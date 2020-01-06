@@ -133,3 +133,4 @@ dmypy.json
 
 .vscode
 app/site.db
+app/secret
