@@ -130,3 +130,5 @@ dmypy.json
 
 #emcas
 */.DS_Store
+
+.vscode
