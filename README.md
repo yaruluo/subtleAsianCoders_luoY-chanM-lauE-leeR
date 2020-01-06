@@ -6,6 +6,11 @@
   - Oversees project development
   - Help with frontend/backend development
   - Updates devlog and design doc
+- **Matthew Chan**
+  - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using SQLite
+  - Assist with retrieval from APIs using OAuth
+  - SQLite/alchemy operations
+    - Create, read, update, delete (CRUD) through SQLAlchemy to SQLite
 - **Eric "Morty" Lau**
   - Creates HTML templates and pages according to sitemap 
   - Jinja
@@ -15,11 +20,6 @@
   - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using HTTP/necessary OAuth 
   - Integrate code from the last project for the login features
   - Make SQLAlchemy models for the database tables
-- **Matthew Chan**
-  - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using SQLite
-  - Assist with retrieval from APIs using OAuth
-  - SQLite/alchemy operations
-    - Create, read, update, delete (CRUD) through SQLAlchemy to SQLite
 
 ## Description
 
