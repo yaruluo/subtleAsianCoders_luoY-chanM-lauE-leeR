@@ -1,3 +1,8 @@
+subtleAsianCoders - Yaru Luo, Eric "Morty" Lau, Raymond Lee, Matthew Chan
+SoftDev1 pd1
+P02 -- The End
+DEVLOG
+
 raymondL -- 2020-01-03 22:51
 draft email to send to Mr. Mykolyk about our proposal
 
@@ -15,3 +20,4 @@ create Musixmatch and Genius API cards
 
 ericL -- 2020-01-05 22:14
 update README.md with roster and instructions
+add boilerplate code and folders
