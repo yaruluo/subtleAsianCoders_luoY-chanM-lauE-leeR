@@ -24,6 +24,8 @@
 ## Description
 
 ## APIs Used
+- Spotify
+- Genius or Musixmatch
 
 ## Instructions
 
