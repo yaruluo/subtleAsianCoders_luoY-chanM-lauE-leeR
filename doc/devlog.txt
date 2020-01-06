@@ -34,3 +34,6 @@ updated README with corresponding roles
 
 raymondL --2020-01-06 04:08
 updated and uploaded design.pdf
+
+raymondL --2020-01-06 18:02
+made db models in sqlalchemy based on ERD
