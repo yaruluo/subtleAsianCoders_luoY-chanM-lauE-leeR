@@ -11,7 +11,7 @@
   - Jinja
   - Bootstrap and custom CSS styling 
     - We are using Bootstrap because we are all more comfortable with it and believe it looks better than Foundation
-- **Raymond Lee**
+- **ray. lee.**
   - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using HTTP/necessary OAuth 
   - Integrate code from the last project for the login features
   - Make SQLAlchemy models for the database tables
