@@ -37,3 +37,5 @@ updated and uploaded design.pdf
 
 raymondL --2020-01-06 18:02
 made db models in sqlalchemy based on ERD
+added config.py
+moved documents to correct? places
