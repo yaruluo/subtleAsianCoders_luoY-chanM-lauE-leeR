@@ -1,4 +1,4 @@
-# &lt;ProjectName&gt; by subtleAsianCoders
+# _Duende_ by subtleAsianCoders
 
 ## Roster
 
