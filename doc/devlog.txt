@@ -1,0 +1,17 @@
+raymondL -- 2020-01-03 22:51
+draft email to send to Mr. Mykolyk about our proposal
+
+yaruL -- 2020-01-04 18:00
+write description, core components, and roles
+create wireframes, sitemap, and database map
+
+raymondL -- 2020-01-05 16:58
+test run Musixmatch API
+
+ericL -- 2020-01-05 20:07
+update Spotify API card
+test run Genius API
+create Musixmatch and Genius API cards
+
+ericL -- 2020-01-05 22:14
+update README.md with roster and instructions
