@@ -1,8 +1,20 @@
+'''
+subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
+SoftDev1 pd1
+P02 -- The End
+'''
+
 # from app.utl import build_db
-from flask import Flask, render_template, flash, redirect, url_for, request, session
+from flask import Flask, request, redirect, session, render_template, url_for, flash
 from utl import models
 from utl.config import Config
+import sqlite3
+import urllib.request
+import urllib.parse
+import functools
 import os
+import json
+import datetime
 
 # SQLAlchemy DB Models
 db = models.db
