@@ -28,7 +28,7 @@ SingleCoverArts = models.SingleCoverArts
 app = Flask(__name__)
 app.config.from_object(Config)
 
-#creates secret key for sessions
+# creates secret key for sessions
 app.secret_key = os.urandom(32)
 
 if __name__ == '__main__':
