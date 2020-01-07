@@ -3,14 +3,14 @@ SoftDev1 pd1
 P02 -- The End
 DEVLOG
 
-raymondL -- 2020-01-03 22:51
+rayL -- 2020-01-03 22:51
 draft email to send to Mr. Mykolyk about our proposal
 
 yaruL -- 2020-01-04 18:00
 wrote description, core components, and roles.
 created wireframes, sitemap, and database map.
 
-raymondL -- 2020-01-05 16:58
+rayL -- 2020-01-05 16:58
 test run Musixmatch API
 
 ericL -- 2020-01-05 20:07
@@ -22,28 +22,34 @@ ericL -- 2020-01-05 22:14
 update README.md with roster and instructions
 add boilerplate code and folders
 
-raymondL -- 2020-01-06 01:21
+rayL -- 2020-01-06 01:21
 added entity relationship diagrams (db maps)
 
 matthewC -- 2020-01-06 01:37
 added site map
 assigned roles
 
-raymondL -- 2020-01-06 01:48
+rayL -- 2020-01-06 01:48
 updated README with corresponding roles
 
-raymondL -- 2020-01-06 04:08
+rayL -- 2020-01-06 04:08
 updated and uploaded design.pdf
 
-raymondL -- 2020-01-06 18:02
+rayL -- 2020-01-06 18:02
 made db models in sqlalchemy based on ERD
 added config.py
 moved documents to correct? places
 
-raymondL -- 2020-01-06 19:13
+rayL -- 2020-01-06 19:13
 organized the files/directories some more
 modularized spotify api connect code
 
 yaruL -- 2020-01-06 21:36
-please stop reorganizing my files
+please stop reorganizing my files/ i gotchu relax
 updated design doc.
+
+rayL -- 2020-01-07 09:27
+made a new models branch
+updated models.py on that branch
+merged models branch to master
+
