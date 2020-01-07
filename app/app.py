@@ -14,7 +14,8 @@ import urllib.parse
 import functools
 import os
 import json
-import datetime
+from datetime import datetime
+import time
 
 # SQLAlchemy DB Models
 # db = models.db
@@ -51,10 +52,30 @@ spotify_auth_query_parameters = {
     'redirect_uri': SPOTIFY_REDIRECT_URI,
     'scope': SPOTIFY_SCOPE,
 }
+
 @app.route('/')
 def root():
     return render_template(
-        'home.html'
+        'home.html',
+        # session = session['access_token']
+    )
+
+@app.route('/index')
+def index():
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+    req = urllib.request.Request(
+        "https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V",
+        headers=authorization_header,
+    )
+    print(session['expires_in'])
+    req = urllib.request.urlopen(req)
+    res = req.read()
+    data = json.loads(res)
+    return render_template(
+        'index.html',
+        data = data
     )
 
 @app.route('/spotify_connect')
@@ -67,8 +88,8 @@ def spotify_connect():
 def callback():
     auth_token = request.args['code']
     code_payload = {
-        'grant_type': 'client_credentials',
-        # 'grant_type': 'authorization_code',
+        # 'grant_type': 'client_credentials',
+        'grant_type': 'authorization_code',
         'code': str(auth_token),
         'redirect_uri': SPOTIFY_REDIRECT_URI,
         'client_id': SPOTIFY_CLIENT_ID,
@@ -85,23 +106,23 @@ def callback():
 
     response_data = json.loads(post_request)
     access_token = response_data['access_token']
-    # refresh_token = response_data['refresh_token']
+    refresh_token = response_data['refresh_token']
     token_type = response_data['token_type']
     expires_in = response_data['expires_in']
 
+    session['access_token'] = access_token
+    session['refresh_token']  = refresh_token
+    session['expires_in'] = expires_in
+    print(time.time())
+    print(datetime.now())
 
-    authorization_header = {
-        'Authorization': f"Bearer {access_token}"
-    }
-
-    req = urllib.request.Request(
-        "https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V",
-        headers=authorization_header,
-    )
-    req = urllib.request.urlopen(req)
-    res = req.read()
-    data = json.loads(res)
-
+    # req = urllib.request.Request(
+    #     "https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V",
+    #     headers=authorization_header,
+    # )
+    # req = urllib.request.urlopen(req)
+    # res = req.read()
+    # data = json.loads(res)
 
     # user_profile_api_endpoint = f"{SPOTIFY_API_URL}/me"
     # profile_response = urllib.request.Request(user_profile_api_endpoint, headers=authorization_header)
@@ -118,11 +139,7 @@ def callback():
 
     # Combine profile and playlist data to display
     # display_arr = [profile_data] + playlist_data["items"]
-    return render_template(
-        "index.html",
-        data = data
-        # sorted_array=display_arr
-        )
+    return redirect(url_for('root'))
 
 if __name__ == '__main__':
     # db.init_app(app)
