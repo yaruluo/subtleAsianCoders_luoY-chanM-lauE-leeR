@@ -31,14 +31,6 @@ app.config.from_object(Config)
 # creates secret key for sessions
 app.secret_key = os.urandom(32)
 
-#  Client Keys
-fin = open('secret', 'r')
-file_contents = fin.readlines()
-CLIENT_ID = file_contents[0].strip()
-CLIENT_SECRET = file_contents[1].strip()
-print(CLIENT_ID)
-print(CLIENT_SECRET)
-
 if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
