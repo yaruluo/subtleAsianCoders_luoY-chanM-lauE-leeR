@@ -7,7 +7,7 @@ P02 -- RYthEM
 # from app.utl import build_db
 from flask import Flask, request, redirect, session, render_template, url_for, flash
 from utl import models
-from utl.config import Config
+from config import Config
 import sqlite3
 import urllib.request
 import urllib.parse
