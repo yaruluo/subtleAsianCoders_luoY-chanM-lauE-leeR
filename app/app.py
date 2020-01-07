@@ -1,7 +1,8 @@
 '''
 subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
 SoftDev1 pd1
-P02 -- RYthEM
+P02 -- The End
+RYthEM
 '''
 
 # from app.utl import build_db
@@ -54,7 +55,7 @@ spotify_auth_query_parameters = {
 }
 
 @app.route('/')
-def root():
+def home():
     return render_template(
         'home.html',
     )
@@ -109,10 +110,8 @@ def callback():
     expires_in = response_data['expires_in']
 
     session['access_token'] = access_token
-    session['refresh_token']  = refresh_token
-    session['expires_in'] = expires_in
 
-    return redirect(url_for('root'))
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     # db.init_app(app)
