@@ -18,12 +18,8 @@ import datetime
 
 # SQLAlchemy DB Models
 db = models.db
-Songs = models.Songs
-Albums = models.Albums
-Lyrics = models.Lyrics
-Listens = models.Listens
-AlbumCoverArts = models.AlbumCoverArts
-SingleCoverArts = models.SingleCoverArts
+Song = models.Song
+Album = models.Album
 
 app = Flask(__name__)
 app.config.from_object(Config)
