@@ -46,4 +46,4 @@ modularized spotify api connect code
 
 yaruL -- 2020-01-06 21:36
 please stop reorganizing my files
-updated devlog.
+updated design doc.
