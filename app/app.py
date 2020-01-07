@@ -57,7 +57,6 @@ spotify_auth_query_parameters = {
 def root():
     return render_template(
         'home.html',
-        # session = session['access_token']
     )
 
 @app.route('/index')
@@ -69,7 +68,6 @@ def index():
         "https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V",
         headers=authorization_header,
     )
-    print(session['expires_in'])
     req = urllib.request.urlopen(req)
     res = req.read()
     data = json.loads(res)
@@ -113,32 +111,7 @@ def callback():
     session['access_token'] = access_token
     session['refresh_token']  = refresh_token
     session['expires_in'] = expires_in
-    print(time.time())
-    print(datetime.now())
 
-    # req = urllib.request.Request(
-    #     "https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V",
-    #     headers=authorization_header,
-    # )
-    # req = urllib.request.urlopen(req)
-    # res = req.read()
-    # data = json.loads(res)
-
-    # user_profile_api_endpoint = f"{SPOTIFY_API_URL}/me"
-    # profile_response = urllib.request.Request(user_profile_api_endpoint, headers=authorization_header)
-    # profile_response = urllib.request.urlopen(profile_response)
-    # profile_response = profile_response.read()
-    # profile_data = json.loads(profile_response)
-
-    # Get user playlist data
-    # playlist_api_endpoint = f"{profile_data['href']}/playlists"
-    # playlists_response = urllib.request.Request(url=playlist_api_endpoint, headers=authorization_header)
-    # playlists_response = urllib.request.urlopen(playlists_response)
-    # playlists_response = playlists_response.read()
-    # playlist_data = json.loads(playlists_response)
-
-    # Combine profile and playlist data to display
-    # display_arr = [profile_data] + playlist_data["items"]
     return redirect(url_for('root'))
 
 if __name__ == '__main__':
