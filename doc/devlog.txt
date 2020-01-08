@@ -1,7 +1,7 @@
 subtleAsianCoders - Yaru Luo, Eric "Morty" Lau, Raymond Lee, Matthew Chan
 SoftDev1 pd1
 P02 -- The End
-DEVLOG
+Duende DEVLOG
 
 rayL -- 2020-01-03 22:51
 draft email to send to Mr. Mykolyk about our proposal
@@ -53,3 +53,8 @@ made a new models branch
 updated models.py on that branch
 merged models branch to master
 
+matthewC -- 2020-01-08 05:18
+Changed name to Duende
+Changed headers accordingly
+Updated design doc with naming mostly and Spotify connection page
+Added background jinja block for base.html
