@@ -60,8 +60,15 @@ ericL -- 2020-01-07 17:22
 modify base to connect with spotify
 store access token in session
 
+rayL -- 2020-01-07 19:00
+made a new branch called dbsetup
+successfully set up db according to ERD, makes one upon running the app
+
 yaruL -- 2020-01-08 00:33
 Updated design doc: tasks, connecting with Spotify, database layout (clarified relationship between the songs and albums tables)
 
 matthewC -- 2020-01-08 05:18
 Added background jinja block for base.html
+
+
+
