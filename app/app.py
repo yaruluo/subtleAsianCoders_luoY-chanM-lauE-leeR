@@ -1,7 +1,8 @@
 '''
 subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
 SoftDev1 pd1
-P02 -- RYthEM
+P02 -- The End
+Duende
 '''
 
 # from app.utl import build_db
