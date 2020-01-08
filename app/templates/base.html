@@ -10,6 +10,7 @@ RYthEM
 <!-- Base for other HTML files -->
 
 <html lang="en">
+
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -34,12 +35,6 @@ RYthEM
         <title>
             {% block title %}{% endblock %} :: RYthEM
         </title>
-
-        <style>
-            /* background {
-                {% block background %}{% endblock %}
-            } */
-        </style>
     </head>
 
     <body>
@@ -64,8 +59,10 @@ RYthEM
         </nav>
 
         <background>
-            {% block body %}
-            {% endblock %}
+            <div class="container-fluid">
+                {% block body %}
+                {% endblock %}
+            </div>
         </background>
     </body>
 
