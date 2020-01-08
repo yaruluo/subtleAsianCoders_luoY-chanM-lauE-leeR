@@ -12,18 +12,19 @@
   - SQLite/alchemy operations
     - Create, read, update, delete (CRUD) through SQLAlchemy to SQLite
 - **Eric "Morty" Lau**
-  - Creates HTML templates and pages according to sitemap 
+  - Creates HTML templates and pages according to sitemap
   - Jinja
-  - Bootstrap and custom CSS styling 
+  - Bootstrap and custom CSS styling
     - We are using Bootstrap because we are all more comfortable with it and believe it looks better than Foundation
 - **ray. lee.**
-  - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using HTTP/necessary OAuth 
+  - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using HTTP/necessary OAuth
   - Integrate code from the last project for the login features
   - Make SQLAlchemy models for the database tables
 
 ## Description
 
 ## APIs Used
+
 - Spotify
 - Genius or Musixmatch
 

@@ -7,8 +7,8 @@ rayL -- 2020-01-03 22:51
 draft email to send to Mr. Mykolyk about our proposal
 
 yaruL -- 2020-01-04 18:00
-wrote description, core components, and roles.
-created wireframes, sitemap, and database map.
+wrote description, core components, and roles on design doc
+created wireframes, sitemap, and database map on design doc
 
 rayL -- 2020-01-05 16:58
 test run Musixmatch API
@@ -23,10 +23,10 @@ update README.md with roster and instructions
 add boilerplate code and folders
 
 rayL -- 2020-01-06 01:21
-added entity relationship diagrams (db maps)
+added entity relationship diagrams (db maps) on design doc
 
 matthewC -- 2020-01-06 01:37
-added site map
+added site map on design doc
 assigned roles
 
 rayL -- 2020-01-06 01:48
@@ -45,16 +45,23 @@ organized the files/directories some more
 modularized spotify api connect code
 
 yaruL -- 2020-01-06 21:36
-please stop reorganizing my files/ i gotchu relax
-updated design doc.
+please stop reorganizing my files/ i gotchu relax/ i am relaxed
+updated design doc with
+
+matthewC -- 2020-01-07 09:00
+created base with a nav bar
 
 rayL -- 2020-01-07 09:27
 made a new models branch
 updated models.py on that branch
 merged models branch to master
 
+ericL -- 2020-01-07 17:22
+modify base to connect with spotify
+store access token in session
+
+yaruL -- 2020-01-08 00:33
+Updated design doc: tasks, connecting with Spotify, database layout (clarified relationship between the songs and albums tables)
+
 matthewC -- 2020-01-08 05:18
-Changed name to Duende
-Changed headers accordingly
-Updated design doc with naming mostly and Spotify connection page
 Added background jinja block for base.html
