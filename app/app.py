@@ -23,7 +23,7 @@ Song = models.Song
 Album = models.Album
 
 app = Flask(__name__)
-# app.config.from_object(Config)
+app.config.from_object(Config)
 
 # creates secret key for sessions
 app.secret_key = os.urandom(32)
@@ -109,7 +109,7 @@ def callback():
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
-    # db.init_app(app)
-    # with app.app_context():
-    #     db.create_all()
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
