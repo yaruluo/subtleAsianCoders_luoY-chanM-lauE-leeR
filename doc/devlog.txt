@@ -1,7 +1,7 @@
-subtleAsianCoders - Yaru Luo, Eric "Morty" Lau, Raymond Lee, Matthew Chan
+subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
 SoftDev1 pd1
 P02 -- The End
-DEVLOG
+RYthEM DEVLOG
 
 rayL -- 2020-01-03 22:51
 draft email to send to Mr. Mykolyk about our proposal
@@ -53,3 +53,9 @@ made a new models branch
 updated models.py on that branch
 merged models branch to master
 
+matthewC -- 2020-01-07 09:00
+created base with a nav bar
+
+ericL -- 2020-01-07 17:22
+modify base to connect with spotify
+store access token in session
