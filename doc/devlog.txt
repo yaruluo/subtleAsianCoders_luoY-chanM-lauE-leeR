@@ -1,7 +1,7 @@
 subtleAsianCoders - Yaru Luo, Eric "Morty" Lau, Raymond Lee, Matthew Chan
 SoftDev1 pd1
 P02 -- The End
-Duende DEVLOG
+RYthEM DEVLOG
 
 rayL -- 2020-01-03 22:51
 draft email to send to Mr. Mykolyk about our proposal
