@@ -53,3 +53,8 @@ made a new models branch
 updated models.py on that branch
 merged models branch to master
 
+rayL -- 2020-01-07 19:00
+made a new branch called dbsetup
+successfully set up db according to ERD, makes one upon running the app
+
+
