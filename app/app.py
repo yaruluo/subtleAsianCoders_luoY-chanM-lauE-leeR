@@ -2,7 +2,7 @@
 subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
 SoftDev1 pd1
 P02 -- The End
-RYthEM
+Duende
 '''
 
 # from app.utl import build_db
@@ -107,6 +107,13 @@ def callback():
     session['access_token'] = access_token
 
     return redirect(url_for('home'))
+
+
+@app.route('/guess_the_song')
+def guess_the_song():
+    return render_template('guess_the_song.html')
+
+
 
 if __name__ == '__main__':
     db.init_app(app)
