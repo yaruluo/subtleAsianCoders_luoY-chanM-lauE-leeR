@@ -3,30 +3,31 @@
 ## Roster
 
 - **Yaru Luo** (Project Manager):
-  - Oversees project development
-  - Help with frontend/backend development
-  - Updates devlog and design doc
+  - Oversees & plans incremental project development mile-marks
+  - Hosts github repo
+  - Helps with minor frontend/backend development
+  - Updates design doc, maintains devlog
 - **Matthew Chan**
-  - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using SQLite
-  - Assist with retrieval from APIs using OAuth
-  - SQLite/alchemy operations
-    - Create, read, update, delete (CRUD) through SQLAlchemy to SQLite
+  - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using HTTP/necessary OAuth
+  - Make SQLAlchemy models for the database tables
+  - Creates the GuessTheSong game
 - **Eric "Morty" Lau**
-  - Creates HTML templates and pages according to sitemap
-  - Jinja
-  - Bootstrap and custom CSS styling
-    - We are using Bootstrap because we are all more comfortable with it and believe it looks better than Foundation
+  - Spotify connection: Retrieves data from APIs using OAuth
+  - Frontend
+    - Creates HTML templates and pages according to sitemap
+    - Bootstrap and custom CSS styling
+      - We are using Bootstrap because we are all more comfortable with it and believe it looks better than Foundation
 - **ray. lee.**
   - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using HTTP/necessary OAuth
-  - Integrate code from the last project for the login features
   - Make SQLAlchemy models for the database tables
+  - Creates the Higher-Lower game
 
 ## Description
+Our website is all about music! We want to create two games: HigherLower, wherein you guess which song of two shown have more listens, and GuessTheSong, wherein you are shown the lyrics to a song and guess what song it is (multiple choice). We also want to use connect with the user's own Spotify account and use their own liked songs in the games.
 
-## APIs Used
-
-- Spotify
-- Genius or Musixmatch
+## APIs Used ** TO DO: HYPERLINK IN Ye Olde SoftDev API KB **
+- Spotify: Retrieves a user’s playlists, songs, and recommendations
+- Genius: Retrieves a song’s lyrics.
 
 ## Instructions
 
@@ -65,6 +66,11 @@ pip install -r doc/requirements.txt
 ```
 
 ### Launch codes
+
+### Cloning
+
+git clone https://github.com/yaruluo/subtleAsianCoders_luoY-chanM-lauE-leeR.git
+
 
 ### Running
 
