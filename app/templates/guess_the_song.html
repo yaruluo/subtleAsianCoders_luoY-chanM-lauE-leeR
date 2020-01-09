@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+<!--
+subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
+SoftDev1 pd1
+P02 -- The End
+Duende
+-->
+
+<!-- Guess The Song Game Homepage -->
+
+{% block title %}
+    Guess The Song Game
+{% endblock %}
+
+
+{% block style %}
+<style>
+    /* .background {
+        background-image: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg');
+        background: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg')
+                    no-repeat
+                    center
+                    center
+                    fixed;
+        background-size: cover;
+        height: 500%;
+        overflow: hidden;
+    } */
+    .background {
+        position: fixed; 
+        top: -50%; 
+        left: -50%; 
+        width: 200%; 
+        height: 200%;
+
+        background-color: black;
+        background-image: linear-gradient(
+            45deg,
+            #ff00fc, 
+            #393939, 
+            #00d4ff);
+
+    }
+    .background img {
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        right: 0; 
+        bottom: 0; 
+        margin: auto; 
+        min-width: 50%;
+        min-height: 50%;
+
+        opacity: 0.9;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<div class="background">
+    <img src="https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg" alt="">
+</div>
+
+
+<br><br>
+Hello World
+{% endblock %}

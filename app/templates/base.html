@@ -4,7 +4,7 @@
 subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
 SoftDev1 pd1
 P02 -- The End
-RYthEM
+Duende
 -->
 
 <!-- Base for other HTML files -->
@@ -33,13 +33,17 @@ RYthEM
 
 
         <title>
-            {% block title %}{% endblock %} :: RYthEM
+            {% block title %}BASE{% endblock %} :: Duende
         </title>
+
+        {% block style %}
+        <style></style>
+        {% endblock %}
     </head>
 
     <body>
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-left fixed-top mb-5">
-            <a class="navbar-brand" href="/home">RYthEM</a>
+            <a class="navbar-brand" href="/home">Duende</a>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="/higher_lower">Higher Lower</a>
@@ -58,12 +62,10 @@ RYthEM
             </ul>
         </nav>
 
-        <background>
-            <div class="container-fluid">
-                {% block body %}
-                {% endblock %}
-            </div>
-        </background>
-    </body>
 
+        <div class="container-fluid">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </body>
 </html>
