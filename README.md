@@ -25,9 +25,9 @@
 ## Description
 Our website is all about music! We want to create two games: HigherLower, wherein you guess which song of two shown have more listens, and GuessTheSong, wherein you are shown the lyrics to a song and guess what song it is (multiple choice). We also want to use connect with the user's own Spotify account and use their own liked songs in the games.
 
-## APIs Used ** TO DO: HYPERLINK IN Ye Olde SoftDev API KB **
-- Spotify: Retrieves a user’s playlists, songs, and recommendations
-- Genius: Retrieves a song’s lyrics.
+## APIs Used
+- [Spotify](https://docs.google.com/document/d/1NzepXhw6sM25KSLzbiNWgba3o53HcN3f8C2SMiajK5Q/edit): Retrieves a user’s playlists, songs, and recommendations
+- [Genius](https://docs.google.com/document/d/1kJ05CPz_bWl5i77SlhBKSEpVl-J8EKPTACczuD9kZkE/edit): Retrieves a song’s lyrics.
 
 ## Instructions
 
