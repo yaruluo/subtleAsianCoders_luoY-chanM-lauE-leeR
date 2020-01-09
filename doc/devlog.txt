@@ -70,5 +70,8 @@ Updated design doc: tasks, connecting with Spotify, database layout (clarified r
 matthewC -- 2020-01-08 05:18
 Added background jinja block for base.html
 
-
-
+matthewC -- 2020-01-09 10:16
+Edited headings that got merged
+Added test /guess_the_song route
+Created Guess The Song HTML page and added background image generation
+Fixed error in models.py database with Song table containing two primary keys
