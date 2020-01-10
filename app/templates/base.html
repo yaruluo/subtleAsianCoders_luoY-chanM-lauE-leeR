@@ -37,7 +37,15 @@ Duende
         </title>
 
         {% block style %}
-        <style></style>
+        <style>
+            #footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2rem; 
+                text-align: center;
+            }
+        </style>
         {% endblock %}
     </head>
 
@@ -67,5 +75,9 @@ Duende
             {% block body %}
             {% endblock %}
         </div>
+
+        <footer id="footer">
+            © subtleAsianCoders 2020
+        </footer>
     </body>
 </html>
