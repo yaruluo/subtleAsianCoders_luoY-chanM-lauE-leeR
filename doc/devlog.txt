@@ -56,6 +56,9 @@ made a new models branch
 updated models.py on that branch
 merged models branch to master
 
+matthewC -- 2020-01-07 09:00
+created base with a nav bar
+
 ericL -- 2020-01-07 17:22
 modify base to connect with spotify
 store access token in session
@@ -70,5 +73,9 @@ Updated design doc: tasks, connecting with Spotify, database layout (clarified r
 matthewC -- 2020-01-08 05:18
 Added background jinja block for base.html
 
+ericL -- 2020-01-01 21:04
+change doc/requirements to nix extraneous modules
+update readme with api information
 
-
+yaruL -- 2020-01-09 23:34
+Updated README: roles, descriptions, APIs and links, git clone instructions
