@@ -12,22 +12,24 @@
   - Make SQLAlchemy models for the database tables
   - Creates the GuessTheSong game
 - **Eric "Morty" Lau**
-  - Spotify connection: Retrieves data from APIs using OAuth
-  - Frontend
-    - Creates HTML templates and pages according to sitemap
-    - Bootstrap and custom CSS styling
-      - We are using Bootstrap because we are all more comfortable with it and believe it looks better than Foundation
+  - Creates HTML templates and pages according to sitemap
+  - Jinja
+  - Bootstrap and custom CSS styling
+    - We are using Bootstrap because we are all more comfortable with it and believe it looks better than Foundation
 - **ray. lee.**
   - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using HTTP/necessary OAuth
+  - Integrate code from the last project for the login features
   - Make SQLAlchemy models for the database tables
   - Creates the Higher-Lower game
 
 ## Description
+
 Our website is all about music! We want to create two games: HigherLower, wherein you guess which song of two shown have more listens, and GuessTheSong, wherein you are shown the lyrics to a song and guess what song it is (multiple choice). We also want to use connect with the user's own Spotify account and use their own liked songs in the games.
 
 ## APIs Used
-- [Spotify](https://docs.google.com/document/d/1NzepXhw6sM25KSLzbiNWgba3o53HcN3f8C2SMiajK5Q/edit): Retrieves a user’s playlists, songs, and recommendations
-- [Genius](https://docs.google.com/document/d/1kJ05CPz_bWl5i77SlhBKSEpVl-J8EKPTACczuD9kZkE/edit): Retrieves a song’s lyrics.
+
+- [Spotify](https://docs.google.com/document/d/1hnI9zCld87HNG-7Vf2Qgeeb4gc08kQzHdCtFPKH0jd4/edit): Retrieves a user’s playlists, songs, and recommendations
+- [Musixmatch](https://docs.google.com/document/d/1iOdEsoYiQ6hxNwFtRxu3Eh1aGIGiIwvMeSQFtFF-dOw/edit): Retrieves a song’s lyrics.
 
 ## Instructions
 
@@ -67,17 +69,46 @@ pip install -r doc/requirements.txt
 
 ### Launch codes
 
+#### Spotify
+
+- Head over to [My Dashboard | Spotify for Developers](https://developer.spotify.com/dashboard/login)
+- Log in with your Spotify account
+- Click the button labeled "CREATE A CLIENT ID"
+- Fill out the form with information about your application
+- Your Client ID and Client Secret are shown on the dashboard for your app
+- Click Edit Settings and add the following to Redirect URI: <http://127.0.0.1:5000/callback/q>
+- Open `app/api.json` and paste your Client ID and Client Secret.
+
+```json
+    "SPOTIFY_CLIENT_ID": "",
+    "SPOTIFY_CLIENT_SECRET": ""
+```
+
+#### Musixmatch
+
+- Create a Musixmatch account [here](https://developer.musixmatch.com/signup)
+- Go to your account screen and click the dashboard tab, and then click the applications tab.
+- You should be able to see an API key listed next to your application in a table.
+- Open `app/api.json` and paste your API key.
+
+```json
+    "MUSIXMATCH_API_KEY": ""
+```
+
 ### Cloning
 
-git clone https://github.com/yaruluo/subtleAsianCoders_luoY-chanM-lauE-leeR.git
+Run the following line in your terminal
 
+```shell
+git clone https://github.com/yaruluo/subtleAsianCoders_luoY-chanM-lauE-leeR.git
+```
 
 ### Running
 
 Run the following line in your virtual environment
 
 ```shell
-python app.py
+python app/app.py
 ```
 
 Open a browser and head to <http://127.0.0.1:5000/>
