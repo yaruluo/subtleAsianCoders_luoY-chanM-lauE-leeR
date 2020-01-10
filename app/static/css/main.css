@@ -1,7 +1,7 @@
 /* body */
 body {
   padding-top: 56px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 /* song images */
@@ -49,4 +49,12 @@ div {
 
 #right-listens {
   display: none;
+}
+
+#higher-btn:hover {
+  background-color: white;
+}
+
+#lower-btn:hover {
+  background-color: white;
 }

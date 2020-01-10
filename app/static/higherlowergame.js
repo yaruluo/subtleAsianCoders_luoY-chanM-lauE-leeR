@@ -10,5 +10,5 @@ function loadGame() {
 }
 
 function loadAnswer(btn) {
-    xx
+    
 }
