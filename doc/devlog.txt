@@ -86,3 +86,7 @@ Added logging of Musixmatch API Key
 Finished Musixmatch API data logic and created musixmatch_get(...) to handle
 Sucessfully retrieved all data for test songs for use in Guess The Song Game
 Things left to do marked as "# TODO:" as well as potential improvements
+
+matthewC -- 2020-01-10 02:16
+Added testing route for Guess The Song Playing Page
+Created rough outline for the playing page without Jinja variables
