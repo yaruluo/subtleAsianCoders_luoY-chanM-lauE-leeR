@@ -80,3 +80,9 @@ matthewC -- 2020-01-09 10:03
 Added /guess_the_song/play route to test
 Added standardized footer in base.html
 Finished text and button on Guess The Song page
+
+matthewC -- 2020-01-10 02:08
+Added logging of Musixmatch API Key
+Finished Musixmatch API data logic and created musixmatch_get(...) to handle
+Sucessfully retrieved all data for test songs for use in Guess The Song Game
+Things left to do marked as "# TODO:" as well as potential improvements
