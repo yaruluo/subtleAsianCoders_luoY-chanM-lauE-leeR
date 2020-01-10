@@ -70,5 +70,8 @@ Updated design doc: tasks, connecting with Spotify, database layout (clarified r
 matthewC -- 2020-01-08 05:18
 Added background jinja block for base.html
 
+rayL -- 2020-01-09 23:04
+created beginning interface for higher lower game
+
 
 
