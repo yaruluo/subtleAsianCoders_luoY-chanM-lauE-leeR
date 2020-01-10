@@ -65,3 +65,6 @@ yaruL -- 2020-01-07 00:33
 Updated design doc: tasks, connecting with Spotify, database layout (clarified relationship between the songs and albums tables)
 =======
 >>>>>>> master
+
+yaruL -- 2020-01-09 23:34
+Updated README: roles, descriptions, APIs and links, git clone instructions
