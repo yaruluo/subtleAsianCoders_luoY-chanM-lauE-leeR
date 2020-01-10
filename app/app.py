@@ -28,6 +28,8 @@ app.config.from_object(Config)
 # creates secret key for sessions
 app.secret_key = os.urandom(32)
 
+MUSIXMATCH_API_KEY = open('secret', 'r').read()
+
 SPOTIFY_CLIENT_ID = 'b9535e1e2c3741069061954ef75397ab'
 SPOTIFY_CLIENT_SECRET = 'bfe2cc0d745b4047ab805445a0ebb25f'
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
@@ -114,8 +116,85 @@ def guess_the_song():
     return render_template('guess_the_song.html')
 
 
+'''
+Accesses the Musixmatch API and returns the lyrics of a given song title and/or artist and/or album
+'''
+def musixmatch_get(title='', artist='', album=''):
+    #===SEARCHING=FOR=SONG==========================
+    search_request = 'https://api.musixmatch.com/ws/1.1/matcher.track.get?'
+    arguments = list()
+    if (len(title) != 0):
+        title = 'q_track=' + urllib.parse.quote(title)
+        arguments.append(title)
+    if (len(artist) != 0):
+        artist = 'q_artist=' + urllib.parse.quote(artist)
+        arguments.append(artist)
+    if (len(album) != 0):
+        album = 'q_album=' + urllib.parse.quote(album)
+        arguments.append(album)
+    search_request += '&'.join(arguments)
+    search_request += '&apikey=' + MUSIXMATCH_API_KEY
+    # print(search_request)
+    url = urllib.request.urlopen(search_request)
+    search_json = json.loads(url.read())
+
+    track_id = search_json['message']['body']['track']['track_id']
+    genre = search_json['message']['body']['track']['primary_genres']['music_genre_list'][0]['music_genre']['music_genre_name']
+
+    has_lyrics = search_json['message']['body']['track']['has_lyrics']
+    if (has_lyrics == 1):
+        #===GETTING=LYRICS==============================
+        lyrics_request = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?'
+        lyrics_request += 'track_id=' + str(track_id)
+        lyrics_request += '&apikey=' + MUSIXMATCH_API_KEY
+        # print(lyrics_request)
+        url = urllib.request.urlopen(lyrics_request)
+        lyrics_json = json.loads(url.read())
+
+        lyrics = lyrics_json['message']['body']['lyrics']['lyrics_body']
+    else:
+        lyrics = 'LYRICS NOT AVAILABLE'
+    
+    #===FORMATTING=MUSIXMATCH=DATA==================
+    data = dict()
+    data['lyrics'] = lyrics
+    data['genre'] = genre
+    return data
+
 @app.route('/guess_the_song/play')
 def play():
+    # choose 10 random songs from Spotify
+    # TODO: change temporary song sample to randomization============================
+    f = open('dummysongs.json', 'r')
+    songs = json.loads(f.read())
+    # ===============================================================================
+
+    # access Musixmatch lyrics for each song
+    for song in songs['items']:
+        title = song['track']['name']
+
+        # TODO: currently assumes only one artist, potentially change to store all later on
+        artist = song['track']['album']['artists'][0]['name']
+
+        # TODO: potentially account for multiple album cover art variants
+        coverArtLink = song['track']['album']['images'][0]['url']
+
+        popularity = song['track']['popularity']
+
+        album_type = song['track']['album']['album_type']
+        # TODO: problems with non-standard characters in album names like "÷ (Deluxe)"
+        if (album_type == "single"):
+            album = "single"
+            musixmatch_data = musixmatch_get(title=title, artist=artist)
+        else:
+            album = song['track']['album']['name']
+            musixmatch_data = musixmatch_get(title=title, artist=artist, album=album)
+        lyrics = musixmatch_data['lyrics']
+        genre = musixmatch_data['genre']
+        print(f'{title}|{artist}|{coverArtLink}|{popularity}|{album}|{genre}|{lyrics}')
+    
+    # TODO: add songs to database
+
     return render_template('guess_the_song_game.html')
 
 
