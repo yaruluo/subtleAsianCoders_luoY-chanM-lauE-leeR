@@ -39,7 +39,7 @@ SPOTIFY_API_URL = f"{SPOTIFY_API_BASE_URL}/{SPOTIFY_API_VERSION}"
 CLIENT_SIDE_URL = 'http://127.0.0.1'
 PORT = 5000
 SPOTIFY_REDIRECT_URI = f"{CLIENT_SIDE_URL}:{PORT}/callback/q"
-SPOTIFY_SCOPE = ''
+SPOTIFY_SCOPE = 'user-library-read'
 # SCOPE = 'playlist-modify-public playlist-modify-private'
 
 spotify_auth_query_parameters = {
@@ -107,6 +107,28 @@ def callback():
     session['access_token'] = access_token
 
     return redirect(url_for('home'))
+
+@app.route('/higher_lower_game')
+def higher_lower_game():
+    fin = open('dummysongs.json', 'r')
+    dummySongsJSON = fin.readlines()
+    dummySongsJSON = json.loads(dummySongsJSON[0])
+    dummySongs = dummySongsJSON['items']
+    songs = []
+    for song in dummySongs:
+        title = song['track']['album']['name']
+        artist = song['track']['album']['artists'][0]['name']
+        coverArtLink = song['track']['album']['images'][0]['url']
+        popularity = song['track']['popularity']
+        songData = {}
+        songData['title'] = title
+        songData['artist'] = artist
+        songData['coverArtLink'] = coverArtLink
+        songData['popularity'] = popularity
+        songs.append(songData)
+        # print(f'{title} {artist} {coverArtLink} {songData} {songs}')
+
+    return render_template('higherlowergame.html', songs = songs)
 
 if __name__ == '__main__':
     db.init_app(app)

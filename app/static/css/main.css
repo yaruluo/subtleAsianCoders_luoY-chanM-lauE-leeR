@@ -1,15 +1,52 @@
-/* body {
-    background: #191414;
-    width: auto;
-    height: auto;
+/* body */
+body {
+  /* padding-top: 56px; */
+  font-family: 'Roboto', sans-serif;
 }
 
-#profileNameLink {
-    text-decoration: none;
-    color: #1DB954;
-    width: fit-content;
+/* song images */
+.songImage {
+  min-height: 100%;
+  width: 600px;
 }
 
-#logout-btn {
-    vertical-align: middle;
-} */
+* {
+  box-sizing: border-box;
+}
+
+section {
+}
+
+div {
+  height: 100%;
+}
+
+/* Pattern styles */
+.container {
+  display: table;
+  width: 100%;
+}
+
+.left-half {
+  position: absolute;
+  left: 0px;
+  width: 50%;
+}
+
+.right-half {
+  position: absolute;
+  right: 0px;
+  width: 50%;
+}
+
+.left-text,
+.right-text {
+  color: #ffffff;
+  text-align: center;
+  background-color: none;
+  vertical-align: middle;
+}
+
+#right-listens {
+  display: none;
+}
