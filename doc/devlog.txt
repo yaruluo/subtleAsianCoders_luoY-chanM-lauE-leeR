@@ -86,3 +86,6 @@ Updated README: roles, descriptions, APIs and links, git clone instructions
 ericL -- 2020-01-10 08:29
 Create HTML template for hearted songs and add session logic for non connected users
 Display JSON mess on hearted songs
+
+ericL -- 2020-01-10 14:47
+Get relevant information for favorited songs
