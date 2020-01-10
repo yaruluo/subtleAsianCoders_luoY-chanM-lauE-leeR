@@ -114,6 +114,10 @@ def guess_the_song():
     return render_template('guess_the_song.html')
 
 
+@app.route('/guess_the_song/play')
+def play():
+    return render_template('guess_the_song_game.html')
+
 
 if __name__ == '__main__':
     db.init_app(app)
