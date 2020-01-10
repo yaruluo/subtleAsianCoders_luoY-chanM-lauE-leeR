@@ -65,3 +65,6 @@ Updated design doc: tasks, connecting with Spotify, database layout (clarified r
 
 matthewC -- 2020-01-08 05:18
 Added background jinja block for base.html
+
+ericL -- 2020-01-09 22:06
+add carousel with images and labels to home page
