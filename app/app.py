@@ -17,6 +17,17 @@ import os
 import json
 import datetime
 
+api_file = os.path.dirname(os.path.abspath(__file__)) + '/api.json'
+
+# TODO: remove api keys from the file after development is done
+
+with open(api_file, 'r') as read_file:
+    keys = json.load(read_file)
+
+SPOTIFY_CLIENT_ID = keys['SPOTIFY_CLIENT_ID']
+SPOTIFY_CLIENT_SECRET = keys['SPOTIFY_CLIENT_SECRET']
+MUSIXMATCH_API_KEY = keys['MUSIXMATCH_API_KEY']
+
 # SQLAlchemy DB Models
 db = models.db
 Song = models.Song
@@ -28,8 +39,6 @@ app.config.from_object(Config)
 # creates secret key for sessions
 app.secret_key = os.urandom(32)
 
-SPOTIFY_CLIENT_ID = 'b9535e1e2c3741069061954ef75397ab'
-SPOTIFY_CLIENT_SECRET = 'bfe2cc0d745b4047ab805445a0ebb25f'
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
 SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_API_BASE_URL = 'https://api.spotify.com'
