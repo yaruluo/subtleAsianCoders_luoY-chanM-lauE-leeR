@@ -117,6 +117,15 @@ def callback():
 
     return redirect(url_for('home'))
 
+@app.route("/hearted_songs")
+def hearted_songs():
+    if not 'access_token' in session:
+        flash('You are not connected to your Spotify account', 'error')
+        return redirect(url_for('home'))
+    else:
+        return render_template(
+            "hearted_songs.html"
+    )
 if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
