@@ -16,18 +16,18 @@ Duende
 
 {% block style %}
 <style>
-    /* .background {
-        background-image: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg');
-        background: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg')
-                    no-repeat
-                    center
-                    center
+    body {
+        /* background-image: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg'); */
+        background: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg') 
+                    no-repeat 
+                    center 
+                    center 
                     fixed;
         background-size: cover;
-        height: 500%;
+        height: 100%;
         overflow: hidden;
-    } */
-    .background {
+    }
+    /* #background {
         position: fixed; 
         top: -50%; 
         left: -50%; 
@@ -40,9 +40,8 @@ Duende
             #ff00fc, 
             #393939, 
             #00d4ff);
-
     }
-    .background img {
+    #background img {
         position: absolute; 
         top: 0; 
         left: 0; 
@@ -53,6 +52,18 @@ Duende
         min-height: 50%;
 
         opacity: 0.9;
+    } */
+    #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2rem; 
+        text-align: center;
+        color: white;
+    }
+    #content {
+        width: 50%;
+        height: 100%;
     }
 </style>
 {% endblock %}
@@ -60,10 +71,15 @@ Duende
 
 {% block body %}
 <div class="background">
-    <img src="https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg" alt="">
+    <!-- <img src="https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg" alt=""> -->
 </div>
 
+<div id="content" class="container text-center mt-5 pt-5" style="color:white;">
+    <h1>Guess The Song</h1>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris quis commodo neque. Nam mollis enim ligula, sit amet semper diam condimentum id. In cursus, felis ut imperdiet rhoncus, neque ipsum viverra ex, et tempor dui sapien vel lorem. Ut malesuada gravida eros sed porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse a luctus diam, id pellentesque dui. Fusce quis nisl arcu. Proin finibus, justo a faucibus tempus, lectus lacus pharetra arcu, in semper ligula quam ut libero. Phasellus et pretium risus. Cras id hendrerit nisl, non euismod massa. Suspendisse pharetra odio at turpis consequat, quis fringilla nunc gravida. Maecenas convallis vehicula quam, ut convallis odio efficitur sed. Vestibulum egestas lacinia odio, sed sodales risus vehicula sed. In faucibus purus at augue maximus feugiat. Vivamus aliquam, tellus ut rutrum hendrerit, sapien mi congue enim, posuere pretium mi mauris eget mi.
+    </p>
+    <a href="/guess_the_song/play" class="btn btn-lg btn-primary">Play Now</a>
+</div>
 
-<br><br>
-Hello World
 {% endblock %}
