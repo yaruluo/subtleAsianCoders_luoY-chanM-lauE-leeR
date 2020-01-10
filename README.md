@@ -80,7 +80,7 @@ git clone https://github.com/yaruluo/subtleAsianCoders_luoY-chanM-lauE-leeR.git
 Run the following line in your virtual environment
 
 ```shell
-python app.py
+python app/app.py
 ```
 
 Open a browser and head to <http://127.0.0.1:5000/>
