@@ -19,6 +19,8 @@ import datetime
 
 api_file = os.path.dirname(os.path.abspath(__file__)) + '/api.json'
 
+# TODO: remove api keys from the file after development is done
+
 with open(api_file, 'r') as read_file:
     keys = json.load(read_file)
 
