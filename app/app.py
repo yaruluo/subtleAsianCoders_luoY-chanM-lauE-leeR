@@ -168,34 +168,46 @@ def play():
     f = open('dummysongs.json', 'r')
     songs = json.loads(f.read())
     # ===============================================================================
+    songObjects = list()
 
     # access Musixmatch lyrics for each song
     for song in songs['items']:
-        title = song['track']['name']
-
-        # TODO: currently assumes only one artist, potentially change to store all later on
-        artist = song['track']['album']['artists'][0]['name']
-
-        # TODO: potentially account for multiple album cover art variants
-        coverArtLink = song['track']['album']['images'][0]['url']
-
-        popularity = song['track']['popularity']
-
-        album_type = song['track']['album']['album_type']
-        # TODO: problems with non-standard characters in album names like "÷ (Deluxe)"
-        if (album_type == "single"):
-            album = "single"
-            musixmatch_data = musixmatch_get(title=title, artist=artist)
+        db_cache = Song.query.filter_by(title == title).first()
+        if (db_cache != None):
+            songObjects.append(db_cache)
         else:
-            album = song['track']['album']['name']
-            musixmatch_data = musixmatch_get(title=title, artist=artist, album=album)
-        lyrics = musixmatch_data['lyrics']
-        genre = musixmatch_data['genre']
-        print(f'{title}|{artist}|{coverArtLink}|{popularity}|{album}|{genre}|{lyrics}')
-    
-    # TODO: add songs to database
+            title = song['track']['name']
 
-    return render_template('guess_the_song_game.html')
+            # TODO: currently assumes only one artist, potentially change to store all later on
+            artist = song['track']['album']['artists'][0]['name']
+
+            # TODO: potentially account for multiple album cover art variants
+            coverArtLink = song['track']['album']['images'][0]['url']
+
+            # TODO: find actual number of listens not this popularity number
+            popularity = song['track']['popularity']
+
+            album_type = song['track']['album']['album_type']
+            # TODO: problems with non-standard characters in album names like "÷ (Deluxe)"
+            if (album_type == "single"):
+                album = "single"
+                musixmatch_data = musixmatch_get(title=title, artist=artist)
+            else:
+                album = song['track']['album']['name']
+                musixmatch_data = musixmatch_get(title=title, artist=artist, album=album)
+            lyrics = musixmatch_data['lyrics']
+            genre = musixmatch_data['genre']
+            print(f'{title}|{artist}|{coverArtLink}|{popularity}|{album}|{genre}|{lyrics}')
+        
+            # TODO: add songs to database
+            albumObject = album(album, coverArtLink)
+            songObject = song(albumObject.aid, artist, title, genre, lyrics, popularity)
+            db.session.add(albumObject)
+            db.session.add(songObject)
+            songObjects.append(songObject)
+
+    db.session.commit()
+    return render_template('guess_the_song_game.html', songs=songObjects)
 
 
 @app.route('/guess_the_song/play/test')
