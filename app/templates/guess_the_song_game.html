@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+<!--
+subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
+SoftDev1 pd1
+P02 -- The End
+Duende
+-->
+
+<!-- Guess The Song Game Playing Page -->
+
+{% block title %}
+    Guess The Song Game
+{% endblock %}
+
+
+{% block style %}
+<style>
+    body {
+        /* background-image: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg'); */
+        background: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg') 
+                    no-repeat 
+                    center 
+                    center 
+                    fixed;
+        background-size: cover;
+        height: 100%;
+        overflow: hidden;
+    }
+    /* #background {
+        position: fixed; 
+        top: -50%; 
+        left: -50%; 
+        width: 200%; 
+        height: 200%;
+
+        background-color: black;
+        background-image: linear-gradient(
+            45deg,
+            #ff00fc, 
+            #393939, 
+            #00d4ff);
+    }
+    #background img {
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        right: 0; 
+        bottom: 0; 
+        margin: auto; 
+        min-width: 50%;
+        min-height: 50%;
+
+        opacity: 0.9;
+    } */
+    #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2rem; 
+        text-align: center;
+        color: white;
+    }
+    #content {
+        width: 50%;
+        height: 100%;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<div id="content" class="container text-center mt-5 pt-5" style="color:white;">
+    <p>INSERT LYRICS</p>
+    <a href="" class="btn btn-lg btn-primary mb-2">OPTION 1</a><br>
+    <a href="" class="btn btn-lg btn-primary mb-2">OPTION 2</a><br>
+    <a href="" class="btn btn-lg btn-primary mb-2">OPTION 3</a><br>
+    <a href="" class="btn btn-lg btn-primary mb-2">OPTION 4</a>
+</div>
+{% endblock %}
