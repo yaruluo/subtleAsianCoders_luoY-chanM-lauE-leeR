@@ -8,7 +8,7 @@ RYthEM
 # from app.utl import build_db
 from flask import Flask, request, redirect, session, render_template, url_for, flash
 from utl import models
-from utl.config import Config
+from config import Config
 import sqlite3
 import urllib.request
 import urllib.parse
@@ -18,16 +18,12 @@ import json
 import datetime
 
 # SQLAlchemy DB Models
-# db = models.db
-# Songs = models.Songs
-# Albums = models.Albums
-# Lyrics = models.Lyrics
-# Listens = models.Listens
-# AlbumCoverArts = models.AlbumCoverArts
-# SingleCoverArts = models.SingleCoverArts
+db = models.db
+Song = models.Song
+Album = models.Album
 
 app = Flask(__name__)
-# app.config.from_object(Config)
+app.config.from_object(Config)
 
 # creates secret key for sessions
 app.secret_key = os.urandom(32)
@@ -113,7 +109,7 @@ def callback():
     return redirect(url_for('home'))
 
 if __name__ == '__main__':
-    # db.init_app(app)
-    # with app.app_context():
-    #     db.create_all()
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
