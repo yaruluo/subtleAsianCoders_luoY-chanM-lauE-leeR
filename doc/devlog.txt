@@ -75,3 +75,4 @@ Added background jinja block for base.html
 
 ericL -- 2020-01-01 21:04
 change doc/requirements to nix extraneous modules
+update readme with api information

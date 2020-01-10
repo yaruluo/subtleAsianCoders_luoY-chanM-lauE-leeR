@@ -28,8 +28,8 @@ Our website is all about music! We want to create two games: HigherLower, wherei
 
 ## APIs Used
 
-- [Spotify](https://docs.google.com/document/d/1NzepXhw6sM25KSLzbiNWgba3o53HcN3f8C2SMiajK5Q/edit): Retrieves a user’s playlists, songs, and recommendations
-- [Genius](https://docs.google.com/document/d/1kJ05CPz_bWl5i77SlhBKSEpVl-J8EKPTACczuD9kZkE/edit): Retrieves a song’s lyrics.
+- [Spotify](https://docs.google.com/document/d/1hnI9zCld87HNG-7Vf2Qgeeb4gc08kQzHdCtFPKH0jd4/edit): Retrieves a user’s playlists, songs, and recommendations
+- [Musixmatch](https://docs.google.com/document/d/1iOdEsoYiQ6hxNwFtRxu3Eh1aGIGiIwvMeSQFtFF-dOw/edit): Retrieves a song’s lyrics.
 
 ## Instructions
 
@@ -69,7 +69,35 @@ pip install -r doc/requirements.txt
 
 ### Launch codes
 
+#### Spotify
+
+- Head over to [My Dashboard | Spotify for Developers](https://developer.spotify.com/dashboard/login)
+- Log in with your Spotify account
+- Click the button labeled "CREATE A CLIENT ID"
+- Fill out the form with information about your application
+- Your Client ID and Client Secret are shown on the dashboard for your app
+- Click Edit Settings and add the following to Redirect URI: <http://127.0.0.1:5000/callback/q>
+- Open `app/api.json` and paste your Client ID and Client Secret.
+
+```json
+    "SPOTIFY_CLIENT_ID": "",
+    "SPOTIFY_CLIENT_SECRET": ""
+```
+
+#### Musixmatch
+
+- Create a Musixmatch account [here](https://developer.musixmatch.com/signup)
+- Go to your account screen and click the dashboard tab, and then click the applications tab.
+- You should be able to see an API key listed next to your application in a table.
+- Open `app/api.json` and paste your API key.
+
+```json
+    "MUSIXMATCH_API_KEY": ""
+```
+
 ### Cloning
+
+Run the following line in your terminal
 
 ```shell
 git clone https://github.com/yaruluo/subtleAsianCoders_luoY-chanM-lauE-leeR.git
