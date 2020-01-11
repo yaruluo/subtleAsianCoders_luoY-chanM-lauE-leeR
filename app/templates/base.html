@@ -41,26 +41,36 @@ RYthEM
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-left fixed-top mb-5">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark justify-content-left fixed-top mb-5">
             <a class="navbar-brand" href="/">RYthEM</a>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/higher_lower">Higher Lower</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/guess_the_song">Guess The Song</a>
-                </li>
-                {% if session['access_token'] %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/hearted_songs">My Hearted Songs</a>
-                </li>
-                {% endif %}
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item navbar-right">
-                    <a class="btn btn-outline-success nav-link text-success" href="/spotify_connect">Connect to Spotify</a>
-                </li>
-            </ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/higher_lower">Higher Lower</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/guess_the_song">Guess The Song</a>
+                    </li>
+                    {% if session['access_token'] %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hearted_songs">My Hearted Songs</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item navbar-right">
+                        {% if session['display_name'] %}
+                        <span style="color: white;">{{ session['display_name'] }}</span>
+                        {% else %}
+                        <a class="btn btn-outline-success nav-link text-success" href="/spotify_connect">Connect to
+                            Spotify</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
         </nav>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -68,27 +78,27 @@ RYthEM
         {% for category, message in messages %}
         {% if category == "error" %}
         <div class="alert alert-danger text-align-center alert-dismissible fade show" role="alert">
-        {% endif %}
-        {% if category == "success" %}
-        <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
-        {% endif %}
-        {{message}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        <background>
-            {% block background %}
-            {% endblock %}
-            <div class="container-fluid">
-                {% block body %}
-                {% endblock %}
+            {% endif %}
+            {% if category == "success" %}
+            <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
+                {% endif %}
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </background>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <background>
+                {% block background %}
+                {% endblock %}
+                <div class="container-fluid">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+            </background>
     </body>
 
 </html>

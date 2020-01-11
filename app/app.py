@@ -115,6 +115,23 @@ def callback():
 
     session['access_token'] = access_token
 
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    req = urllib.request.Request(
+        "https://api.spotify.com/v1/me",
+        headers=authorization_header,
+    )
+
+    req = urllib.request.urlopen(req)
+    res = req.read()
+    data = json.loads(res)
+
+    print(data)
+
+    session['display_name'] = data['display_name']
+
     return redirect(url_for('home'))
 
 @app.route("/hearted_songs")
