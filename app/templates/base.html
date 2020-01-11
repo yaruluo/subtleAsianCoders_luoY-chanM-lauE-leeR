@@ -34,7 +34,6 @@ RYthEM
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
 
-
         <title>
             {% block title %}{% endblock %} :: RYthEM
         </title>
@@ -78,27 +77,32 @@ RYthEM
         {% for category, message in messages %}
         {% if category == "error" %}
         <div class="alert alert-danger text-align-center alert-dismissible fade show" role="alert">
+        {% endif %}
+        {% if category == "success" %}
+        <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
             {% endif %}
-            {% if category == "success" %}
-            <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
-                {% endif %}
-                {{message}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
 
-            <background>
-                {% block background %}
+        <background>
+            {% block background %}
+            {% endblock %}
+            <div class="container-fluid">
+                {% block body %}
                 {% endblock %}
-                <div class="container-fluid">
-                    {% block body %}
-                    {% endblock %}
-                </div>
-            </background>
+            </div>
+        </background>
+
+        <script src="../static/main.js"></script>
+
+        {% block scripts %}
+        {% endblock %}
     </body>
 
 </html>

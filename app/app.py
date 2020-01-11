@@ -134,6 +134,7 @@ def hearted_songs():
             "hearted_songs.html",
             data = data['items'],
     )
+
 if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
