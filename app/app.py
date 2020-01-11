@@ -49,11 +49,13 @@ spotify_auth_query_parameters = {
     'scope': SPOTIFY_SCOPE,
 }
 
+
 @app.route('/')
 def home():
     return render_template(
         'home.html',
     )
+
 
 @app.route('/index')
 def index():
@@ -69,14 +71,17 @@ def index():
     data = json.loads(res)
     return render_template(
         'index.html',
-        data = data
+        data=data
     )
+
 
 @app.route('/spotify_connect')
 def spotify_connect():
-    url_args = "&".join([f"{key}={urllib.parse.quote(val)}" for key, val in spotify_auth_query_parameters.items()])
+    url_args = "&".join([f"{key}={urllib.parse.quote(val)}" for key,
+                         val in spotify_auth_query_parameters.items()])
     auth_url = f"{SPOTIFY_AUTH_URL}/?{url_args}"
     return redirect(auth_url)
+
 
 @app.route('/callback/q')
 def callback():
@@ -92,7 +97,7 @@ def callback():
 
     post_request = urllib.request.Request(
         SPOTIFY_TOKEN_URL,
-        data = urllib.parse.urlencode(code_payload).encode()
+        data=urllib.parse.urlencode(code_payload).encode()
     )
 
     post_request = urllib.request.urlopen(post_request)
@@ -108,15 +113,16 @@ def callback():
 
     return redirect(url_for('home'))
 
-@app.route('/higher_lower_game')
-def higher_lower_game():
+
+@app.route('/higherlowergame')
+def higherlowergame():
     fin = open('dummysongs.json', 'r')
     dummySongsJSON = fin.readlines()
     dummySongsJSON = json.loads(dummySongsJSON[0])
     dummySongs = dummySongsJSON['items']
     songs = []
     for song in dummySongs:
-        title = song['track']['album']['name']
+        title = song['track']['name']
         artist = song['track']['album']['artists'][0]['name']
         coverArtLink = song['track']['album']['images'][0]['url']
         popularity = song['track']['popularity']
@@ -128,7 +134,8 @@ def higher_lower_game():
         songs.append(songData)
         # print(f'{title} {artist} {coverArtLink} {songData} {songs}')
 
-    return render_template('higherlowergame.html', songs = songs)
+    return render_template('higherlowergame.html', songs=songs)
+
 
 if __name__ == '__main__':
     db.init_app(app)

@@ -1,7 +1,10 @@
+* {
+  box-sizing: border-box;
+}
+
 /* body */
 body {
   padding-top: 56px;
-  font-family: "Roboto", sans-serif;
 }
 
 /* song images */
@@ -10,20 +13,13 @@ body {
   width: 600px;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-section {
-}
-
 div {
   height: 100%;
 }
 
 /* Pattern styles */
 .container {
-  display: table;
+  /* display: table; */
   width: 100%;
 }
 
@@ -47,14 +43,27 @@ div {
   vertical-align: middle;
 }
 
-#right-listens {
+#right-song-popularity {
   display: none;
 }
 
+/* higher lower buttons */
+/* white background in buttons upon hover */
 #higher-btn:hover {
   background-color: white;
 }
 
 #lower-btn:hover {
   background-color: white;
+}
+
+/* removes blue highlighting around bootstrap button */
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.scoreboard {
+  text-align: center;
+  background-color: none;
+  vertical-align: middle;
 }

@@ -1,31 +1,27 @@
-{% extends "base.html" %} {% block head %}
-<script src="{{ url_for('static', filename='higherlowergame.js') }}"></script>
-{% endblock %} {% block body %}
-
+{% extends "base.html" %} {% block content %}
 <section class="container">
-  <div
-    class="left-half"
-    style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{ songs[0]['coverArtLink'] }}') no-repeat; background-size: 100% 100%"
-  >
+  <div class="left-half">
     <div class="left-text">
-      <h1 class="display-4">"{{ songs[0]['title'] }}"</h1>
-      <h1 class="display-4">"{{ songs[0]['artist'] }}"</h1>
-      <h1 class="display-4">"{{ songs[0]['popularity'] }}"</h1>
+      <h1 id="left-song-title" class="display-4"></h1>
+      <h1 id="left-song-artist" class="display-4"></h1>
+      <h1 id="left-song-popularity" class="display-4"></h1>
     </div>
+    <div class="scoreboard">SCORE: <p id="score"></p></div>
   </div>
-  <div
-    class="right-half"
-    style="background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('{{ songs[1]['coverArtLink'] }}') no-repeat; background-size: cover;"
-  >
+  <div class="right-half">
     <div class="right-text">
-      <h1 class="display-4">"{{ songs[1]['title'] }}"</h1>
-      <h1 class="display-4">"{{ songs[1]['artist'] }}"</h1>
-      <h1 class="display-4" id="right-listens">
-        "{{ songs[1]['popularity'] }}"
-      </h1>
-      <button type="button" class="btn" id="higher-btn">Higher</button>
-      <button type="button" class="btn" id="lower-btn">Lower</button>
+      <h1 id="right-song-title" class="display-4"></h1>
+      <h1 id="right-song-artist" class="display-4"></h1>
+      <h1 id="right-song-popularity" class="display-4"></h1>
+      <button type="button" class="btn" id="higher-btn" next-page="1">Higher</button>
+      <button type="button" class="btn" id="lower-btn" next-page="1">Lower</button>
     </div>
   </div>
 </section>
+{% endblock %} {% block script %}
+<script src="{{ url_for('static', filename='js/higherlowergame.js') }}"></script>
+<script>
+  
+  init({{ songs|safe }}, 0);
+</script>
 {% endblock %}
