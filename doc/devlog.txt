@@ -94,3 +94,4 @@ ericL -- 2020-01-11 14:34
 Display user's display name after connecting to Spotify
 Bootstrap-ify hearted songs display
 Add collapse feature to navbar on small screens
+Add play button to hearted songs

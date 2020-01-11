@@ -49,7 +49,6 @@ CLIENT_SIDE_URL = 'http://127.0.0.1'
 PORT = 5000
 SPOTIFY_REDIRECT_URI = f"{CLIENT_SIDE_URL}:{PORT}/callback/q"
 SPOTIFY_SCOPE = 'user-library-read'
-# SCOPE = 'playlist-modify-public playlist-modify-private'
 
 spotify_auth_query_parameters = {
     'client_id': SPOTIFY_CLIENT_ID,
@@ -64,23 +63,6 @@ def home():
         'home.html',
     )
 
-# @app.route('/index')
-# def index():
-#     authorization_header = {
-#         'Authorization': f"Bearer {session['access_token']}"
-#     }
-#     req = urllib.request.Request(
-#         "https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V",
-#         headers=authorization_header,
-#     )
-#     req = urllib.request.urlopen(req)
-#     res = req.read()
-#     data = json.loads(res)
-#     return render_template(
-#         'index.html',
-#         data = data
-#     )
-
 @app.route('/spotify_connect')
 def spotify_connect():
     url_args = "&".join([f"{key}={urllib.parse.quote(val)}" for key, val in spotify_auth_query_parameters.items()])
@@ -91,7 +73,6 @@ def spotify_connect():
 def callback():
     auth_token = request.args['code']
     code_payload = {
-        # 'grant_type': 'client_credentials',
         'grant_type': 'authorization_code',
         'code': str(auth_token),
         'redirect_uri': SPOTIFY_REDIRECT_URI,
@@ -120,15 +101,13 @@ def callback():
     }
 
     req = urllib.request.Request(
-        "https://api.spotify.com/v1/me",
+        "https://api.spotify.com/v1/me/",
         headers=authorization_header,
     )
 
     req = urllib.request.urlopen(req)
     res = req.read()
     data = json.loads(res)
-
-    print(data)
 
     session['display_name'] = data['display_name']
 
@@ -144,8 +123,8 @@ def hearted_songs():
             'Authorization': f"Bearer {session['access_token']}"
         }
         req = urllib.request.Request(
-            "https://api.spotify.com/v1/me/tracks",
-            headers=authorization_header
+            "https://api.spotify.com/v1/me/tracks?limit=10",
+            headers=authorization_header,
         )
 
         req =urllib.request.urlopen(req)

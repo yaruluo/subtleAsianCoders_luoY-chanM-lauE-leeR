@@ -6,25 +6,8 @@ Hearted Songs
 
 {% block body %}
 {% for track in data %}
-<div class="row">
-    <div class="col-md-12 col-xl-3">
-        <img src="{{ track['track']['album']['images'][1]['url'] }}">
-    </div>
-    <div class="col-md-12 col-xl-9">
-        <h3>"{{ track['track']['name'] }}"</h3>
-        <h3> Artists: </h3>
-        {% for artist in track['track']['artists'] %}
-        <h4>{{ artist['name'] }}</h4>
-        {% endfor %}
-        <h4>Album: {{ track['track']['album']['name'] }}</h4>
-    </div>
-</div>
-
-<br>
-<!-- {{ track['track']['preview_url'] }} -->
-<!-- {% for artist in track['artists'] %}
-{{ artist['name'] }}
-{% endfor %} -->
-
+<iframe
+    src="{{ track['track']['external_urls']['spotify'][:25] }}embed/{{ track['track']['external_urls']['spotify'][25:] }}"
+    width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 {% endfor %}
 {% endblock %}
