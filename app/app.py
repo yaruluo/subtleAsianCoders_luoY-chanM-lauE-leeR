@@ -116,7 +116,8 @@ def callback():
 
 @app.route('/higherlowergame')
 def higherlowergame():
-    fin = open('dummysongs.json', 'r')
+    dummysongs = os.path.dirname(os.path.abspath(__file__)) + '/dummysongs.json'
+    fin = open(dummysongs, 'r')
     dummySongsJSON = fin.readlines()
     dummySongsJSON = json.loads(dummySongsJSON[0])
     dummySongs = dummySongsJSON['items']
