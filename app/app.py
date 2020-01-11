@@ -130,6 +130,7 @@ def hearted_songs():
         req =urllib.request.urlopen(req)
         res = req.read()
         data = json.loads(res)
+
         return render_template(
             "hearted_songs.html",
             data = data['items'],
