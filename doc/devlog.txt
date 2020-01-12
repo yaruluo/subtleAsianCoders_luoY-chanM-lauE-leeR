@@ -133,3 +133,7 @@ heart fill on hover
 ericL -- 2020-01-12 04:35
 put request to add song to hearted songs
 add basic endgame screen
+
+rayL --2020-01-12 15:54
+added logout button
+turned app into dark mode lol
