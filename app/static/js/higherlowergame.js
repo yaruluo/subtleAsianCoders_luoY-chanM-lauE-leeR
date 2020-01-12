@@ -5,7 +5,7 @@ function init(songs, counter) { // params are meant to preserve the state of the
     $("#higher-btn, #lower-btn").on("click", btn => {
       var leftSongPopularity = parseInt($("#left-song-popularity").text()); // get the left song popularity rating
       var rightSongPopularity = parseInt($("#right-song-popularity").text()); //get the right song popularity rating
-      if (counter >= 8) $(".container").hide(); // this means the user finished all 10 questions; hide the page so they cannot play anymore.
+      if (counter >= 8) window.location.replace("/");; // this means the user finished all 10 questions; hide the page so they cannot play anymore.
       // scorekeeping
       if (
         (leftSongPopularity <= rightSongPopularity && // if the user chooses the 'Higher' choice and the right song is indeed higher in popularity than the left song, or if the user chooses the 'Lower' choice and the right song is indeed lower in popularity than the left song, then consider that the user picked the right choice and move on to the next question (if applicable)
@@ -19,7 +19,7 @@ function init(songs, counter) { // params are meant to preserve the state of the
         loadGame(songs, counter, ++curScore); // song and counter is explained above; curScore (current score) is incremented and then its value is returned and loaded back into loadGame for the next question (if applicable—user did not finish all 10 questions yet)
       } else {
         // wrong choice
-        $("#higher-lower").empty();
+        $("#higher-lower").hide();
         // Implement end game screen
       }
     });
