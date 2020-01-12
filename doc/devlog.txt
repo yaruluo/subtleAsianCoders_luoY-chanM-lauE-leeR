@@ -76,5 +76,10 @@ created beginning interface for higher lower game
 rayL -- 2020-01-11 18:10
 can change pages recursively
 
+rayL -- 2020-01-11 19:08
+added uncompressed jQuery
+added live-updated score
+added wipe screen upon losing or going thru all 10 songs
+
 
 
