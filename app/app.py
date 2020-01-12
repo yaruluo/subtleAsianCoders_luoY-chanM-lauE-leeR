@@ -16,6 +16,7 @@ import functools
 import os
 import json
 import datetime
+import random
 
 # SQLAlchemy DB Models
 db = models.db
@@ -172,12 +173,11 @@ def play():
 
     # access Musixmatch lyrics for each song
     for song in songs['items']:
-        db_cache = Song.query.filter_by(title == title).first()
+        title = song['track']['name']
+        db_cache = Song.query.filter_by(title = title).first()
         if (db_cache != None):
             songObjects.append(db_cache)
         else:
-            title = song['track']['name']
-
             # TODO: currently assumes only one artist, potentially change to store all later on
             artist = song['track']['album']['artists'][0]['name']
 
@@ -187,9 +187,9 @@ def play():
             # TODO: find actual number of listens not this popularity number
             popularity = song['track']['popularity']
 
-            album_type = song['track']['album']['album_type']
+            albumType = song['track']['album']['album_type']
             # TODO: problems with non-standard characters in album names like "÷ (Deluxe)"
-            if (album_type == "single"):
+            if (albumType == "single"):
                 album = "single"
                 musixmatch_data = musixmatch_get(title=title, artist=artist)
             else:
@@ -199,14 +199,27 @@ def play():
             genre = musixmatch_data['genre']
             print(f'{title}|{artist}|{coverArtLink}|{popularity}|{album}|{genre}|{lyrics}')
         
-            # TODO: add songs to database
-            albumObject = album(album, coverArtLink)
-            songObject = song(albumObject.aid, artist, title, genre, lyrics, popularity)
+        # add songs to database
+        with db.session.no_autoflush:
+            albumObject = Album(title=album, coverartlink=coverArtLink)
+            print(f"========================{albumObject.aid}=========================")
             db.session.add(albumObject)
+            db.session.commit()
+            songObject = Song(aid=albumObject.aid, artist=artist, title=title, genre=genre, lyrics=lyrics, numListen=popularity)
             db.session.add(songObject)
-            songObjects.append(songObject)
+            db.session.commit()
 
-    db.session.commit()
+        songObjects.append(songObject)
+    
+    # songsDict = dict()
+    # for i in range(songObjects):
+    #     weights = [1] * len(songObjects)
+    #     weights[i] = 0
+    #     choices = random.choices(songObjects, weights=weights, k=3)
+    #     for choice in choices:
+    #         choice = choice.title
+    #     songsDict[songObjects[i]] = choices
+
     return render_template('guess_the_song_game.html', songs=songObjects)
 
 

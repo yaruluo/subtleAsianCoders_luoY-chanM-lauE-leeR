@@ -27,32 +27,6 @@ Duende
         height: 100%;
         overflow: hidden;
     }
-    /* #background {
-        position: fixed; 
-        top: -50%; 
-        left: -50%; 
-        width: 200%; 
-        height: 200%;
-
-        background-color: black;
-        background-image: linear-gradient(
-            45deg,
-            #ff00fc, 
-            #393939, 
-            #00d4ff);
-    }
-    #background img {
-        position: absolute; 
-        top: 0; 
-        left: 0; 
-        right: 0; 
-        bottom: 0; 
-        margin: auto; 
-        min-width: 50%;
-        min-height: 50%;
-
-        opacity: 0.9;
-    } */
     #footer {
         position: absolute;
         bottom: 0;
@@ -65,16 +39,27 @@ Duende
         width: 50%;
         height: 100%;
     }
+
+    #question-1 {
+        position: absolute;
+
+    }
 </style>
 {% endblock %}
 
 
 {% block body %}
 <div id="content" class="container text-center mt-5 pt-5" style="color:white;">
-    <p>INSERT LYRICS</p>
-    <a href="" class="btn btn-lg btn-primary mb-2">OPTION 1</a><br>
-    <a href="" class="btn btn-lg btn-primary mb-2">OPTION 2</a><br>
-    <a href="" class="btn btn-lg btn-primary mb-2">OPTION 3</a><br>
-    <a href="" class="btn btn-lg btn-primary mb-2">OPTION 4</a>
+    <p id="lyrics">INSERT LYRICS</p>
+    <a id="choice-1" href="" class="btn btn-lg btn-primary mb-2">OPTION 1</a><br>
+    <a id="choice-2" href="" class="btn btn-lg btn-primary mb-2">OPTION 2</a><br>
+    <a id="choice-3" href="" class="btn btn-lg btn-primary mb-2">OPTION 3</a><br>
+    <a id="choice-4" href="" class="btn btn-lg btn-primary mb-2">OPTION 4</a><br>
+    Correct Answers: <p id="score">0</p>
 </div>
+
+<script src="{{ url_for('static', filename='guess_the_song.js') }}"></script>
+<script>
+    init({{ songs }}, 0);
+</script>
 {% endblock %}
