@@ -9,3 +9,19 @@ body {
     background-color: rgba(255, 255, 255, 0.5);
     color: black;
 }
+
+.slide-image {
+    object-fit: cover;
+    height: 50vh;
+}
+
+.bottom-image {
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.copyright {
+    text-align: center;
+}

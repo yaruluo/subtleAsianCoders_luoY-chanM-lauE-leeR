@@ -96,6 +96,9 @@ Bootstrap-ify hearted songs display
 Add collapse feature to navbar on small screens
 Add play button to hearted songs
 
-ericL -- 2020-01-18:57
+ericL -- 2020-01-11 18:57
 Change font and label on home page
 Fix margins and add bottom text
+
+ericL -- 2020-01-11 20:35
+flesh out design of home page
