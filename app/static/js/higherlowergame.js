@@ -33,8 +33,8 @@ function init(songs, counter) { // params are meant to preserve the state of the
 }
 
 function loadGame(songs, counter, score) { // this fxn basically updates the moving parts of the game: the left and right images, song titles, song artists, popularity ratings, etc.; this modularization allows us to call this function again and again after a button is clicked—to update the DOM each time upon an event.
-  renderInfo("left", 0);
-  renderInfo("right", 1);
+  renderInfo(songs, counter, "left", 0);
+  renderInfo(songs, counter, "right", 1);
 
   $("#right-song-title").html(`${songs[counter + 1]["title"]}`);
   $("#right-song-artist").html(`${songs[counter + 1]["artist"]}`);
@@ -42,7 +42,7 @@ function loadGame(songs, counter, score) { // this fxn basically updates the mov
   $("#score").html(`${score}`);
 }
 
-var renderInfo = function (side, increment) {
+var renderInfo = function (songs, counter, side, increment) {
   $(`#${side}-image`).prop("src", songs[counter + increment]["coverArtLink"]);
   $(`#${side}-heart`).prop("href", `/save_song/${songs[counter + increment]["spotify_id"]}`);
   $(`#${side}-song-iframe`).prop("src", songs[counter + increment]["iframe"]);
