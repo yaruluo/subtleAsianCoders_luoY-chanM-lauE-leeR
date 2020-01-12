@@ -1,5 +1,5 @@
 function init(songs, counter) { // params are meant to preserve the state of the game throughout playing; songs is the list of songs (with song title, artist, popularity rating, cover art link, etc.) and counter is the current index in the songs list that the game is on. Initially, the game is on the 0th song, so on first load, counter should equal 0.
-  $(document).ready(() => {
+  $(window).on('load', () => {
     // when the document is ready to be loaded, run code below
     loadGame(songs, counter, 0);
     $("#higher-btn, #lower-btn").on("click", btn => {
