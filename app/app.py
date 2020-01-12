@@ -48,8 +48,7 @@ SPOTIFY_API_URL = f"{SPOTIFY_API_BASE_URL}/{SPOTIFY_API_VERSION}"
 CLIENT_SIDE_URL = 'http://127.0.0.1'
 PORT = 5000
 SPOTIFY_REDIRECT_URI = f"{CLIENT_SIDE_URL}:{PORT}/callback/q"
-SPOTIFY_SCOPE = 'user-library-read user-library-modify'
-# SCOPE = 'playlist-modify-public playlist-modify-private'
+SPOTIFY_SCOPE = 'user-library-read user-library-modify user-top-read'
 
 spotify_auth_query_parameters = {
     'client_id': SPOTIFY_CLIENT_ID,
@@ -70,7 +69,6 @@ def spotify_connect():
                          val in spotify_auth_query_parameters.items()])
     auth_url = f"{SPOTIFY_AUTH_URL}/?{url_args}"
     return redirect(auth_url)
-
 
 @app.route('/callback/q')
 def callback():
@@ -99,6 +97,15 @@ def callback():
 
     session['access_token'] = access_token
 
+    get_user_info()
+
+    return redirect(url_for('home'))
+
+def get_user_info():
+    get_user_name()
+    get_user_top()
+
+def get_user_name():
     authorization_header = {
         'Authorization': f"Bearer {session['access_token']}"
     }
@@ -115,30 +122,40 @@ def callback():
     session['display_name'] = data['display_name']
     session['spotify_client_id'] = SPOTIFY_CLIENT_ID
 
-    return redirect(url_for('home'))
+def get_user_top():
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    req = urllib.request.Request(
+        "https://api.spotify.com/v1/me/top/tracks",
+        headers=authorization_header,
+    )
+
+    req = urllib.request.urlopen(req)
+    res = req.read()
+    data = json.loads(res)['items']
+
+    songs = list()
+    for track in data:
+        track_data = {
+            'title': track['name'],
+            'artist': track['album']['artists'][0]['name'],
+            'coverArtLink': track['album']['images'][0]['url'],
+            'genre': "I DONT KNOW",
+            'lyrics': "MUSIXMATCH",
+            'popularity': track['popularity'],
+            'spotify_id': track['id'],
+            'iframe': f"{track['external_urls']['spotify'][:25]}embed/{track['external_urls']['spotify'][25:]}",
+        }
+        songs.append(track_data)
+    session['songs'] = songs
 
 @app.route('/higher_lower')
 def higher_lower():
-    dummysongs = os.path.dirname(os.path.abspath(__file__)) + '/dummysongs.json'
-    fin = open(dummysongs, 'r')
-    dummySongsJSON = fin.readlines()
-    dummySongsJSON = json.loads(dummySongsJSON[0])
-    dummySongs = dummySongsJSON['items']
-    songs = list()
-    for song in dummySongs:
-        songData = {
-            'title': song['track']['name'],
-            'artist': song['track']['album']['artists'][0]['name'],
-            'coverArtLink': song['track']['album']['images'][0]['url'],
-            'popularity': song['track']['popularity'],
-            'iframe': f"{song['track']['external_urls']['spotify'][:25]}embed/{song['track']['external_urls']['spotify'][25:]}",
-            'spotify_id': song['track']['id']
-        }
-        songs.append(songData)
-
     return render_template(
         'higherlowergame.html',
-        songs=songs
+        songs=session['songs']
         )
 
 @app.route("/save_song/<song_id>")
@@ -198,4 +215,7 @@ if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(
+        debug=True,
+        threaded=True
+        )

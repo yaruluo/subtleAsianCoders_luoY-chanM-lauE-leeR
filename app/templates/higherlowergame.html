@@ -70,6 +70,6 @@ Higher Lower
 {% block script %}
 <script src="{{ url_for('static', filename='js/higherlowergame.js') }}"></script>
 <script>
-  init({{ songs | safe }}, 0);
+  init({{ songs | tojson }}, 0);
 </script>
 {% endblock %}

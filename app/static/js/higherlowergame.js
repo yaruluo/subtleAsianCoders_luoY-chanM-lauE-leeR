@@ -1,5 +1,5 @@
 function init(songs, counter) { // params are meant to preserve the state of the game throughout playing; songs is the list of songs (with song title, artist, popularity rating, cover art link, etc.) and counter is the current index in the songs list that the game is on. Initially, the game is on the 0th song, so on first load, counter should equal 0.
-  $(document).ready(() => {
+  $(window).on('load', () => {
     // when the document is ready to be loaded, run code below
     loadGame(songs, counter, 0);
     $("#higher-btn, #lower-btn").on("click", btn => {
@@ -36,9 +36,6 @@ function loadGame(songs, counter, score) { // this fxn basically updates the mov
   renderInfo(songs, counter, "left", 0);
   renderInfo(songs, counter, "right", 1);
 
-  $("#right-song-title").html(`${songs[counter + 1]["title"]}`);
-  $("#right-song-artist").html(`${songs[counter + 1]["artist"]}`);
-  $("#right-song-popularity").html(`${songs[counter + 1]["popularity"]}`);
   $("#score").html(`${score}`);
 }
 

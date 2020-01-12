@@ -137,3 +137,6 @@ add basic endgame screen
 rayL --2020-01-12 15:54
 added logout button
 turned app into dark mode lol
+
+ericL -- 2020-01-12 15:54
+use user's top tracks in higher lower game
