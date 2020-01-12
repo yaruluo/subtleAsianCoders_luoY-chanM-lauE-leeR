@@ -122,6 +122,7 @@ def get_user_name():
     data = json.loads(res)
 
     session['display_name'] = data['display_name']
+    session['spotify_client_id'] = SPOTIFY_CLIENT_ID
 
 def get_user_top():
     authorization_header = {
@@ -221,6 +222,13 @@ def hearted_songs():
             "hearted_songs.html",
             data = data['items'],
         )
+
+@app.route('/logout')
+def logout():
+    session['access_token'] = None
+    session['display_name'] = None
+    session['spotify_client_id'] = None
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     db.init_app(app)

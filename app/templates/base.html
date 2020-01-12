@@ -65,8 +65,9 @@ RYthEM
                     <li class="nav-item navbar-right">
                         {% if session['display_name'] %}
                         <span style="color: white;">{{ session['display_name'] }}</span>
+                        <a id="logout-btn" class="btn btn-outline-success nav-link text-success" href="/logout">Log out</a>
                         {% else %}
-                        <a class="btn btn-outline-success nav-link text-success" href="/spotify_connect">Connect to
+                        <a id="spotify-connect-btn" class="btn btn-outline-success nav-link text-success" href="/spotify_connect">Connect to
                             Spotify</a>
                         {% endif %}
                     </li>
@@ -116,7 +117,7 @@ RYthEM
 
     <footer>
         {% block footer %}
-        <div class="copyright mt-4 text-center">
+        <div class="fixed-bottom footer text-center">
             &copy; 2020 subtleAsianCoders
         </div>
         {% endblock %}
