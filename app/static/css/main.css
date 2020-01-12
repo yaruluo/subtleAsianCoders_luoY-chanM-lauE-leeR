@@ -1,10 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+
 * {
   box-sizing: border-box;
-}
-
-/* body */
-body {
-  padding-top: 56px;
 }
 
 /* song images */
@@ -35,8 +32,7 @@ div {
   width: 50%;
 }
 
-.left-text,
-.right-text {
+.left-text, .right-text {
   color: #ffffff;
   text-align: center;
   background-color: none;
@@ -66,4 +62,30 @@ div {
   text-align: center;
   background-color: none;
   vertical-align: middle;
+}
+
+body {
+    font-family: 'Questrial', sans-serif;
+    padding-top: 50px;
+}
+
+.slide {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+}
+
+.slide-image {
+    object-fit: cover;
+    height: 50vh;
+}
+
+.bottom-image {
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.copyright {
+    text-align: center;
 }

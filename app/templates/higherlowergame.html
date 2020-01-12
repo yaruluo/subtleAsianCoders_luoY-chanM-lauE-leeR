@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block body %}
 <section class="container">
   <div class="left-half">
     <div class="left-text">
@@ -18,10 +19,11 @@
     </div>
   </div>
 </section>
-{% endblock %} {% block script %}
+{% endblock %}
+
+{% block script %}
 <script src="{{ url_for('static', filename='js/higherlowergame.js') }}"></script>
 <script>
-  
   init({{ songs|safe }}, 0);
 </script>
 {% endblock %}
