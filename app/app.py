@@ -135,7 +135,7 @@ def musixmatch_get(title='', artist='', album=''):
         arguments.append(album)
     search_request += '&'.join(arguments)
     search_request += '&apikey=' + MUSIXMATCH_API_KEY
-    # print(search_request)
+    print(search_request)
     url = urllib.request.urlopen(search_request)
     search_json = json.loads(url.read())
 
@@ -170,6 +170,12 @@ def play():
     songs = json.loads(f.read())
     # ===============================================================================
     songObjects = list()
+    album = ''
+    coverArtLink = ''
+    artist = ''
+    genre = ''
+    lyrics = ''
+    popularity = 0
 
     # access Musixmatch lyrics for each song
     for song in songs['items']:
@@ -202,10 +208,12 @@ def play():
         # add songs to database
         with db.session.no_autoflush:
             albumObject = Album(title=album, coverartlink=coverArtLink)
-            print(f"========================{albumObject.aid}=========================")
+            # print(f"========================{albumObject.aid}=========================")
             db.session.add(albumObject)
             db.session.commit()
-            songObject = Song(aid=albumObject.aid, artist=artist, title=title, genre=genre, lyrics=lyrics, numListen=popularity)
+            lastAddedAlbumRecord = db.session.query(Album).order_by(Album.aid.desc()).first()
+            print(f"album obj id{lastAddedAlbumRecord.aid}")
+            songObject = Song(aid=lastAddedAlbumRecord.aid, artist=artist, title=title, genre=genre, lyrics=lyrics, numlisten=popularity)
             db.session.add(songObject)
             db.session.commit()
 

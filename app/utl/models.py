@@ -9,7 +9,7 @@ class Song(db.Model):
     title = db.Column(db.Text, nullable=False)
     genre = db.Column(db.Text, nullable=False)
     lyrics = db.Column(db.Text, nullable=False)
-    numListen = db.Column(db.Integer, nullable=False)
+    numlisten = db.Column(db.Integer, nullable=False)
 
 class Album(db.Model):
     aid = db.Column(db.Integer, primary_key=True)
