@@ -162,6 +162,13 @@ def hearted_songs():
             data = data['items'],
         )
 
+@app.route("/endgame/<score>")
+def endgame(score):
+    return render_template(
+        "endgame.html",
+        score = score,
+    )
+
 if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
