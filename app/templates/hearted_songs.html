@@ -5,7 +5,7 @@ Hearted Songs
 {% endblock %}
 
 {% block body %}
-<div style="text-align: center;">
+<div style="text-align: center; padding-top: 20px;" >
     {% for track in data %}
     <iframe
         src="{{ track['track']['external_urls']['spotify'][:25] }}embed/{{ track['track']['external_urls']['spotify'][25:] }}"

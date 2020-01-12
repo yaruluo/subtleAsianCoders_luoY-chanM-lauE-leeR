@@ -98,3 +98,4 @@ Add play button to hearted songs
 
 ericL -- 2020-01-18:57
 Change font and label on home page
+Fix margins and add bottom text
