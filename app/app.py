@@ -130,7 +130,8 @@ def higher_lower():
             'artist': song['track']['album']['artists'][0]['name'],
             'coverArtLink': song['track']['album']['images'][0]['url'],
             'popularity': song['track']['popularity'],
-            'iframe': f"{song['track']['external_urls']['spotify'][:25]}embed/{song['track']['external_urls']['spotify'][25:]}"
+            'iframe': f"{song['track']['external_urls']['spotify'][:25]}embed/{song['track']['external_urls']['spotify'][25:]}",
+            'spotify_id': song['track']['id']
         }
         songs.append(songData)
 

@@ -126,3 +126,6 @@ Updated game descriptions from lorem ipsum
 ericL -- 2020-01-12 02:38
 embed player in higher lower game
 add heart outline and align with player
+
+ericL -- 2020-01-12 03:33
+heart fill on hover
