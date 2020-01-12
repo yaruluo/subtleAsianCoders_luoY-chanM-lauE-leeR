@@ -130,6 +130,7 @@ def higher_lower():
             'artist': song['track']['album']['artists'][0]['name'],
             'coverArtLink': song['track']['album']['images'][0]['url'],
             'popularity': song['track']['popularity'],
+            'iframe': f"{song['track']['external_urls']['spotify'][:25]}embed/{song['track']['external_urls']['spotify'][25:]}"
         }
         songs.append(songData)
 
@@ -152,7 +153,7 @@ def hearted_songs():
             headers=authorization_header,
         )
 
-        req =urllib.request.urlopen(req)
+        req = urllib.request.urlopen(req)
         res = req.read()
         data = json.loads(res)
 
