@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+Hearted Songs
+{% endblock %}
+
+{% block body %}
+<div style="text-align: center; padding-top: 20px;" >
+    {% for track in data %}
+    <iframe
+        src="{{ track['track']['external_urls']['spotify'][:25] }}embed/{{ track['track']['external_urls']['spotify'][25:] }}"
+        width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    {% endfor %}
+</div>
+{% endblock %}
