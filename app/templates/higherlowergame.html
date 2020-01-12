@@ -8,10 +8,22 @@ Higher Lower
 <div id="higher-lower" class="row pt-5">
   <div id="left-half" class="py-2 col-md-12 col-lg-6 text-center">
     <img id="left-image" src="">
-    <div class="carousel-caption slide">
+    <div class="carousel-caption slide text-center">
+      <table style="margin: auto;">
+        <td>
+          <iframe id="left-song-iframe" src="" width="80" height="80" frameborder="0" allowtransparency="true"
+            allow="encrypted-media"></iframe>
+        </td>
+        <td>
+          <a id="left-heart" href="">
+            <img width="80" height="80" src="../static/img/heart_outline.png">
+          </a>
+        </td>
+      </table>
       <p id="left-song-title" class="h3"></p>
       <p id="left-song-artist" class="h3"></p>
-      <div  class="h4"> Popularity: <p id="left-song-popularity"></p></div>
+      <div class="h4"> Popularity: <p id="left-song-popularity"></p>
+      </div>
       <div class="scoreboard">SCORE: <p id="score"></p>
       </div>
     </div>
@@ -19,6 +31,17 @@ Higher Lower
   <div id="right-half" class="py-2 col-md-12 col-lg-6 text-center">
     <img id="right-image" src="">
     <div class="carousel-caption slide">
+      <table style="margin: auto;">
+        <td>
+          <iframe id="right-song-iframe" src="" width="80" height="80" frameborder="0" allowtransparency="true"
+            allow="encrypted-media"></iframe>
+        </td>
+        <td>
+          <a id="right-heart" href="">
+            <img width="80" height="80" src="../static/img/heart_outline.png">
+          </a>
+        </td>
+      </table>
       <p id="right-song-title" class="h3"></p>
       <p id="right-song-artist" class="h3"></p>
       <p class="h4">has</p>
@@ -31,11 +54,22 @@ Higher Lower
     </div>
   </div>
 </div>
+
+<div id="endgame">
+  <div class="row">
+    <div class="col text-center">
+      <p id="game-message" class="h4"></p>
+      <a href="/higher_lower" class="my-2 btn btn-success">Play Again</a>
+      <br>
+      <a href="/" class="btn btn-light">Back Home</a>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block script %}
 <script src="{{ url_for('static', filename='js/higherlowergame.js') }}"></script>
 <script>
-  init({{ songs| safe }}, 0);
+  init({{ songs | tojson }}, 0);
 </script>
 {% endblock %}
