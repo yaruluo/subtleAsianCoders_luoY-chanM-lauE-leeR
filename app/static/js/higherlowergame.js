@@ -11,6 +11,11 @@ function init(songs, counter) { // params are meant to preserve the state of the
         window.location.replace(`/endgame/${counter + 1}`); // counter + 1 is the score because they have gotten all previous q's including current one.
       }
         // scorekeeping
+        // $("#higher-lower").empty(); // this means the user finished all 10 questions; hide the page so they cannot play anymore.
+        // $("#game-message").html("You Won!");
+        // $("#endgame").css("display", "initial");
+      // }
+      // scorekeeping
       if (
         (leftSongPopularity <= rightSongPopularity && // if the user chooses the 'Higher' choice and the right song is indeed higher in popularity than the left song, or if the user chooses the 'Lower' choice and the right song is indeed lower in popularity than the left song, then consider that the user picked the right choice and move on to the next question (if applicable)
           $(btn.target).html() == "Higher") ||
@@ -26,6 +31,9 @@ function init(songs, counter) { // params are meant to preserve the state of the
         $("#higher-lower").hide();
         console.log(`/endgame/${counter}`); // just counter this time because they have not gotten the question they are on, but have gotten the previous q's
         window.location.replace(`/endgame/${counter + 1}`);
+        // $("#higher-lower").empty(); ercc
+        // $("#game-message").html("You Lost!");
+        // $("#endgame").css("display", "initial");
         // Implement end game screen
       }
     });
@@ -33,16 +41,38 @@ function init(songs, counter) { // params are meant to preserve the state of the
 }
 
 function loadGame(songs, counter, score) { // this fxn basically updates the moving parts of the game: the left and right images, song titles, song artists, popularity ratings, etc.; this modularization allows us to call this function again and again after a button is clicked—to update the DOM each time upon an event.
-  $("#left-image").attr("src", `${songs[counter]["coverArtLink"]}`);
+  $("#left-image").prop("src", songs[counter]["coverArtLink"]);
+  $("#left-heart").prop("href", `/save_song/${songs[counter]["spotify_id"]}`);
+  $("#left-song-iframe").prop("src", songs[counter]["iframe"]);
+  $("#left-song-title").html(songs[counter]["title"]);
+  $("#left-song-artist").html(songs[counter]["artist"]);
+  $("#left-song-popularity").html(songs[counter]["popularity"]);
 
-  $("#left-song-title").html(`${songs[counter]["title"]}`);
-  $("#left-song-artist").html(`${songs[counter]["artist"]}`);
-  $("#left-song-popularity").html(`${songs[counter]["popularity"]}`);
-
-  $("#right-image").attr("src", `${songs[counter + 1]["coverArtLink"]}`);
+  $("#right-image").prop("src", songs[counter + 1]["coverArtLink"]);
+  $("#right-heart").prop("href", `/save_song/${songs[counter + 1]["spotify_id"]}`);
+  $("#right-song-iframe").prop("src", songs[counter + 1]["iframe"]);
+  $("#right-song-title").html(songs[counter + 1]["title"]);
+  $("#right-song-artist").html(songs[counter + 1]["artist"]);
+  $("#right-song-popularity").html(songs[counter + 1]["popularity"]);
 
   $("#right-song-title").html(`${songs[counter + 1]["title"]}`);
   $("#right-song-artist").html(`${songs[counter + 1]["artist"]}`);
   $("#right-song-popularity").html(`${songs[counter + 1]["popularity"]}`);
   $("#score").html(`${score}`);
 }
+
+var fillHeart = function() {
+  this.setAttribute("src", "../static/img/heart_full.png");
+}
+
+var emptyHeart = function() {
+  this.setAttribute("src", "../static/img/heart_outline.png");
+}
+
+var addListeners = function(element) {
+  element.addEventListener("mouseover", fillHeart);
+  element.addEventListener("mouseout", emptyHeart);
+}
+
+addListeners(document.getElementById("left-heart").firstElementChild);
+addListeners(document.getElementById("right-heart").firstElementChild);

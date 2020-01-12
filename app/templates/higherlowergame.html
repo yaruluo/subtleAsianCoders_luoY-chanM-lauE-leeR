@@ -15,7 +15,9 @@ Higher Lower
             allow="encrypted-media"></iframe>
         </td>
         <td>
-          <img width="80" height="80" src="../static/img/heart_outline.png">
+          <a id="left-heart" href="">
+            <img width="80" height="80" src="../static/img/heart_outline.png">
+          </a>
         </td>
       </table>
       <p id="left-song-title" class="h3"></p>
@@ -35,7 +37,9 @@ Higher Lower
             allow="encrypted-media"></iframe>
         </td>
         <td>
-          <img width="80" height="80" src="../static/img/heart_outline.png">
+          <a id="right-heart" href="">
+            <img width="80" height="80" src="../static/img/heart_outline.png">
+          </a>
         </td>
       </table>
       <p id="right-song-title" class="h3"></p>
@@ -47,6 +51,17 @@ Higher Lower
       <button type="button" class="btn" id="lower-btn" next-page="1">Lower</button>
       <br>
       <p class="h4">popularity</p>
+    </div>
+  </div>
+</div>
+
+<div id="endgame">
+  <div class="row">
+    <div class="col text-center">
+      <p id="game-message" class="h4"></p>
+      <a href="/higher_lower" class="my-2 btn btn-success">Play Again</a>
+      <br>
+      <a href="/" class="btn btn-light">Back Home</a>
     </div>
   </div>
 </div>
