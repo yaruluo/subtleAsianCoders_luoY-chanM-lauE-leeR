@@ -36,9 +36,6 @@ function loadGame(songs, counter, score) { // this fxn basically updates the mov
   renderInfo(songs, counter, "left", 0);
   renderInfo(songs, counter, "right", 1);
 
-  $("#right-song-title").html(`${songs[counter + 1]["title"]}`);
-  $("#right-song-artist").html(`${songs[counter + 1]["artist"]}`);
-  $("#right-song-popularity").html(`${songs[counter + 1]["popularity"]}`);
   $("#score").html(`${score}`);
 }
 

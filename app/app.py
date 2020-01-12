@@ -49,7 +49,6 @@ CLIENT_SIDE_URL = 'http://127.0.0.1'
 PORT = 5000
 SPOTIFY_REDIRECT_URI = f"{CLIENT_SIDE_URL}:{PORT}/callback/q"
 SPOTIFY_SCOPE = 'user-library-read user-library-modify user-top-read'
-# SCOPE = 'playlist-modify-public playlist-modify-private'
 
 spotify_auth_query_parameters = {
     'client_id': SPOTIFY_CLIENT_ID,
@@ -70,7 +69,6 @@ def spotify_connect():
                          val in spotify_auth_query_parameters.items()])
     auth_url = f"{SPOTIFY_AUTH_URL}/?{url_args}"
     return redirect(auth_url)
-
 
 @app.route('/callback/q')
 def callback():
@@ -234,4 +232,7 @@ if __name__ == '__main__':
     db.init_app(app)
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(
+        debug=True,
+        threaded=True
+        )
