@@ -33,19 +33,8 @@ function init(songs, counter) { // params are meant to preserve the state of the
 }
 
 function loadGame(songs, counter, score) { // this fxn basically updates the moving parts of the game: the left and right images, song titles, song artists, popularity ratings, etc.; this modularization allows us to call this function again and again after a button is clicked—to update the DOM each time upon an event.
-  $("#left-image").prop("src", songs[counter]["coverArtLink"]);
-  $("#left-heart").prop("href", `/save_song/${songs[counter]["spotify_id"]}`);
-  $("#left-song-iframe").prop("src", songs[counter]["iframe"]);
-  $("#left-song-title").html(songs[counter]["title"]);
-  $("#left-song-artist").html(songs[counter]["artist"]);
-  $("#left-song-popularity").html(songs[counter]["popularity"]);
-
-  $("#right-image").prop("src", songs[counter + 1]["coverArtLink"]);
-  $("#right-heart").prop("href", `/save_song/${songs[counter + 1]["spotify_id"]}`);
-  $("#right-song-iframe").prop("src", songs[counter + 1]["iframe"]);
-  $("#right-song-title").html(songs[counter + 1]["title"]);
-  $("#right-song-artist").html(songs[counter + 1]["artist"]);
-  $("#right-song-popularity").html(songs[counter + 1]["popularity"]);
+  renderInfo("left", 0);
+  renderInfo("right", 1);
 
   $("#right-song-title").html(`${songs[counter + 1]["title"]}`);
   $("#right-song-artist").html(`${songs[counter + 1]["artist"]}`);
@@ -53,15 +42,24 @@ function loadGame(songs, counter, score) { // this fxn basically updates the mov
   $("#score").html(`${score}`);
 }
 
-var fillHeart = function() {
+var renderInfo = function (side, increment) {
+  $(`#${side}-image`).prop("src", songs[counter + increment]["coverArtLink"]);
+  $(`#${side}-heart`).prop("href", `/save_song/${songs[counter + increment]["spotify_id"]}`);
+  $(`#${side}-song-iframe`).prop("src", songs[counter + increment]["iframe"]);
+  $(`#${side}-song-title`).html(songs[counter + increment]["title"]);
+  $(`#${side}-song-artist`).html(songs[counter + increment]["artist"]);
+  $(`#${side}-song-popularity`).html(songs[counter + increment]["popularity"]);
+}
+
+var fillHeart = function () {
   this.setAttribute("src", "../static/img/heart_full.png");
 }
 
-var emptyHeart = function() {
+var emptyHeart = function () {
   this.setAttribute("src", "../static/img/heart_outline.png");
 }
 
-var addListeners = function(element) {
+var addListeners = function (element) {
   element.addEventListener("mouseover", fillHeart);
   element.addEventListener("mouseout", emptyHeart);
 }
