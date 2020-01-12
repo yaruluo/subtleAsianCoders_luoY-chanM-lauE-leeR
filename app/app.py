@@ -145,31 +145,14 @@ def get_user_top():
             'genre': "I DONT KNOW",
             'lyrics': "MUSIXMATCH",
             'popularity': track['popularity'],
-            'spotify_id': f"{track['external_urls']['spotify'][:25]}embed/{track['external_urls']['spotify'][25:]}",
-            'iframe': track['id'],
+            'spotify_id': track['id'],
+            'iframe': f"{track['external_urls']['spotify'][:25]}embed/{track['external_urls']['spotify'][25:]}",
         }
         songs.append(track_data)
     session['songs'] = songs
 
 @app.route('/higher_lower')
 def higher_lower():
-    # dummysongs = os.path.dirname(os.path.abspath(__file__)) + '/dummysongs.json'
-    # fin = open(dummysongs, 'r')
-    # dummySongsJSON = fin.readlines()
-    # dummySongsJSON = json.loads(dummySongsJSON[0])
-    # dummySongs = dummySongsJSON['items']
-    # songs = get_
-    # for song in dummySongs:
-    #     songData = {
-    #         'title': song['track']['name'],
-    #         'artist': song['track']['album']['artists'][0]['name'],
-    #         'coverArtLink': song['track']['album']['images'][0]['url'],
-    #         'popularity': song['track']['popularity'],
-    #         'iframe': f"{song['track']['external_urls']['spotify'][:25]}embed/{song['track']['external_urls']['spotify'][25:]}",
-    #         'spotify_id': song['track']['id']
-    #     }
-    #     songs.append(songData)
-
     return render_template(
         'higherlowergame.html',
         songs=session['songs']

@@ -133,3 +133,6 @@ heart fill on hover
 ericL -- 2020-01-12 04:35
 put request to add song to hearted songs
 add basic endgame screen
+
+ericL -- 2020-01-12 15:54
+use user's top tracks in higher lower game
