@@ -1,4 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+
 body {
-    font-family: "Georgia,Times,Times New Roman,serif" ;
-    padding-top: 70px;
+    font-family: 'Questrial', sans-serif;
+    padding-top: 50px;
+}
+
+.slide {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+}
+
+.slide-image {
+    object-fit: cover;
+    height: 50vh;
+}
+
+.bottom-image {
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.copyright {
+    text-align: center;
 }
