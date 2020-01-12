@@ -98,3 +98,8 @@ matthewC -- 2020-01-12 03:29
 Tested database additions (lots of problems)
 Errors in database, won't automatically fill in primary key columns
 Added some interaction between HTML playing page and javascript (wasn't able to test yet because of database problems)
+
+matthewC -- 2020-01-12 15:49
+Fixed logic for guess_the_song database work
+Errors in data collection and duplicated database entries
+Testing needed for Javascript usage

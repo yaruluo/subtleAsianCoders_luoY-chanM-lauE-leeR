@@ -135,7 +135,6 @@ def musixmatch_get(title='', artist='', album=''):
         arguments.append(album)
     search_request += '&'.join(arguments)
     search_request += '&apikey=' + MUSIXMATCH_API_KEY
-    print(search_request)
     url = urllib.request.urlopen(search_request)
     search_json = json.loads(url.read())
 
@@ -170,19 +169,21 @@ def play():
     songs = json.loads(f.read())
     # ===============================================================================
     songObjects = list()
-    album = ''
-    coverArtLink = ''
-    artist = ''
-    genre = ''
-    lyrics = ''
-    popularity = 0
 
     # access Musixmatch lyrics for each song
     for song in songs['items']:
         title = song['track']['name']
-        db_cache = Song.query.filter_by(title = title).first()
-        if (db_cache != None):
-            songObjects.append(db_cache)
+        artist = ''
+        album = ''
+        coverArtLink = ''
+        lyrics = ''
+        genre = ''
+        popularity = -1
+
+        cachedSong = Song.query.filter_by(title = title).first()
+        print(f"==========================={cachedSong}")
+        if (cachedSong != None):
+            songObjects.append(cachedSong)
         else:
             # TODO: currently assumes only one artist, potentially change to store all later on
             artist = song['track']['album']['artists'][0]['name']
@@ -196,7 +197,7 @@ def play():
             albumType = song['track']['album']['album_type']
             # TODO: problems with non-standard characters in album names like "÷ (Deluxe)"
             if (albumType == "single"):
-                album = "single"
+                album = f"SINGLE|{title}:{artist}"
                 musixmatch_data = musixmatch_get(title=title, artist=artist)
             else:
                 album = song['track']['album']['name']
@@ -205,19 +206,22 @@ def play():
             genre = musixmatch_data['genre']
             print(f'{title}|{artist}|{coverArtLink}|{popularity}|{album}|{genre}|{lyrics}')
         
-        # add songs to database
-        with db.session.no_autoflush:
-            albumObject = Album(title=album, coverartlink=coverArtLink)
-            # print(f"========================{albumObject.aid}=========================")
-            db.session.add(albumObject)
-            db.session.commit()
-            lastAddedAlbumRecord = db.session.query(Album).order_by(Album.aid.desc()).first()
-            print(f"album obj id{lastAddedAlbumRecord.aid}")
-            songObject = Song(aid=lastAddedAlbumRecord.aid, artist=artist, title=title, genre=genre, lyrics=lyrics, numlisten=popularity)
+            # add songs to database
+            aid = -1
+            cachedAlbum = Album.query.filter_by(title = album).first()
+            if (cachedAlbum != None):
+                aid = cachedAlbum.aid
+            else:
+                albumObject = Album(title=album, coverartlink=coverArtLink)
+                db.session.add(albumObject)
+                db.session.commit()
+                lastAddedAlbum = db.session.query(Album).order_by(Album.aid.desc()).first()
+                aid=lastAddedAlbum.aid
+            songObject = Song(aid=aid, artist=artist, title=title, genre=genre, lyrics=lyrics, numlisten=popularity)
             db.session.add(songObject)
             db.session.commit()
 
-        songObjects.append(songObject)
+            songObjects.append(songObject)
     
     # songsDict = dict()
     # for i in range(songObjects):

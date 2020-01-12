@@ -1,8 +1,10 @@
 function init(songs, counter) {
+    console.log(songs)
     var hasLost = false;
     $(document).ready(() => {
         // Starting question
         loadQuestion(songs[counter], 0);
+        console.log(songs[counter])
         // $("#choice-1", "#choice-2", "#choice-3", "#choice-4").on("click", btn => {
         //     // If finished with final question
         //     if (counter > 10) $("#content").hide();

@@ -49,17 +49,18 @@ Duende
 
 
 {% block body %}
+{% for song in songs %}
 <div id="content" class="container text-center mt-5 pt-5" style="color:white;">
-    <p id="lyrics">INSERT LYRICS</p>
-    <a id="choice-1" href="" class="btn btn-lg btn-primary mb-2">OPTION 1</a><br>
-    <a id="choice-2" href="" class="btn btn-lg btn-primary mb-2">OPTION 2</a><br>
+    <p id="lyrics">{{ song.lyrics }}</p>
+    <a id="choice-1" href="" class="btn btn-lg btn-primary mb-2">{{ song.title }}</a><br>
+    <a id="choice-2" href="" class="btn btn-lg btn-primary mb-2">{{ song.artist }}</a><br>
     <a id="choice-3" href="" class="btn btn-lg btn-primary mb-2">OPTION 3</a><br>
     <a id="choice-4" href="" class="btn btn-lg btn-primary mb-2">OPTION 4</a><br>
     Correct Answers: <p id="score">0</p>
 </div>
+{% endfor %}
 
-<script src="{{ url_for('static', filename='guess_the_song.js') }}"></script>
-<script>
+<script src="{{ url_for('static', filename='guess_the_song.js') }}">
     init({{ songs }}, 0);
 </script>
 {% endblock %}
