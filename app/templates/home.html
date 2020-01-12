@@ -53,7 +53,11 @@ Home
 
 {% block body %}
 <div class="row mt-2">
+  {% if session['access_token'] %}
   <div class="col-sm-12 col-md-4">
+  {% else %}
+  <div class="col-sm-12 col-md-6">
+  {% endif %}
     <div class="text-center">
       <img class="bottom-image pt-2" src="../static/img/background_1.jpg">
       <br>
@@ -67,7 +71,11 @@ Home
       <a class="btn btn-success" href="/higher_lower">Play Now</a>
     </div>
   </div>
+  {% if session['access_token'] %}
   <div class="col-sm-12 col-md-4">
+  {% else %}
+  <div class="col-sm-12 col-md-6">
+  {% endif %}
     <div class="text-center">
       <img class="bottom-image pt-2" src="../static/img/background_2.jpg">
       <br>
@@ -81,6 +89,7 @@ Home
       <a class="btn btn-success" href="/guess_the_song">Play Now</a>
     </div>
   </div>
+  {% if session['access_token'] %}
   <div class="col-sm-12 col-md-4">
     <div class="text-center">
       <img class="bottom-image pt-2" src="../static/img/heart.gif">
@@ -95,5 +104,6 @@ Home
       <a class="btn btn-success" href="/hearted_songs">See Songs</a>
     </div>
   </div>
+  {% endif %}
 </div>
 {% endblock %}
