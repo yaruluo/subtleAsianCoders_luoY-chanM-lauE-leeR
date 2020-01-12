@@ -58,7 +58,6 @@ spotify_auth_query_parameters = {
     'scope': SPOTIFY_SCOPE,
 }
 
-
 @app.route('/')
 def home():
     return render_template(
@@ -124,19 +123,15 @@ def higher_lower():
     dummySongsJSON = fin.readlines()
     dummySongsJSON = json.loads(dummySongsJSON[0])
     dummySongs = dummySongsJSON['items']
-    songs = []
+    songs = list()
     for song in dummySongs:
-        title = song['track']['name']
-        artist = song['track']['album']['artists'][0]['name']
-        coverArtLink = song['track']['album']['images'][0]['url']
-        popularity = song['track']['popularity']
-        songData = {}
-        songData['title'] = title
-        songData['artist'] = artist
-        songData['coverArtLink'] = coverArtLink
-        songData['popularity'] = popularity
+        songData = {
+            'title': song['track']['name']
+            'artist': song['track']['album']['artists'][0]['name']
+            'coverArtLink': song['track']['album']['images'][0]['url']
+            'popularity': song['track']['popularity']
+        }
         songs.append(songData)
-        # print(f'{title} {artist} {coverArtLink} {songData} {songs}')
 
     return render_template(
         'higherlowergame.html',
