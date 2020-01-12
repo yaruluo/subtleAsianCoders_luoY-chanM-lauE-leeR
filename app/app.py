@@ -126,10 +126,10 @@ def higher_lower():
     songs = list()
     for song in dummySongs:
         songData = {
-            'title': song['track']['name']
-            'artist': song['track']['album']['artists'][0]['name']
-            'coverArtLink': song['track']['album']['images'][0]['url']
-            'popularity': song['track']['popularity']
+            'title': song['track']['name'],
+            'artist': song['track']['album']['artists'][0]['name'],
+            'coverArtLink': song['track']['album']['images'][0]['url'],
+            'popularity': song['track']['popularity'],
         }
         songs.append(songData)
 
