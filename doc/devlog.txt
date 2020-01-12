@@ -119,3 +119,6 @@ refactor higher lower game
 
 ericL -- 2020-01-12 00:08
 make hearted songs session dependent
+
+yaruL -- 2020-01-12 00:34
+Updated game descriptions from lorem ipsum
