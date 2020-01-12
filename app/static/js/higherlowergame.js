@@ -2,16 +2,18 @@ function init(songs, counter) {
   var hasLost = false;
   $(document).ready(() => {
     var nextPageIndex = parseInt($("#higher-btn").attr("next-page"));
-    console.log(counter);
+    // console.log(counter);
     loadGame(songs, counter, 0);
     $("#higher-btn, #lower-btn").on("click", btn => {
-      console.log(counter);
-      var leftSongPopularity = JSON.parse($("#left-song-popularity").text()); // JSON used to remove double quotations on both ends of string
-      var rightSongPopularity = JSON.parse($("#right-song-popularity").text());
-      console.log(parseInt(leftSongPopularity));
-      console.log(parseInt(rightSongPopularity)); 
+      // console.log(counter);
+      // console.log($("left-song-popularity").text())
+      // console.log($("right-song-popularity").text())
+      var leftSongPopularity = parseInt($("#left-song-popularity").text());
+      var rightSongPopularity = parseInt($("#right-song-popularity").text());
+      // console.log(parseInt(leftSongPopularity));
+      // console.log(parseInt(rightSongPopularity));
       if (counter >= 8) $(".container").hide(); // finished all 10 questions
-      // scorekeepin
+      // scorekeeping
       if (
         (leftSongPopularity <= rightSongPopularity && // right choice
           $(btn.target).html() == "Higher") ||
@@ -23,31 +25,28 @@ function init(songs, counter) {
         $(btn.target).attr("next-page", ++counter);
         loadGame(songs, counter, ++curScore);
       } else { // wrong choice
-        $(".container").hide();
+        $("#higher-lower").empty()
+        // Implement end game screen
       }
     });
   });
 }
 
 function loadGame(songs, counter, score) {
-  $(".left-half").css(
-    "background",
-    `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("${songs[counter]["coverArtLink"]}") no-repeat`
-  );
-  $(".left-half").css("backgroundSize", "100% 100%");
-  $("#left-song-title").html(`"${songs[counter]["title"]}"`);
-  $("#left-song-artist").html(`"${songs[counter]["artist"]}"`);
-  $("#left-song-popularity").html(`"${songs[counter]["popularity"]}"`);
-  $(".right-half").css(
-    "background",
-    `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('${
-      songs[counter + 1]["coverArtLink"]
-    }') no-repeat`
-  );
-  $(".right-half").css("backgroundSize", "100% 100%");
-  $("#right-song-title").html(`"${songs[counter + 1]["title"]}"`);
-  $("#right-song-artist").html(`"${songs[counter + 1]["artist"]}"`);
-  $("#right-song-popularity").html(`"${songs[counter + 1]["popularity"]}"`);
-  console.log(score);
+  $("#left-image").attr(
+    "src", `${songs[counter]["coverArtLink"]}`
+  )
+
+  $("#left-song-title").html(`${songs[counter]["title"]}`);
+  $("#left-song-artist").html(`${songs[counter]["artist"]}`);
+  $("#left-song-popularity").html(`${songs[counter]["popularity"]}`);
+
+  $("#right-image").attr(
+    "src", `${songs[counter + 1]["coverArtLink"]}`
+  )
+
+  $("#right-song-title").html(`${songs[counter + 1]["title"]}`);
+  $("#right-song-artist").html(`${songs[counter + 1]["artist"]}`);
+  $("#right-song-popularity").html(`${songs[counter + 1]["popularity"]}`);
   $("#score").html(`${score}`);
 }

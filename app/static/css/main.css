@@ -1,42 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
 
-* {
+/* * {
   box-sizing: border-box;
+} */
+
+#left-half, #right-half {
+  position: relative,
 }
 
-/* song images */
-.songImage {
-  min-height: 100%;
-  width: 600px;
-}
-
-div {
-  height: 100%;
-}
-
-/* Pattern styles */
-.container {
-  /* display: table; */
-  width: 100%;
-}
-
-.left-half {
+.text {
   position: absolute;
-  left: 0px;
-  width: 50%;
-}
-
-.right-half {
-  position: absolute;
-  right: 0px;
-  width: 50%;
-}
-
-.left-text, .right-text {
-  color: #ffffff;
-  text-align: center;
-  background-color: none;
-  vertical-align: middle;
 }
 
 #right-song-popularity {
@@ -46,22 +19,16 @@ div {
 /* higher lower buttons */
 /* white background in buttons upon hover */
 #higher-btn:hover {
-  background-color: white;
+  background-color: green;
 }
 
 #lower-btn:hover {
-  background-color: white;
+  background-color: red;
 }
 
 /* removes blue highlighting around bootstrap button */
 .btn:focus {
   box-shadow: none !important;
-}
-
-.scoreboard {
-  text-align: center;
-  background-color: none;
-  vertical-align: middle;
 }
 
 body {
@@ -84,8 +51,4 @@ body {
     width: 200px;
     height: 200px;
     border-radius: 50%;
-}
-
-.copyright {
-    text-align: center;
 }

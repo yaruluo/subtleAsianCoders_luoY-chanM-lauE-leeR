@@ -96,14 +96,12 @@ RYthEM
         {% endif %}
         {% endwith %}
 
-        <background>
-            {% block background %}
+        {% block background %}
+        {% endblock %}
+        <div class="container-fluid">
+            {% block body %}
             {% endblock %}
-            <div class="container-fluid">
-                {% block body %}
-                {% endblock %}
-            </div>
-        </background>
+        </div>
 
 
         <!-- uncompressed jQuery -->
@@ -120,7 +118,7 @@ RYthEM
 
     <footer>
         {% block footer %}
-        <div class="copyright mt-2">
+        <div class="copyright mt-2 text-center">
             &copy; 2020 subtleAsianCoders
         </div>
         {% endblock %}

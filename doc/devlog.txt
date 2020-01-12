@@ -113,3 +113,6 @@ added wipe screen upon losing or going thru all 10 songs
 
 ericL -- 2020-01-11 20:35
 flesh out design of home page
+
+ericL -- 2020-01-11 23:27
+refactor higher lower game

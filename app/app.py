@@ -117,8 +117,8 @@ def callback():
 
     return redirect(url_for('home'))
 
-@app.route('/higherlowergame')
-def higherlowergame():
+@app.route('/higher_lower')
+def higher_lower():
     dummysongs = os.path.dirname(os.path.abspath(__file__)) + '/dummysongs.json'
     fin = open(dummysongs, 'r')
     dummySongsJSON = fin.readlines()
