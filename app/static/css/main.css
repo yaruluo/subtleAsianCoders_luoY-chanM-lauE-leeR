@@ -52,3 +52,7 @@ body {
     height: 200px;
     border-radius: 50%;
 }
+
+#endgame {
+  display: none;
+}
