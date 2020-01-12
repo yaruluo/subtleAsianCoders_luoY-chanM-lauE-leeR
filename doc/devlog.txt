@@ -93,3 +93,8 @@ Created rough outline for the playing page without Jinja variables
 
 matthewC -- 2020-01-10 09:20
 Finished logic for caching song and album in database and checking if already in the database
+
+matthewC -- 2020-01-12 03:29
+Tested database additions (lots of problems)
+Errors in database, won't automatically fill in primary key columns
+Added some interaction between HTML playing page and javascript (wasn't able to test yet because of database problems)
