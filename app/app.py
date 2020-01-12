@@ -140,6 +140,29 @@ def higher_lower():
         songs=songs
         )
 
+@app.route("/save_song/<song_id>")
+def save_song(song_id):
+    if not 'access_token' in session:
+        flash('You are not connected to your Spotify account', 'error')
+        return redirect(url_for('home'))
+    else:
+        authorization_header = {
+            'Authorization': f"Bearer {session['access_token']}",
+        }
+
+        req = urllib.request.Request(
+            f"https://api.spotify.com/v1/me/tracks?ids={song_id}",
+            headers=authorization_header,
+            method="PUT",
+        )
+
+        try:
+            req = urllib.request.urlopen(req)
+        except urllib.error.HTTPError as error:
+            print(error.reason)
+
+        return redirect(url_for('hearted_songs'))
+
 @app.route("/hearted_songs")
 def hearted_songs():
     if not 'access_token' in session:
