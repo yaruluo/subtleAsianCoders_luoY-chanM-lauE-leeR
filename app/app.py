@@ -113,6 +113,7 @@ def callback():
     data = json.loads(res)
 
     session['display_name'] = data['display_name']
+    session['spotify_client_id'] = SPOTIFY_CLIENT_ID
 
     return redirect(url_for('home'))
 
@@ -186,12 +187,12 @@ def hearted_songs():
             data = data['items'],
         )
 
-@app.route("/endgame/<score>")
-def endgame(score):
-    return render_template(
-        "endgame.html",
-        score = score,
-    )
+@app.route('/logout')
+def logout():
+    session['access_token'] = None
+    session['display_name'] = None
+    session['spotify_client_id'] = None
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     db.init_app(app)
