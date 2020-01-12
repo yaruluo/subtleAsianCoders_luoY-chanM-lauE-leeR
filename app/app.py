@@ -48,7 +48,7 @@ SPOTIFY_API_URL = f"{SPOTIFY_API_BASE_URL}/{SPOTIFY_API_VERSION}"
 CLIENT_SIDE_URL = 'http://127.0.0.1'
 PORT = 5000
 SPOTIFY_REDIRECT_URI = f"{CLIENT_SIDE_URL}:{PORT}/callback/q"
-SPOTIFY_SCOPE = 'user-library-read'
+SPOTIFY_SCOPE = 'user-library-read user-library-modify'
 # SCOPE = 'playlist-modify-public playlist-modify-private'
 
 spotify_auth_query_parameters = {
