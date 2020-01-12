@@ -27,16 +27,17 @@ function init(songs, counter) { // params are meant to preserve the state of the
 }
 
 function loadGame(songs, counter, score) { // this fxn basically updates the moving parts of the game: the left and right images, song titles, song artists, popularity ratings, etc.; this modularization allows us to call this function again and again after a button is clicked—to update the DOM each time upon an event.
-  $("#left-image").attr("src", `${songs[counter]["coverArtLink"]}`);
+  $("#left-image").prop("src", `${songs[counter]["coverArtLink"]}`);
+  $("#left-song-iframe").prop("src", songs[counter]["iframe"]);
+  $("#left-song-title").html(songs[counter]["title"]);
+  $("#left-song-artist").html(songs[counter]["artist"]);
+  $("#left-song-popularity").html(songs[counter]["popularity"]);
 
-  $("#left-song-title").html(`${songs[counter]["title"]}`);
-  $("#left-song-artist").html(`${songs[counter]["artist"]}`);
-  $("#left-song-popularity").html(`${songs[counter]["popularity"]}`);
+  $("#right-image").prop("src", songs[counter + 1]["coverArtLink"])
+  $("#right-song-iframe").prop("src", songs[counter + 1]["iframe"]);
+  $("#right-song-title").html(songs[counter + 1]["title"]);
+  $("#right-song-artist").html(songs[counter + 1]["artist"]);
+  $("#right-song-popularity").html(songs[counter + 1]["popularity"]);
 
-  $("#right-image").attr("src", `${songs[counter + 1]["coverArtLink"]}`);
-
-  $("#right-song-title").html(`${songs[counter + 1]["title"]}`);
-  $("#right-song-artist").html(`${songs[counter + 1]["artist"]}`);
-  $("#right-song-popularity").html(`${songs[counter + 1]["popularity"]}`);
-  $("#score").html(`${score}`);
+  $("#score").html(score);
 }

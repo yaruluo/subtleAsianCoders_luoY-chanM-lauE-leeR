@@ -48,7 +48,7 @@ SPOTIFY_API_URL = f"{SPOTIFY_API_BASE_URL}/{SPOTIFY_API_VERSION}"
 CLIENT_SIDE_URL = 'http://127.0.0.1'
 PORT = 5000
 SPOTIFY_REDIRECT_URI = f"{CLIENT_SIDE_URL}:{PORT}/callback/q"
-SPOTIFY_SCOPE = 'user-library-read'
+SPOTIFY_SCOPE = 'user-library-read user-library-modify'
 # SCOPE = 'playlist-modify-public playlist-modify-private'
 
 spotify_auth_query_parameters = {
@@ -130,6 +130,7 @@ def higher_lower():
             'artist': song['track']['album']['artists'][0]['name'],
             'coverArtLink': song['track']['album']['images'][0]['url'],
             'popularity': song['track']['popularity'],
+            'iframe': f"{song['track']['external_urls']['spotify'][:25]}embed/{song['track']['external_urls']['spotify'][25:]}"
         }
         songs.append(songData)
 
@@ -152,7 +153,7 @@ def hearted_songs():
             headers=authorization_header,
         )
 
-        req =urllib.request.urlopen(req)
+        req = urllib.request.urlopen(req)
         res = req.read()
         data = json.loads(res)
 
