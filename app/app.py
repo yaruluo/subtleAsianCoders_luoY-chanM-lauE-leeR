@@ -173,21 +173,18 @@ def play():
     # access Musixmatch lyrics for each song
     for song in songs['items']:
         title = song['track']['name']
-        artist = ''
+        # TODO: currently assumes only one artist, potentially change to store all later on
+        artist = song['track']['album']['artists'][0]['name']
         album = ''
         coverArtLink = ''
         lyrics = ''
         genre = ''
         popularity = -1
 
-        cachedSong = Song.query.filter_by(title = title).first()
-        print(f"==========================={cachedSong}")
+        cachedSong = Song.query.filter_by(title = title, artist=artist).first()
         if (cachedSong != None):
             songObjects.append(cachedSong)
         else:
-            # TODO: currently assumes only one artist, potentially change to store all later on
-            artist = song['track']['album']['artists'][0]['name']
-
             # TODO: potentially account for multiple album cover art variants
             coverArtLink = song['track']['album']['images'][0]['url']
 
@@ -223,16 +220,16 @@ def play():
 
             songObjects.append(songObject)
     
-    # songsDict = dict()
-    # for i in range(songObjects):
-    #     weights = [1] * len(songObjects)
-    #     weights[i] = 0
-    #     choices = random.choices(songObjects, weights=weights, k=3)
-    #     for choice in choices:
-    #         choice = choice.title
-    #     songsDict[songObjects[i]] = choices
+    songsDict = dict()
+    for i in range(len(songObjects)):
+        availableChoices = list(songObjects)
+        availableChoices.pop(i)
+        choices = random.sample(availableChoices, k=3)
+        choices.append(songObjects[i])
+        random.shuffle(choices)
+        songsDict[songObjects[i]] = choices
 
-    return render_template('guess_the_song_game.html', songs=songObjects)
+    return render_template('guess_the_song_game.html', songs=songsDict)
 
 
 @app.route('/guess_the_song/play/test')

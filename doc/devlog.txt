@@ -103,3 +103,10 @@ matthewC -- 2020-01-12 15:49
 Fixed logic for guess_the_song database work
 Errors in data collection and duplicated database entries
 Testing needed for Javascript usage
+
+matthewC -- 2020-01-13 22:49
+Logic in app.py for Guess The Song Game fleshed out
+Fixed errors in data collection and duplicate database entries
+Need to filter out songs without lyrics available
+Fixed passing python song objects through jinja to javascript
+Functional Javascript logic and correct answer detection as well as question generation

@@ -5,13 +5,21 @@ function init(songs, counter) {
         // Starting question
         loadQuestion(songs[counter], 0);
         console.log(songs[counter])
-        // $("#choice-1", "#choice-2", "#choice-3", "#choice-4").on("click", btn => {
-        //     // If finished with final question
-        //     if (counter > 10) $("#content").hide();
+        $("#choice-1, #choice-2, #choice-3, #choice-4").on("click", btn => {
+            // If finished with final question
+            if (counter >= 10) $("#content").hide();
 
-        //     // Checking correct answer
-        //     if ()
-        // });
+            // Checking correct answer
+            console.log($(btn.target).html());
+            console.log(parseInt($("#score").text()));
+            console.log($(btn.target).html() == `[${songs[counter].choices[0].title}] by [${songs[counter].choices[0].artist}]`);
+            var currScore = parseInt($("#score").text());
+            if ($(btn.target).html() == `[${songs[counter].choices[0].title}] by [${songs[counter].choices[0].artist}]`) {
+                loadQuestion(songs[++counter], ++currScore);
+            } else {
+                loadQuestion(songs[++counter], currScore);
+            }
+        });
 
         // $("#higher-btn, #lower-btn").on("click", btn => {
         //     var leftSongPopularity = parseInt($("#left-song-popularity").text());
@@ -38,6 +46,11 @@ function init(songs, counter) {
 
 function loadQuestion(song, score) {
     $("#lyrics").html(`${song.lyrics}`);
-    
+
+    $("#choice-1").html(`[${song.choices[0].title}] by [${song.choices[0].artist}]`);
+    $("#choice-2").html(`[${song.choices[1].title}] by [${song.choices[1].artist}]`);
+    $("#choice-3").html(`[${song.choices[2].title}] by [${song.choices[2].artist}]`);
+    $("#choice-4").html(`[${song.choices[3].title}] by [${song.choices[3].artist}]`);
+
     $("#score").html(`${score}`);
 }

@@ -49,18 +49,45 @@ Duende
 
 
 {% block body %}
-{% for song in songs %}
 <div id="content" class="container text-center mt-5 pt-5" style="color:white;">
-    <p id="lyrics">{{ song.lyrics }}</p>
-    <a id="choice-1" href="" class="btn btn-lg btn-primary mb-2">{{ song.title }}</a><br>
-    <a id="choice-2" href="" class="btn btn-lg btn-primary mb-2">{{ song.artist }}</a><br>
-    <a id="choice-3" href="" class="btn btn-lg btn-primary mb-2">OPTION 3</a><br>
-    <a id="choice-4" href="" class="btn btn-lg btn-primary mb-2">OPTION 4</a><br>
+    <p id="lyrics">INSERT LYRICS</p>
+    <button type="button" id="choice-1" class="btn btn-lg btn-primary mb-2">OPTION 1</button><br>
+    <button type="button" id="choice-2" class="btn btn-lg btn-primary mb-2">OPTION 2</button><br>
+    <button type="button" id="choice-3" class="btn btn-lg btn-primary mb-2">OPTION 3</button><br>
+    <button type="button" id="choice-4" class="btn btn-lg btn-primary mb-2">OPTION 4</button><br>
     Correct Answers: <p id="score">0</p>
 </div>
-{% endfor %}
 
-<script src="{{ url_for('static', filename='guess_the_song.js') }}">
-    init({{ songs }}, 0);
+<!-- uncompressed jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+<script src="{{ url_for('static', filename='guess_the_song.js') }}"></script>
+<script>
+    {% for song in songs %}
+    var song{{song.sid}} = {
+        title : "{{song.title}}",
+        artist : "{{song.artist}}",
+        genre : "{{song.genre}}",
+        lyrics : `{{song.lyrics}}`,
+        numlisten : "{{song.numlisten}}",
+        choices : []
+    };
+    {% endfor %}
+
+    {% for song,choices in songs.items() %}
+    song{{song.sid}}.choices = [
+        {% for choice in choices %}
+        song{{choice.sid}},
+        {% endfor %}
+    ]
+    {% endfor %}
+
+    var songs = [
+    {% for song in songs %}
+        song{{song.sid}},
+    {% endfor %}
+    ];
+    init(songs, 0);
 </script>
 {% endblock %}
