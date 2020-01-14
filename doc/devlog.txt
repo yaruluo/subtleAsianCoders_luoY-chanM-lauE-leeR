@@ -146,3 +146,7 @@ add function wrapper for spotify connnection
 
 ericL -- 2020-01-14 08:30
 abstract spotify api queries into a function
+
+yaruL -- 2020-01014 16:42
+Hello if I didn't do my very beautiful Holmes spacing it means I need to go back to dojo to figure out what means
+also elau ur code is so perspicuous ah
