@@ -57,6 +57,17 @@ spotify_auth_query_parameters = {
     'scope': SPOTIFY_SCOPE,
 }
 
+def protected(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        if 'access_token' in session:
+            # if logged in, continue with expected function
+            return f(*args, **kwargs)
+        else:
+            flash('You are not connected to your Spotify account', 'error')
+            return redirect(url_for('home'))
+    return wrapper
+
 @app.route('/')
 def home():
     return render_template(
@@ -97,13 +108,10 @@ def callback():
 
     session['access_token'] = access_token
 
-    get_user_info()
-
-    return redirect(url_for('home'))
-
-def get_user_info():
     get_user_name()
     get_user_top()
+
+    return redirect(url_for('home'))
 
 def get_user_name():
     authorization_header = {
@@ -120,7 +128,6 @@ def get_user_name():
     data = json.loads(res)
 
     session['display_name'] = data['display_name']
-    session['spotify_client_id'] = SPOTIFY_CLIENT_ID
 
 def get_user_top():
     authorization_header = {
@@ -158,57 +165,47 @@ def higher_lower():
         songs=session['songs']
         )
 
+@protected
 @app.route("/save_song/<song_id>")
 def save_song(song_id):
-    if not 'access_token' in session:
-        flash('You are not connected to your Spotify account', 'error')
-        return redirect(url_for('home'))
-    else:
-        authorization_header = {
-            'Authorization': f"Bearer {session['access_token']}",
-        }
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}",
+    }
 
-        req = urllib.request.Request(
-            f"https://api.spotify.com/v1/me/tracks?ids={song_id}",
-            headers=authorization_header,
-            method="PUT",
-        )
+    req = urllib.request.Request(
+        f"https://api.spotify.com/v1/me/tracks?ids={song_id}",
+        headers=authorization_header,
+        method="PUT",
+    )
 
-        try:
-            req = urllib.request.urlopen(req)
-        except urllib.error.HTTPError as error:
-            print(error.reason)
+    req = urllib.request.urlopen(req)
 
-        return redirect(url_for('hearted_songs'))
+    return redirect(url_for('hearted_songs'))
 
+@protected
 @app.route("/hearted_songs")
 def hearted_songs():
-    if not 'access_token' in session:
-        flash('You are not connected to your Spotify account', 'error')
-        return redirect(url_for('home'))
-    else:
-        authorization_header = {
-            'Authorization': f"Bearer {session['access_token']}"
-        }
-        req = urllib.request.Request(
-            "https://api.spotify.com/v1/me/tracks?limit=10",
-            headers=authorization_header,
-        )
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+    req = urllib.request.Request(
+        "https://api.spotify.com/v1/me/tracks?limit=10",
+        headers=authorization_header,
+    )
 
-        req = urllib.request.urlopen(req)
-        res = req.read()
-        data = json.loads(res)
+    req = urllib.request.urlopen(req)
+    res = req.read()
+    data = json.loads(res)
 
-        return render_template(
-            "hearted_songs.html",
-            data = data['items'],
-        )
+    return render_template(
+        "hearted_songs.html",
+        data = data['items'],
+    )
 
 @app.route('/logout')
 def logout():
     session['access_token'] = None
     session['display_name'] = None
-    session['spotify_client_id'] = None
     return redirect(url_for('home'))
 
 if __name__ == '__main__':

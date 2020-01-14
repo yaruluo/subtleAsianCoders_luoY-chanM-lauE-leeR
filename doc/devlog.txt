@@ -140,3 +140,6 @@ turned app into dark mode lol
 
 ericL -- 2020-01-12 15:54
 use user's top tracks in higher lower game
+
+ericL -- 2020-01-14 08:10
+add function wrapper for spotify connnection
