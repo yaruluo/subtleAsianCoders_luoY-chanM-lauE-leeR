@@ -19,6 +19,12 @@
 
 /* higher lower buttons */
 /* white background in buttons upon hover */
+#higher-btn, #lower-btn {
+  background: white;
+  margin-bottom: 2%;
+  font-size: larger;
+}
+
 #higher-btn:hover {
   background-color: green;
 }
