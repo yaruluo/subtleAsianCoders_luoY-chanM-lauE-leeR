@@ -28,6 +28,8 @@ function init(songs, counter) { // params are meant to preserve the state of the
         $("#higher-lower").empty();
         $("#game-message").html("You Lost!");
         $("#endgame").css("display", "initial");
+        $("body").css("background-image", `url("../static/img/high_low_2.jpg")`);
+        $("body").css("background-size", "cover")
         // Implement end game screen
       }
     });
@@ -65,4 +67,3 @@ var addListeners = function (element) {
 
 addListeners(document.getElementById("left-heart").firstElementChild);
 addListeners(document.getElementById("right-heart").firstElementChild);
-
