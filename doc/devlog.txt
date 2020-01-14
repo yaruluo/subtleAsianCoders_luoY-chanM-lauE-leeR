@@ -3,6 +3,10 @@ SoftDev1 pd1
 P02 -- The End
 RYthEM DEVLOG
 
+ericL -- 2020-01-01 21:04
+change doc/requirements to nix extraneous modules
+update readme with api information
+
 rayL -- 2020-01-03 22:51
 draft email to send to Mr. Mykolyk about our proposal
 
@@ -56,6 +60,9 @@ made a new models branch
 updated models.py on that branch
 merged models branch to master
 
+matthewC -- 2020-01-07 09:00
+created base with a nav bar
+
 ericL -- 2020-01-07 17:22
 modify base to connect with spotify
 store access token in session
@@ -81,6 +88,9 @@ Added /guess_the_song/play route to test
 Added standardized footer in base.html
 Finished text and button on Guess The Song page
 
+yaruL -- 2020-01-09 23:34
+Updated README: roles, descriptions, APIs and links, git clone instructions
+
 matthewC -- 2020-01-10 02:08
 Added logging of Musixmatch API Key
 Finished Musixmatch API data logic and created musixmatch_get(...) to handle
@@ -91,8 +101,28 @@ matthewC -- 2020-01-10 02:16
 Added testing route for Guess The Song Playing Page
 Created rough outline for the playing page without Jinja variables
 
+ericL -- 2020-01-10 08:29
+Create HTML template for hearted songs and add session logic for non connected users
+Display JSON mess on hearted songs
+
 matthewC -- 2020-01-10 09:20
 Finished logic for caching song and album in database and checking if already in the database
+
+ericL -- 2020-01-10 14:47
+Get relevant information for favorited songs
+
+ericL -- 2020-01-11 14:34
+Display user's display name after connecting to Spotify
+Bootstrap-ify hearted songs display
+Add collapse feature to navbar on small screens
+Add play button to hearted songs
+
+ericL -- 2020-01-11 18:57
+Change font and label on home page
+Fix margins and add bottom text
+
+ericL -- 2020-01-11 20:35
+flesh out design of home page
 
 matthewC -- 2020-01-12 03:29
 Tested database additions (lots of problems)
@@ -110,3 +140,5 @@ Fixed errors in data collection and duplicate database entries
 Need to filter out songs without lyrics available
 Fixed passing python song objects through jinja to javascript
 Functional Javascript logic and correct answer detection as well as question generation
+ericL -- 2020-01-09 22:06
+add carousel with images and labels to home page

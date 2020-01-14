@@ -18,6 +18,17 @@ import json
 import datetime
 import random
 
+api_file = os.path.dirname(os.path.abspath(__file__)) + '/api.json'
+
+# TODO: remove api keys from the file after development is done
+
+with open(api_file, 'r') as read_file:
+    keys = json.load(read_file)
+
+SPOTIFY_CLIENT_ID = keys['SPOTIFY_CLIENT_ID']
+SPOTIFY_CLIENT_SECRET = keys['SPOTIFY_CLIENT_SECRET']
+MUSIXMATCH_API_KEY = keys['MUSIXMATCH_API_KEY']
+
 # SQLAlchemy DB Models
 db = models.db
 Song = models.Song
@@ -29,10 +40,13 @@ app.config.from_object(Config)
 # creates secret key for sessions
 app.secret_key = os.urandom(32)
 
+<<<<<<< HEAD
 MUSIXMATCH_API_KEY = open('secret', 'r').read()
 
 SPOTIFY_CLIENT_ID = 'b9535e1e2c3741069061954ef75397ab'
 SPOTIFY_CLIENT_SECRET = 'bfe2cc0d745b4047ab805445a0ebb25f'
+=======
+>>>>>>> master
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
 SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_API_BASE_URL = 'https://api.spotify.com'
@@ -42,8 +56,7 @@ SPOTIFY_API_URL = f"{SPOTIFY_API_BASE_URL}/{SPOTIFY_API_VERSION}"
 CLIENT_SIDE_URL = 'http://127.0.0.1'
 PORT = 5000
 SPOTIFY_REDIRECT_URI = f"{CLIENT_SIDE_URL}:{PORT}/callback/q"
-SPOTIFY_SCOPE = ''
-# SCOPE = 'playlist-modify-public playlist-modify-private'
+SPOTIFY_SCOPE = 'user-library-read'
 
 spotify_auth_query_parameters = {
     'client_id': SPOTIFY_CLIENT_ID,
@@ -58,23 +71,6 @@ def home():
         'home.html',
     )
 
-@app.route('/index')
-def index():
-    authorization_header = {
-        'Authorization': f"Bearer {session['access_token']}"
-    }
-    req = urllib.request.Request(
-        "https://api.spotify.com/v1/tracks/2TpxZ7JUBn3uw46aR7qd6V",
-        headers=authorization_header,
-    )
-    req = urllib.request.urlopen(req)
-    res = req.read()
-    data = json.loads(res)
-    return render_template(
-        'index.html',
-        data = data
-    )
-
 @app.route('/spotify_connect')
 def spotify_connect():
     url_args = "&".join([f"{key}={urllib.parse.quote(val)}" for key, val in spotify_auth_query_parameters.items()])
@@ -85,7 +81,6 @@ def spotify_connect():
 def callback():
     auth_token = request.args['code']
     code_payload = {
-        # 'grant_type': 'client_credentials',
         'grant_type': 'authorization_code',
         'code': str(auth_token),
         'redirect_uri': SPOTIFY_REDIRECT_URI,
@@ -108,6 +103,21 @@ def callback():
     expires_in = response_data['expires_in']
 
     session['access_token'] = access_token
+
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    req = urllib.request.Request(
+        "https://api.spotify.com/v1/me/",
+        headers=authorization_header,
+    )
+
+    req = urllib.request.urlopen(req)
+    res = req.read()
+    data = json.loads(res)
+
+    session['display_name'] = data['display_name']
 
     return redirect(url_for('home'))
 
@@ -160,6 +170,7 @@ def musixmatch_get(title='', artist='', album=''):
     data['lyrics'] = lyrics
     data['genre'] = genre
     return data
+
 
 @app.route('/guess_the_song/play')
 def play():
@@ -232,9 +243,28 @@ def play():
     return render_template('guess_the_song_game.html', songs=songsDict)
 
 
-@app.route('/guess_the_song/play/test')
-def test():
-    return render_template('guess_the_song_game.html')
+@app.route("/hearted_songs")
+def hearted_songs():
+    if not 'access_token' in session:
+        flash('You are not connected to your Spotify account', 'error')
+        return redirect(url_for('home'))
+    else:
+        authorization_header = {
+            'Authorization': f"Bearer {session['access_token']}"
+        }
+        req = urllib.request.Request(
+            "https://api.spotify.com/v1/me/tracks?limit=10",
+            headers=authorization_header,
+        )
+
+        req =urllib.request.urlopen(req)
+        res = req.read()
+        data = json.loads(res)
+
+        return render_template(
+            "hearted_songs.html",
+            data = data['items'],
+    )
 
 
 if __name__ == '__main__':
