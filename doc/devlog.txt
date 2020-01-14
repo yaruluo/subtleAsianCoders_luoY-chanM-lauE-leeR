@@ -146,3 +146,6 @@ add function wrapper for spotify connnection
 
 ericL -- 2020-01-14 08:30
 abstract spotify api queries into a function
+
+ericL -- 2020-01-14 16:23
+added choosing screen and background for higher lower

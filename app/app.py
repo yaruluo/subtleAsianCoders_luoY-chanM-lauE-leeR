@@ -144,6 +144,7 @@ def get_user_top():
 
     songs = list()
     for track in data:
+        track_link = track['external_urls']['spotify']
         track_data = {
             'title': track['name'],
             'artist': track['album']['artists'][0]['name'],
@@ -152,18 +153,30 @@ def get_user_top():
             'lyrics': "MUSIXMATCH",
             'popularity': track['popularity'],
             'spotify_id': track['id'],
-            'iframe': f"{track['external_urls']['spotify'][:25]}embed/{track['external_urls']['spotify'][25:]}",
+            'iframe': f"{track_link[:25]}embed/{track_link[25:]}",
         }
         songs.append(track_data)
 
     session['songs'] = songs
 
-@app.route('/higher_lower')
-def higher_lower():
-    return render_template(
-        'higherlowergame.html',
-        songs=session['songs']
-        )
+@app.route('/higher_lower/<choice>')
+def higher_lower(choice):
+    if choice == 'screen':
+        return render_template(
+            'higherlowerscreen.html',
+            )
+    elif choice == 'random':
+        return render_template(
+            'higherlowergame.html',
+            songs=session['songs'],
+            choice = choice
+            )
+    if choice == 'favorite':
+        return render_template(
+            'higherlowergame.html',
+            songs=session['songs'],
+                choice = choice
+            )
 
 @protected
 @app.route("/save_song/<song_id>")

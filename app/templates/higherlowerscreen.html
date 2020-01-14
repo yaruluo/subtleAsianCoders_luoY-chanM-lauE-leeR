@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Higher Lower
+{% endblock %}
+
+{% block body %}
+<div class="text-center h-100">
+    <form action="/higher_lower/random" method="GET">
+        <button type="submit" class="btn btn-success">Random</button>
+    </form>
+    <form action="/higher_lower/favorite" method="GET">
+        <button type="submit" class="btn btn-success">Favorite</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $("body").css("background-image", `url("../static/img/high_low_1.jpg")`)
+    $("body").css("background-size", "cover")
+</script>
+{% endblock %}
