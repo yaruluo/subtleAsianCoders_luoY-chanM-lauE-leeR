@@ -9,7 +9,9 @@ class Song(db.Model):
     title = db.Column(db.Text, nullable=False)
     genre = db.Column(db.Text, nullable=False)
     lyrics = db.Column(db.Text, nullable=False)
-    numListen = db.Column(db.Integer, nullable=False)
+    popularity = db.Column(db.Integer, nullable=False)
+    spotifyid = db.Column(db.Text, nullable=False)
+    iframe = db.Column(db.Text, nullable=False)
 
 class Album(db.Model):
     aid = db.Column(db.Integer, primary_key=True)
