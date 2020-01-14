@@ -143,3 +143,6 @@ use user's top tracks in higher lower game
 
 ericL -- 2020-01-14 08:10
 add function wrapper for spotify connnection
+
+ericL -- 2020-01-14 08:30
+abstract spotify api queries into a function

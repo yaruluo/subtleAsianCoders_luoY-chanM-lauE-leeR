@@ -68,6 +68,27 @@ def protected(f):
             return redirect(url_for('home'))
     return wrapper
 
+def spotify_api_query(url, method):
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+
+    req = urllib.request.Request(
+        url,
+        headers=authorization_header,
+        method=method,
+    )
+
+    req = urllib.request.urlopen(req)
+
+    if method == 'GET':
+        res = req.read()
+        data = json.loads(res)
+
+        return data
+
+    return None
+
 @app.route('/')
 def home():
     return render_template(
@@ -114,34 +135,12 @@ def callback():
     return redirect(url_for('home'))
 
 def get_user_name():
-    authorization_header = {
-        'Authorization': f"Bearer {session['access_token']}"
-    }
-
-    req = urllib.request.Request(
-        "https://api.spotify.com/v1/me/",
-        headers=authorization_header,
-    )
-
-    req = urllib.request.urlopen(req)
-    res = req.read()
-    data = json.loads(res)
+    data = spotify_api_query("https://api.spotify.com/v1/me/", 'GET')
 
     session['display_name'] = data['display_name']
 
 def get_user_top():
-    authorization_header = {
-        'Authorization': f"Bearer {session['access_token']}"
-    }
-
-    req = urllib.request.Request(
-        "https://api.spotify.com/v1/me/top/tracks",
-        headers=authorization_header,
-    )
-
-    req = urllib.request.urlopen(req)
-    res = req.read()
-    data = json.loads(res)['items']
+    data = spotify_api_query("https://api.spotify.com/v1/me/top/tracks", 'GET')['items']
 
     songs = list()
     for track in data:
@@ -156,6 +155,7 @@ def get_user_top():
             'iframe': f"{track['external_urls']['spotify'][:25]}embed/{track['external_urls']['spotify'][25:]}",
         }
         songs.append(track_data)
+
     session['songs'] = songs
 
 @app.route('/higher_lower')
@@ -168,34 +168,16 @@ def higher_lower():
 @protected
 @app.route("/save_song/<song_id>")
 def save_song(song_id):
-    authorization_header = {
-        'Authorization': f"Bearer {session['access_token']}",
-    }
 
-    req = urllib.request.Request(
-        f"https://api.spotify.com/v1/me/tracks?ids={song_id}",
-        headers=authorization_header,
-        method="PUT",
-    )
-
-    req = urllib.request.urlopen(req)
+    spotify_api_query(f"https://api.spotify.com/v1/me/tracks?ids={song_id}", 'PUT')
 
     return redirect(url_for('hearted_songs'))
 
 @protected
 @app.route("/hearted_songs")
 def hearted_songs():
-    authorization_header = {
-        'Authorization': f"Bearer {session['access_token']}"
-    }
-    req = urllib.request.Request(
-        "https://api.spotify.com/v1/me/tracks?limit=10",
-        headers=authorization_header,
-    )
 
-    req = urllib.request.urlopen(req)
-    res = req.read()
-    data = json.loads(res)
+    data = spotify_api_query("https://api.spotify.com/v1/me/tracks?limit=10", 'GET')
 
     return render_template(
         "hearted_songs.html",
