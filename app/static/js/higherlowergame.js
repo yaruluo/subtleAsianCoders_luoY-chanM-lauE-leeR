@@ -1,4 +1,5 @@
 function init(songs, counter) { // params are meant to preserve the state of the game throughout playing; songs is the list of songs (with song title, artist, popularity rating, cover art link, etc.) and counter is the current index in the songs list that the game is on. Initially, the game is on the 0th song, so on first load, counter should equal 0.
+  shuffle = (array) => array.sort(() => Math.random() - 0.5);
   songs = shuffle(songs);
   $(window).on('load', () => {
     // when the document is ready to be loaded, run code below
@@ -65,21 +66,3 @@ var addListeners = function (element) {
 addListeners(document.getElementById("left-heart").firstElementChild);
 addListeners(document.getElementById("right-heart").firstElementChild);
 
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
