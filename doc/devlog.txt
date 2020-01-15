@@ -3,10 +3,6 @@ SoftDev1 pd1
 P02 -- The End
 RYthEM DEVLOG
 
-ericL -- 2020-01-01 21:04
-change doc/requirements to nix extraneous modules
-update readme with api information
-
 rayL -- 2020-01-03 22:51
 draft email to send to Mr. Mykolyk about our proposal
 
@@ -87,6 +83,10 @@ matthewC -- 2020-01-09 10:03
 Added /guess_the_song/play route to test
 Added standardized footer in base.html
 Finished text and button on Guess The Song page
+
+ericL -- 2020-01-09 21:04
+change doc/requirements to nix extraneous modules
+update readme with api information
 
 yaruL -- 2020-01-09 23:34
 Updated README: roles, descriptions, APIs and links, git clone instructions
