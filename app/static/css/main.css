@@ -4,8 +4,7 @@
   box-sizing: border-box;
 }
 
-#left-half,
-#right-half {
+#left-half, #right-half {
   position: relative;
 }
 
@@ -91,4 +90,33 @@ footer {
 
 #see-songs-btn, #play-btn {
   margin-top: 2%;
+}
+
+#playlist_slide {
+  padding-top: 60px;
+  /* width: 25vw; */
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-align: center;
+  transition: 0.5s;
+  display: none;
+  background-color: #1b1b1b;
+}
+
+.playlist_label {
+  z-index: 0;
+}
+
+#playlist_slide_content{
+  /* background-color: red; */
+  display: block;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  flex-direction: column;
 }

@@ -159,3 +159,6 @@ clean up logic on higher lower game
 
 ericL -- 2020-01-14 21:09
 add background to higher lower landing screen
+
+ericL -- 2020-01-15 18:33
+add users playlist route

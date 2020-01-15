@@ -203,6 +203,16 @@ def hearted_songs():
         data = data['items'],
     )
 
+@protected
+@app.route("/playlists")
+def playlists():
+    data = spotify_api_query("http://api.spotify.com/v1/me/playlists?limit=50", 'GET')
+
+    return render_template(
+        "playlists.html",
+        data = data['items'],
+    )
+
 @app.route('/logout')
 def logout():
     session['access_token'] = None
