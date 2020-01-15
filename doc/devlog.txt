@@ -88,6 +88,12 @@ ericL -- 2020-01-09 21:04
 change doc/requirements to nix extraneous modules
 update readme with api information
 
+ericL -- 2020-01-09 22:06
+add carousel with images and labels to home page
+
+rayL -- 2020-01-09 23:04
+created beginning interface for higher lower game
+
 yaruL -- 2020-01-09 23:34
 Updated README: roles, descriptions, APIs and links, git clone instructions
 
@@ -117,22 +123,57 @@ Bootstrap-ify hearted songs display
 Add collapse feature to navbar on small screens
 Add play button to hearted songs
 
+rayL -- 2020-01-11 18:10
+can change pages recursively
+
 ericL -- 2020-01-11 18:57
 Change font and label on home page
 Fix margins and add bottom text
 
+rayL -- 2020-01-11 19:08
+added uncompressed jQuery
+added live-updated score
+added wipe screen upon losing or going thru all 10 songs
+
 ericL -- 2020-01-11 20:35
 flesh out design of home page
+
+ericL -- 2020-01-11 23:27
+refactor higher lower game
+
+ericL -- 2020-01-12 00:08
+make hearted songs session dependent
+
+yaruL -- 2020-01-12 00:34
+Updated game descriptions from lorem ipsum
+
+ericL -- 2020-01-12 02:38
+embed player in higher lower game
+add heart outline and align with player
 
 matthewC -- 2020-01-12 03:29
 Tested database additions (lots of problems)
 Errors in database, won't automatically fill in primary key columns
 Added some interaction between HTML playing page and javascript (wasn't able to test yet because of database problems)
 
+ericL -- 2020-01-12 03:33
+heart fill on hover
+
+ericL -- 2020-01-12 04:35
+put request to add song to hearted songs
+add basic endgame screen
+
 matthewC -- 2020-01-12 15:49
 Fixed logic for guess_the_song database work
 Errors in data collection and duplicated database entries
 Testing needed for Javascript usage
+
+rayL --2020-01-12 15:54
+added logout button
+turned app into dark mode lol
+
+ericL -- 2020-01-12 15:54
+use user's top tracks in higher lower game
 
 matthewC -- 2020-01-13 22:49
 Logic in app.py for Guess The Song Game fleshed out
@@ -140,8 +181,25 @@ Fixed errors in data collection and duplicate database entries
 Need to filter out songs without lyrics available
 Fixed passing python song objects through jinja to javascript
 Functional Javascript logic and correct answer detection as well as question generation
-ericL -- 2020-01-09 22:06
-add carousel with images and labels to home page
+
+ericL -- 2020-01-14 08:10
+add function wrapper for spotify connnection
+
+ericL -- 2020-01-14 08:30
+abstract spotify api queries into a function
+
+ericL -- 2020-01-14 16:23
+added choosing screen and background for higher lower
+
+yaruL -- 2020-01-14 16:42
+Hello if I didn't do the beautiful Holmes spacing it means I need to go back to dojo to figure out what means
+also elau ur code is so perspicuous ah THANK YOU
+
+ericL -- 2020-01-14 19:01
+clean up logic on higher lower game
+
+ericL -- 2020-01-14 21:09
+add background to higher lower landing screen
 
 matthewC -- 2020-01-14 23:29
 Fixed answer checking typo in javascript

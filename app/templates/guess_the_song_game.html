@@ -18,10 +18,10 @@ RYthEM
 <style>
     body {
         /* background-image: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg'); */
-        background: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg') 
-                    no-repeat 
-                    center 
-                    center 
+        background: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg')
+                    no-repeat
+                    center
+                    center
                     fixed;
         background-size: cover;
         height: 100%;
@@ -31,7 +31,7 @@ RYthEM
         position: absolute;
         bottom: 0;
         width: 100%;
-        height: 2rem; 
+        height: 2rem;
         text-align: center;
         color: white;
     }
@@ -68,7 +68,7 @@ RYthEM
 <script src="https://code.jquery.com/jquery-3.4.1.js"
     integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
-<script src="{{ url_for('static', filename='guess_the_song.js') }}"></script>
+<script src="{{ url_for('static', filename='js/guess_the_song.js') }}"></script>
 <script>
     {% for song in songs %}
     var song{{song.sid}} = {
