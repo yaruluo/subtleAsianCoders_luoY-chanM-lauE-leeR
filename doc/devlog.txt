@@ -156,3 +156,6 @@ also elau ur code is so perspicuous ah THANK YOU
 
 ericL -- 2020-01-14 19:01
 clean up logic on higher lower game
+
+ericL -- 2020-01-14 21:09
+add background to higher lower landing screen
