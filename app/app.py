@@ -206,8 +206,9 @@ def play():
                 album = song['track']['album']['name']
                 musixmatch_data = musixmatch_get(title=title, artist=artist, album=album)
             lyrics = musixmatch_data['lyrics']
+            lyrics = lyrics[:((lyrics.find('*'))-1)]
             genre = musixmatch_data['genre']
-            print(f'{title}|{artist}|{coverArtLink}|{popularity}|{album}|{genre}|{lyrics}')
+            # print(f'{title}|{artist}|{coverArtLink}|{popularity}|{album}|{genre}|{lyrics}')
         
             # add songs to database
             aid = -1
@@ -226,6 +227,8 @@ def play():
 
             songObjects.append(songObject)
     
+    # random.shuffle(songObjects)
+
     songsDict = dict()
     for i in range(len(songObjects)):
         availableChoices = list(songObjects)

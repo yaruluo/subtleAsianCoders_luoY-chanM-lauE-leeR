@@ -49,13 +49,19 @@ RYthEM
 
 
 {% block body %}
-<div id="content" class="container text-center mt-5 pt-5" style="color:white;">
-    <p id="lyrics">INSERT LYRICS</p>
-    <button type="button" id="choice-1" class="btn btn-lg btn-primary mb-2">OPTION 1</button><br>
-    <button type="button" id="choice-2" class="btn btn-lg btn-primary mb-2">OPTION 2</button><br>
-    <button type="button" id="choice-3" class="btn btn-lg btn-primary mb-2">OPTION 3</button><br>
-    <button type="button" id="choice-4" class="btn btn-lg btn-primary mb-2">OPTION 4</button><br>
-    Correct Answers: <p id="score">0</p>
+<div id="content" class="container mt-5 pt-5" style="color:white;">
+    <div id="lyrics-card" class="card p-3 m-2" style="color:black">
+        <p id="lyrics">INSERT LYRICS</p>
+    </div>
+    <div class="text-center">
+        <div id="button-container" class="container-fluid text-center">
+            <button type="button" id="choice-1" class="btn btn-lg btn-primary mb-2">OPTION 1</button><br>
+            <button type="button" id="choice-2" class="btn btn-lg btn-primary mb-2">OPTION 2</button><br>
+            <button type="button" id="choice-3" class="btn btn-lg btn-primary mb-2">OPTION 3</button><br>
+            <button type="button" id="choice-4" class="btn btn-lg btn-primary mb-2">OPTION 4</button><br>
+        </div>
+        Correct Answers: <p id="score">0</p>
+    </div>
 </div>
 
 <!-- uncompressed jQuery -->
