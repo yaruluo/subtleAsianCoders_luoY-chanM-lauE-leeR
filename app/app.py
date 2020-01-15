@@ -40,13 +40,8 @@ app.config.from_object(Config)
 # creates secret key for sessions
 app.secret_key = os.urandom(32)
 
-<<<<<<< HEAD
 MUSIXMATCH_API_KEY = open('secret', 'r').read()
 
-SPOTIFY_CLIENT_ID = 'b9535e1e2c3741069061954ef75397ab'
-SPOTIFY_CLIENT_SECRET = 'bfe2cc0d745b4047ab805445a0ebb25f'
-=======
->>>>>>> master
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
 SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 SPOTIFY_API_BASE_URL = 'https://api.spotify.com'
