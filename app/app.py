@@ -207,13 +207,21 @@ def get_user_top():
             'spotify_id': track['id'],
             'iframe': f"{track_link[:25]}embed/{track_link[25:]}",
         }
+        songs.append(track_data)
         print(track_data)
         musixmatch_track_data = musixmatch_get(title=track_data['title'], artist=track_data['artist'], album=track_data['album'])
         print(musixmatch_track_data)
         track_data['genre'] = musixmatch_track_data['genre']
         track_data['lyrics'] = musixmatch_track_data['lyrics']
         # print(track_data)
-        songs.append(track_data)
+        potentialAlbum = Album.query.filter_by(title=track_data['album']).first()
+        if potentialAlbum == None:
+            albumObject = Album(title=track_data['album'], coverartlink=track_data['coverArtLink'])
+            db.session.add(albumObject)
+            db.session.commit()
+        album = Album.query.filter_by(title=track_data['album']).first()
+
+        
     
     # newTrack = Song()
     # session['songs'] = songs
