@@ -24,7 +24,7 @@ api_file = os.path.dirname(os.path.abspath(__file__)) + '/api.json'
 with open( api_file, 'r') as read_file:
     keys = json.load( read_file) # retrieve keys from json
 
-SPOTIFY_CLIENT_ID = keys[ 'SPOTIFY_CLIENT_ID'] 
+SPOTIFY_CLIENT_ID = keys[ 'SPOTIFY_CLIENT_ID']
 SPOTIFY_CLIENT_SECRET = keys[ 'SPOTIFY_CLIENT_SECRET']
 MUSIXMATCH_API_KEY = keys[ 'MUSIXMATCH_API_KEY']
 
@@ -161,13 +161,6 @@ def get_user_top():
 
     session['songs'] = songs
 
-# @app.route( '/higher_lower')
-# def higher_lower():
-#     return render_template(
-#         'higherlowergame.html',
-#         songs=session['songs']
-#         )
-
 @app.route('/higher_lower/<choice>')
 def higher_lower(choice):
     if choice == 'screen':
@@ -181,11 +174,15 @@ def higher_lower(choice):
             choice = choice
             )
     if choice == 'favorite':
-        return render_template(
-            'higherlowergame.html',
-            songs=session['songs'],
+        if 'access_token' in session:
+            return render_template(
+                'higherlowergame.html',
+                songs=session['songs'],
                 choice = choice
             )
+        else:
+            flash( 'You are not connected to your Spotify account', 'error')
+            return redirect(url_for('home'))
 
 @protected # openable if connected
 @app.route( "/save_song/<song_id>")

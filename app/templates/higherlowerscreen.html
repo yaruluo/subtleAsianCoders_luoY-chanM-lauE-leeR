@@ -5,26 +5,35 @@ Higher Lower
 {% endblock %}
 
 {% block body %}
-<div class="text-center" style="color: white;">
-  <h1>The Higher Lower Game</h1>
-  <p>
-    description
-  </p>
-  <br>
-  <form action="/higher_lower/random" method="GET">
-    <button type="submit" class="btn btn-success">Play with random songs</button>
-  </form>
-  <br>
-  <form action="/higher_lower/favorite" method="GET">
-    <button type="submit" class="btn btn-success">Play with my Liked songs</button>
-  </form>
+<div class="text-center row" style="color: white;">
+  <div class="col p-5 m-5" style="background-color: rgba(0, 125, 0, 0.2);">
+    <h1>The Higher Lower Game</h1>
+    <p>
+      You’ll be shown two cards with the names of two songs. You simply have
+      to decide whether the second card’s number of “monthly listens” is
+      higher or lower than the first card. As you progress, you will be
+      shown a new card. Choose higher or lower to decide whether it is
+      listened to more or less than the previous card. The objective is to
+      get the most right in a row. If you get one wrong, you lose the game.
+    </p>
+    <br>
+    <form action="/higher_lower/random" method="GET">
+      <button type="submit" class="btn btn-success">Play with random songs</button>
+    </form>
+    <br>
+    {% if session['access_token'] %}
+    <form action="/higher_lower/favorite" method="GET">
+      <button type="submit" class="btn btn-success">Play with my Liked songs</button>
+    </form>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
 
 {% block script %}
 <script>
-  $("body").css("background-image", `url("../static/img/high_low_1.jpg")`)
+  $("body").css("background-image", `url("../static/img/high_low_2.jpg")`)
   $("body").css("background-size", "cover")
-  $( 'body').css( 'margin-top', '12%')
+  $('body').css('margin-top', '12%')
 </script>
 {% endblock %}
