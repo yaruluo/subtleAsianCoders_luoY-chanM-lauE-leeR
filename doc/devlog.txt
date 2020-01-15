@@ -206,3 +206,10 @@ Fixed answer checking typo in javascript
 Cleaned Musixmatch lyric output string
 Changed frontend to look better
 Error still on last song in quiz
+
+matthewC -- 2020-01-15 08:39
+Added UserSongs table to establish relationship between users and their songs
+Error found with apostrophes in javascript checking answers (won't register as a correct answer)
+Added abstraction for API connection and data collection
+Grouped helper functions and fixed them with Musixmatch interaction
+Errors with database for Guess the Song due to merging and database changes
