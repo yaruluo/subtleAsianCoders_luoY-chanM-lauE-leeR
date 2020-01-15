@@ -152,4 +152,7 @@ added choosing screen and background for higher lower
 
 yaruL -- 2020-01014 16:42
 Hello if I didn't do the beautiful Holmes spacing it means I need to go back to dojo to figure out what means
-also elau ur code is so perspicuous ah
+also elau ur code is so perspicuous ah THANK YOU
+
+ericL -- 2020-01-14 19:01
+clean up logic on higher lower game
