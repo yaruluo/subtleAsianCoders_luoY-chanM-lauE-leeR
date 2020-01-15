@@ -142,3 +142,9 @@ Fixed passing python song objects through jinja to javascript
 Functional Javascript logic and correct answer detection as well as question generation
 ericL -- 2020-01-09 22:06
 add carousel with images and labels to home page
+
+matthewC -- 2020-01-14 23:29
+Fixed answer checking typo in javascript
+Cleaned Musixmatch lyric output string
+Changed frontend to look better
+Error still on last song in quiz
