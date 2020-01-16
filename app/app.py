@@ -170,7 +170,7 @@ def musixmatch_get(title='', artist='', album=''):
     else:
         genre = music_genre_list[0]['music_genre']['music_genre_name']
     print(search_json['message']['body']['track'])
-  
+
     has_lyrics = search_json['message']['body']['track']['has_lyrics']
     if (has_lyrics == 1):
         #===GETTING=LYRICS==============================
@@ -184,7 +184,7 @@ def musixmatch_get(title='', artist='', album=''):
         lyrics = lyrics_json['message']['body']['lyrics']['lyrics_body']
     else:
         lyrics = 'LYRICS NOT AVAILABLE'
-    
+
     #===FORMATTING=MUSIXMATCH=DATA==================
     data = dict()
     data['lyrics'] = lyrics
@@ -212,8 +212,8 @@ def get_user_top():
         print(track_data)
         musixmatch_track_data = musixmatch_get(title=track_data['title'], artist=track_data['artist'], album=track_data['album'])
         print(musixmatch_track_data)
-        track_data['genre'] = musixmatch_track_data['genre']
-        track_data['lyrics'] = musixmatch_track_data['lyrics']
+        # track_data['genre'] = musixmatch_track_data['genre']
+        # track_data['lyrics'] = musixmatch_track_data['lyrics']
         # print(track_data)
         potentialAlbum = Album.query.filter_by(title=track_data['album']).first()
         if potentialAlbum == None:
@@ -222,10 +222,8 @@ def get_user_top():
             db.session.commit()
         album = Album.query.filter_by(title=track_data['album']).first()
 
-        
-    
     # newTrack = Song()
-    # session['songs'] = songs
+    session['songs'] = songs
 
 @app.route('/higher_lower/<choice>')
 def higher_lower(choice):

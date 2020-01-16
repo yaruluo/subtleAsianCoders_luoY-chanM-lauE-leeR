@@ -169,3 +169,4 @@ show score of user at higher lower endgame
 
 ericL -- 2020-01-16 01:41
 animate higher lower game
+tweak timing and add background to win screen
