@@ -14,7 +14,6 @@ import urllib.request
 import urllib.parse
 import functools
 import os
-import random
 import json
 import datetime
 
@@ -142,55 +141,6 @@ def get_user_name():
 
     session['display_name'] = data['display_name']
 
-'''
-Accesses the Musixmatch API and returns the lyrics of a given song title and/or artist and/or album
-'''
-def musixmatch_get(title='', artist='', album=''):
-    #===SEARCHING=FOR=SONG==========================
-    search_request = 'https://api.musixmatch.com/ws/1.1/matcher.track.get?'
-    arguments = list()
-    if (len(title) != 0):
-        title = 'q_track=' + urllib.parse.quote(title)
-        arguments.append(title)
-    if (len(artist) != 0):
-        artist = 'q_artist=' + urllib.parse.quote(artist)
-        arguments.append(artist)
-    if (len(album) != 0):
-        album = 'q_album=' + urllib.parse.quote(album)
-        arguments.append(album)
-    search_request += '&'.join(arguments)
-    search_request += '&apikey=' + MUSIXMATCH_API_KEY
-    url = urllib.request.urlopen(search_request)
-    search_json = json.loads(url.read())
-
-    track_id = search_json['message']['body']['track']['track_id']
-    music_genre_list = search_json['message']['body']['track']['primary_genres']['music_genre_list']
-    if(len(music_genre_list) == 0):
-        genre = "No genre found!"
-    else:
-        genre = music_genre_list[0]['music_genre']['music_genre_name']
-    print(search_json['message']['body']['track'])
-
-    has_lyrics = search_json['message']['body']['track']['has_lyrics']
-    if (has_lyrics == 1):
-        #===GETTING=LYRICS==============================
-        lyrics_request = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?'
-        lyrics_request += 'track_id=' + str(track_id)
-        lyrics_request += '&apikey=' + MUSIXMATCH_API_KEY
-        # print(lyrics_request)
-        url = urllib.request.urlopen(lyrics_request)
-        lyrics_json = json.loads(url.read())
-
-        lyrics = lyrics_json['message']['body']['lyrics']['lyrics_body']
-    else:
-        lyrics = 'LYRICS NOT AVAILABLE'
-
-    #===FORMATTING=MUSIXMATCH=DATA==================
-    data = dict()
-    data['lyrics'] = lyrics
-    data['genre'] = genre
-    return data
-
 def get_user_top():
     data = spotify_api_query("https://api.spotify.com/v1/me/top/tracks", 'GET')['items']
 
@@ -200,10 +150,9 @@ def get_user_top():
         track_data = {
             'title': track['name'],
             'artist': track['album']['artists'][0]['name'],
-            'album': track['album']['name'],
             'coverArtLink': track['album']['images'][0]['url'],
-            'genre': "",
-            'lyrics': "",
+            'genre': "I DONT KNOW",
+            'lyrics': "MUSIXMATCH",
             'popularity': track['popularity'],
             'spotify_id': track['id'],
             'iframe': f"{track_link[:25]}embed/{track_link[25:]}",
@@ -225,6 +174,7 @@ def get_user_top():
         # album = Album.query.filter_by(title=track_data['album']).first()
 
     # newTrack = Song()
+
     session['songs'] = songs
 
 @app.route('/higher_lower/<choice>')
@@ -251,7 +201,7 @@ def higher_lower(choice):
             return redirect(url_for('home'))
 
 @protected # openable if connected
-@app.route("/save_song/<song_id>")
+@app.route( "/save_song/<song_id>")
 def save_song( song_id):
 
     spotify_api_query( f"https://api.spotify.com/v1/me/tracks?ids={song_id}", 'PUT')
@@ -267,27 +217,6 @@ def hearted_songs():
     return render_template(
         "hearted_songs.html",
         data = data['items'],
-    )
-
-@protected
-@app.route("/playlists")
-def playlists():
-    data = spotify_api_query("http://api.spotify.com/v1/me/playlists?limit=50", 'GET')
-
-    return render_template(
-        "playlists.html",
-        data = data['items'],
-    )
-
-@protected
-@app.route('/artists')
-def artists():
-    rand = random.randrange(0, 100)
-    data = spotify_api_query(f"http://api.spotify.com/v1/search?q=year:0000-9999&type=artist&offset={rand}", 'GET')
-
-    return render_template(
-        'test.html',
-        data = data['artists']['items']
     )
 
 @app.route('/logout')
