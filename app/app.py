@@ -151,9 +151,9 @@ def get_user_top():
             'spotify_id': track['id'],
             'iframe': f"{track_link[:25]}embed/{track_link[25:]}",
         }
-        musixmatch_data = musixmatch_api_query(title=track_data['title'], artist=track_data['artist'])
-        track_data['genre'] = musixmatch_data['genre']
-        track_data['lyrics'] = musixmatch_data['lyrics']
+        # musixmatch_data = musixmatch_api_query(title=track_data['title'], artist=track_data['artist'])
+        # track_data['genre'] = musixmatch_data['genre']
+        # track_data['lyrics'] = musixmatch_data['lyrics']
 
         songs.append(track_data)
 
@@ -338,6 +338,31 @@ def hearted_songs():
     return render_template(
         "hearted_songs.html",
         data = data['items'],
+    )
+
+@protected
+@app.route("/cache")
+def cache():
+    data = spotify_api_query("http://api.spotify.com/v1/playlists/37i9dQZF1DXbYM3nMM0oPk", 'GET')
+
+    songs = list()
+    for track in data['tracks']['item']:
+        track_link = track['external_urls']['spotify']
+        song_data = {
+            'title': track['name'],
+            'artist': track['artists'][0]['name'],
+            'genre': "MUSIXMATCH",
+            'lyrics': "MUSIXMATCH",
+            'popularity': track['popularity'],
+            'spotifyid': track['id'],
+            'iframe': f"{track_link[:25]}embed/{track_link[25:]}"
+        }
+        album_title = track['album']['name']
+        coverartlink = track['images'][0]['url']
+
+    return render_template(
+        "test.html",
+        data = data
     )
 
 @app.route('/logout')
