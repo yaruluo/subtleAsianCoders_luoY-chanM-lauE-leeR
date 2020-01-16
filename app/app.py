@@ -105,22 +105,33 @@ def musixmatch_api_query(title='', artist='', album=''):
     search_request += '&apikey=' + MUSIXMATCH_API_KEY
     url = urllib.request.urlopen(search_request)
     search_json = json.loads(url.read())
+    # print(search_request)
 
-    track_id = search_json['message']['body']['track']['track_id']
-    genre = search_json['message']['body']['track']['primary_genres']['music_genre_list'][0]['music_genre']['music_genre_name']
+    body = search_json['message']['body']
+    if (body != ''):
+        track_id = search_json['message']['body']['track']['track_id']
+        
+        music_genre_list = search_json['message']['body']['track']['primary_genres']['music_genre_list']
+        if (len(music_genre_list) == 0):
+            genre = "GENRE NOT AVAILABLE"
+        else:
+            genre = music_genre_list[0]['music_genre']['music_genre_name']
 
-    has_lyrics = search_json['message']['body']['track']['has_lyrics']
-    if (has_lyrics == 1):
-        # Get the lyrics for the found song
-        lyrics_request = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?'
-        lyrics_request += 'track_id=' + str(track_id)
-        lyrics_request += '&apikey=' + MUSIXMATCH_API_KEY
-        # print(lyrics_request)
-        url = urllib.request.urlopen(lyrics_request)
-        lyrics_json = json.loads(url.read())
+        has_lyrics = search_json['message']['body']['track']['has_lyrics']
+        if (has_lyrics == 1):
+            # Get the lyrics for the found song
+            lyrics_request = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?'
+            lyrics_request += 'track_id=' + str(track_id)
+            lyrics_request += '&apikey=' + MUSIXMATCH_API_KEY
+            # print(lyrics_request)
+            url = urllib.request.urlopen(lyrics_request)
+            lyrics_json = json.loads(url.read())
 
-        lyrics = lyrics_json['message']['body']['lyrics']['lyrics_body']
+            lyrics = lyrics_json['message']['body']['lyrics']['lyrics_body']
+        else:
+            lyrics = 'LYRICS NOT AVAILABLE'
     else:
+        genre = "GENRE NOT AVAILABLE"
         lyrics = 'LYRICS NOT AVAILABLE'
 
     # Package the API data
@@ -138,7 +149,7 @@ def get_user_name():
 
 
 def get_user_hearted():
-    data = spotify_api_query("https://api.spotify.com/v1/me/tracks", 'GET')['items']
+    data = spotify_api_query("https://api.spotify.com/v1/me/tracks?limit=50", 'GET')['items']
     sids = cache_songs(data)
     for sid in sids:
         user_song_link(session['spotify_user_id'], sid)
@@ -426,7 +437,7 @@ def hearted_songs():
 @protected
 @app.route("/cache")
 def cache():
-    data = spotify_api_query("http://api.spotify.com/v1/playlists/37i9dQZF1DXbYM3nMM0oPk", 'GET')['tracks']['item']
+    data = spotify_api_query("http://api.spotify.com/v1/playlists/37i9dQZF1DXbYM3nMM0oPk?limit=50", 'GET')['tracks']['item']
     sids = cache_songs(data)
     for sid in sids:
         user_song_link('guest', sid)
