@@ -18,13 +18,14 @@
     - We are using Bootstrap because we are all more comfortable with it and believe it looks better than Foundation
 - **ray. lee.**
   - Write Python scripts to handle requests to modify or retrieve data from databases and APIs using HTTP/necessary OAuth
-  - Integrate code from the last project for the login features
   - Make SQLAlchemy models for the database tables
-  - Creates the Higher-Lower game
+  - Creates the HigherLower game
 
 ## Description
 
-Our website is all about music! We want to create two games: HigherLower, wherein you guess which song of two shown have more listens, and GuessTheSong, wherein you are shown the lyrics to a song and guess what song it is (multiple choice). We also want to use connect with the user's own Spotify account and use their own liked songs in the games.
+Our website is all about music! We want to create two games: HigherLower, wherein you guess which song of two shown have more listens, and GuessTheSong, wherein you are shown the lyrics to a song and guess what song it is (multiple choice). We also allow user's to connect connect with their own Spotify account and use their own liked songs in the games.
+
+[video demo here](youtube.com)
 
 ## APIs Used
 
