@@ -111,7 +111,7 @@ def musixmatch_api_query(title='', artist='', album=''):
     body = search_json['message']['body']
     if (body != ''):
         track_id = search_json['message']['body']['track']['track_id']
-        
+
         music_genre_list = search_json['message']['body']['track']['primary_genres']['music_genre_list']
         if (len(music_genre_list) == 0):
             genre = "GENRE NOT AVAILABLE"
@@ -127,7 +127,7 @@ def musixmatch_api_query(title='', artist='', album=''):
             # print(lyrics_request)
             url = urllib.request.urlopen(lyrics_request)
             lyrics_json = json.loads(url.read())
-
+            print(lyrics_request)
             lyrics = lyrics_json['message']['body']['lyrics']['lyrics_body']
         else:
             lyrics = 'LYRICS NOT AVAILABLE'
@@ -188,13 +188,13 @@ def cache_songs(songs):
             else:
                 album = song['track']['album']['name']
                 musixmatch_data = musixmatch_api_query(title=title, artist=artist, album=album)
-            
+
             if ((musixmatch_data['lyrics'] != "LYRICS NOT AVAILABLE") and (musixmatch_data['genre'] != "GENRE NOT AVAILABLE")):
                 lyrics = musixmatch_data['lyrics']
                 if (lyrics != "LYRICS NOT AVAILABLE"):
                     lyrics = lyrics[:((lyrics.find('*'))-1)]
                 genre = musixmatch_data['genre']
-                
+
                 # add songs to database
                 aid = -1
                 cachedAlbum = Album.query.filter_by(title = album).first()
@@ -207,7 +207,7 @@ def cache_songs(songs):
 
                     lastAddedAlbum = db.session.query(Album).order_by(Album.aid.desc()).first()
                     aid=lastAddedAlbum.aid
-                
+
                 songObject = Song(
                     aid=aid,
                     artist=artist,
@@ -258,6 +258,18 @@ def get_guest_songs(numSongs):
         songObject = Song.query.filter_by(sid=link.sid).first()
         songObjects.append(songObject)
     return songObjects
+
+
+def package_song(songObject):
+    songDict = dict()
+    songDict['artist'] = songObject.artist
+    songDict['title'] = songObject.title
+    songDict['popularity'] = songObject.popularity
+    songDict['spotify_id'] = songObject.spotifyid
+    songDict['iframe'] = songObject.iframe
+    album = Album.query.filter_by(aid=songObject.aid).first()
+    songDict['coverArtLink'] = album.coverartlink
+    return songDict
 
 #========================================================================================
 
@@ -346,7 +358,18 @@ def play(choice):
         random.shuffle(choices)
         songsDict[songObjects[i]] = choices
     return render_template('guess_the_song_game.html', songs=songsDict)
-    
+
+
+@protected
+@app.route("/playlists")
+def playlists():
+    data = spotify_api_query("http://api.spotify.com/v1/me/playlists?limit=50", 'GET')
+
+    return render_template(
+        "playlists.html",
+        data = data['items'],
+    )
+
 
 @app.route('/higher_lower/<choice>')
 def higher_lower(choice):
@@ -355,16 +378,26 @@ def higher_lower(choice):
             'higherlowerscreen.html',
             )
     elif choice == 'random':
+        songObjects = get_guest_songs(10)
+        songs = list()
+        for songObject in songObjects:
+            songs.append(package_song(songObject))
+
         return render_template(
             'higherlowergame.html',
-            songs=session['songs'],
+            songs=songs,
             choice = choice
             )
     if choice == 'favorite':
+        songObjects = get_user_songs(10)
+        songs = list()
+        for songObject in songObjects:
+            songs.append(package_song(songObject))
+
         if 'access_token' in session:
             return render_template(
                 'higherlowergame.html',
-                songs=session['songs'],
+                songs=songs,
                 choice = choice
             )
         else:
