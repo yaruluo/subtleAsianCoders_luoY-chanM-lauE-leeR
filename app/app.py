@@ -164,8 +164,8 @@ def cache_songs(songs):
             coverartlink = song['track']['album']['images'][0]['url']
             popularity = song['track']['popularity']
 
-            spotify_id = track['id'],
-            track_link = track['external_urls']['spotify']
+            spotify_id = song['id']
+            track_link = song['external_urls']['spotify']
             iframe = f"{track_link[:25]}embed/{track_link[25:]}"
 
             albumType = song['track']['album']['album_type']
