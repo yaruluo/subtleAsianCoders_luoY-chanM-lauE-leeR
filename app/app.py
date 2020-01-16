@@ -134,13 +134,19 @@ def musixmatch_api_query(title='', artist='', album=''):
 def get_user_name():
     data = spotify_api_query("https://api.spotify.com/v1/me/", 'GET')
     session['display_name'] = data['display_name']
-    session['user_id'] = data['id']
+    session['spotify_user_id'] = data['id']
 
 
 def get_user_hearted():
     data = spotify_api_query("https://api.spotify.com/v1/me/tracks", 'GET')['items']
-    
-    for song in data:
+    sids = cache_songs(data)
+    for sid in sids:
+        user_song_link(session['spotify_user_id'])
+
+
+def cache_songs(songs):
+    sids = list()
+    for song in songs:
         artist = song['track']['album']['artists'][0]['name']
         title = song['track']['name']
         genre = ''
@@ -152,7 +158,9 @@ def get_user_hearted():
         coverartlink = ''
 
         cachedSong = Song.query.filter_by(title = title, artist=artist).first()
-        if (cachedSong == None):
+        if (cachedSong != None):
+            sids.append(cachedSong.sid)
+        else:
             coverartlink = song['track']['album']['images'][0]['url']
             popularity = song['track']['popularity']
 
@@ -199,29 +207,15 @@ def get_user_hearted():
             db.session.add(songObject)
             db.session.commit()
 
-            songObjects.append(songObject)
-    '''
-    songs = list()
-    for track in data:
-        track_link = track['external_urls']['spotify']
-        track_data = {
-            'title': track['name'],
-            'artist': track['album']['artists'][0]['name'],
-            'coverArtLink': track['album']['images'][0]['url'],
-            'genre': None,
-            'lyrics': None,
-            'popularity': track['popularity'],
-            'spotify_id': track['id'],
-            'iframe': f"{track_link[:25]}embed/{track_link[25:]}",
-        }
-        # musixmatch_data = musixmatch_api_query(title=track_data['title'], artist=track_data['artist'])
-        # track_data['genre'] = musixmatch_data['genre']
-        # track_data['lyrics'] = musixmatch_data['lyrics']
+            lastAddedSong = db.session.query(Song).order_by(Song.sid.desc()).first()
+            sids.append(lastAddedSong.sid)
 
-        songs.append(track_data)
-    
-    session['songs'] = songs
-    '''
+    return sids
+
+def user_song_link(spotifyid, sid):
+    link = UserSongs(spotifyid = spotifyid, sid=sid)
+    db.session.add(albumObject)
+    db.session.commit()
 
 #========================================================================================
 
