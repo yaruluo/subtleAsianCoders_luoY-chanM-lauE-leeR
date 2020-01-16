@@ -431,16 +431,17 @@ def higher_lower(choice):
             'higherlowerscreen.html',
             )
     elif choice == 'random':
+        print(Song.query.all())
         return render_template(
             'higherlowergame.html',
-            songs=session['songs'],
+            songs=Song.query.all(),
             choice = choice
             )
     if choice == 'favorite':
         if 'access_token' in session:
             return render_template(
                 'higherlowergame.html',
-                songs=session['songs'],
+                songs=Song.query.all(),
                 choice = choice
             )
         else:
