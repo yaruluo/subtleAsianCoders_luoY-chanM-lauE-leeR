@@ -227,11 +227,11 @@ def cache_songs(songs):
     return sids
 
 
-def user_song_link(spotifyid, sid):
-    cachedLink = UserSongs.query.filter_by(spotifyid=spotifyid, sid=sid).first()
+def user_song_link(spotify_id, song_id):
+    cachedLink = UserSongs.query.filter_by(spotifyid=spotify_id, sid=song_id).first()
     if (cachedLink != None):
         return None
-    link = UserSongs(spotifyid = spotifyid, sid=sid)
+    link = UserSongs(spotifyid = spotify_id, sid=song_id)
     db.session.add(link)
     db.session.commit()
 
@@ -341,7 +341,6 @@ def play(choice):
         choices.append(songObjects[i])
         random.shuffle(choices)
         songsDict[songObjects[i]] = choices
-    print(f"========================{str(len(songsDict))}===========================")
     return render_template('guess_the_song_game.html', songs=songsDict)
   
 '''
