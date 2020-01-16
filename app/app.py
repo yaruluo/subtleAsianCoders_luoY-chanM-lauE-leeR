@@ -324,67 +324,9 @@ def guess_the_song():
 
 @app.route('/guess_the_song/play')
 def play():
-    # choose 10 random songs from Spotify
-    # TODO: change temporary song sample to randomization============================
-    dummysongs = os.path.dirname(os.path.abspath(__file__)) + '/dummysongs.json'
-    f = open(dummysongs, 'r')
-    songs = json.loads(f.read())
-    # ===============================================================================
-    songObjects = list()
-
-    # access Musixmatch lyrics for each song
-    for song in songs['items']:
-        title = song['track']['name']
-        # TODO: currently assumes only one artist, potentially change to store all later on
-        artist = song['track']['album']['artists'][0]['name']
-        album = ''
-        coverArtLink = ''
-        lyrics = ''
-        genre = ''
-        popularity = -1
-
-        cachedSong = Song.query.filter_by(title = title, artist=artist).first()
-        if (cachedSong != None):
-            songObjects.append(cachedSong)
-        else:
-            # TODO: potentially account for multiple album cover art variants
-            coverArtLink = song['track']['album']['images'][0]['url']
-
-            # TODO: find actual number of listens not this popularity number
-            popularity = song['track']['popularity']
-
-            albumType = song['track']['album']['album_type']
-            # TODO: problems with non-standard characters in album names like "÷ (Deluxe)"
-            if (albumType == "single"):
-                album = f"SINGLE|{title}:{artist}"
-                musixmatch_data = musixmatch_api_query(title=title, artist=artist)
-            else:
-                album = song['track']['album']['name']
-                musixmatch_data = musixmatch_api_query(title=title, artist=artist, album=album)
-            lyrics = musixmatch_data['lyrics']
-            lyrics = lyrics[:((lyrics.find('*'))-1)]
-            genre = musixmatch_data['genre']
-            # print(f'{title}|{artist}|{coverArtLink}|{popularity}|{album}|{genre}|{lyrics}')
-
-            # add songs to database
-            aid = -1
-            cachedAlbum = Album.query.filter_by(title = album).first()
-            if (cachedAlbum != None):
-                aid = cachedAlbum.aid
-            else:
-                albumObject = Album(title=album, coverartlink=coverArtLink)
-                db.session.add(albumObject)
-                db.session.commit()
-                lastAddedAlbum = db.session.query(Album).order_by(Album.aid.desc()).first()
-                aid=lastAddedAlbum.aid
-            songObject = Song(aid=aid, artist=artist, title=title, genre=genre, lyrics=lyrics, numlisten=popularity)
-            db.session.add(songObject)
-            db.session.commit()
-
-            songObjects.append(songObject)
-
-    # random.shuffle(songObjects)
-
+    # choose 10 random popular songs
+    songObjects = get_guest_songs(10)
+    
     songsDict = dict()
     for i in range(len(songObjects)):
         availableChoices = list(songObjects)
