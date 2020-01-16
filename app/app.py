@@ -215,7 +215,7 @@ def cache_songs(songs):
 
 def user_song_link(spotifyid, sid):
     link = UserSongs(spotifyid = spotifyid, sid=sid)
-    db.session.add(albumObject)
+    db.session.add(link)
     db.session.commit()
 
 
