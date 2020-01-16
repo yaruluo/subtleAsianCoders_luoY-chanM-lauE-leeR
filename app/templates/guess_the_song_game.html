@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+<!--
+subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
+SoftDev1 pd1
+P02 -- The End
+RYthEM
+-->
+
+<!-- Guess The Song Game Playing Page -->
+
+{% block title %}
+    Guess The Song
+{% endblock %}
+
+
+{% block style %}
+<style>
+    body::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE and Edge */
+    body {
+        -ms-overflow-style: none;
+    }
+
+    #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="game" class="text-center m-5">
+    <div class="row" style="color:white;">
+        <div id="lyrics-card" class="col-6 pt-3"style="color:black; background-color: rgba(255, 255, 255, 0.5);">
+            <p id="lyrics"></p>
+        </div>
+        <div class="text-center col-6" style="position: fixed; right: 0;">
+            <span class="h4">Correct Answers:</span> <p id="score" class="h3">0</p>
+            <div id="button-container" class="container-fluid text-center">
+                <button type="button" id="choice-1" class="btn btn-lg btn-primary mb-2">OPTION 1</button><br>
+                <button type="button" id="choice-2" class="btn btn-lg btn-primary mb-2">OPTION 2</button><br>
+                <button type="button" id="choice-3" class="btn btn-lg btn-primary mb-2">OPTION 3</button><br>
+                <button type="button" id="choice-4" class="btn btn-lg btn-primary mb-2">OPTION 4</button><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="endgame" class="row" style="display: none; color: white;">
+    <div class="col-12 text-center">
+        <p class="h4">Correct Answers:</p> <p id="endscore" class="h3"></p>
+        <a href="/guess_the_song" class="my-2 btn btn-success">Play Again</a>
+        <br>
+        <a href="/" class="btn btn-light">Back Home</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<!-- uncompressed jQuery -->
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
+<script src="{{ url_for('static', filename='js/guess_the_song.js') }}"></script>
+<script>
+    {% for song in songs %}
+    var song{{song.sid}} = {
+        title : "{{song.title}}",
+        artist : "{{song.artist}}",
+        genre : "{{song.genre}}",
+        lyrics : `{{song.lyrics}}`,
+        numlisten : "{{song.numlisten}}",
+        choices : []
+    };
+    {% endfor %}
+
+    {% for song,choices in songs.items() %}
+    song{{song.sid}}.choices = [
+        {% for choice in choices %}
+        song{{choice.sid}},
+        {% endfor %}
+    ]
+    {% endfor %}
+
+    var songs = [
+    {% for song in songs %}
+        song{{song.sid}},
+    {% endfor %}
+    ];
+    init(songs, 0);
+</script>
+<script>
+    // $("#lyrics-card").css("overflow-y", "scroll");
+    $("body").css("background-image", `url("../static/img/guess_the_song.jpg")`)
+    $("body").css("background-size", "cover")
+    // $("body").css("overflow", "hidden")
+    $("body").css("background-position", "center")
+    $("body").css("background-attachment", "fixed")
+    // $('body').css('margin-top', '12%')
+  </script>
+{% endblock %}

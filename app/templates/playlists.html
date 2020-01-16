@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Playlists
+{% endblock %}
+
+{% block body %}
+<script src="{{ url_for('static', filename='js/playlist.js') }}"></script>
+
+<div class="row" style="text-align: center; padding-top: 20px;">
+    {% for playlist in data %}
+    <div class="col-xs-12 col-sm-6 col-lg-4 p-3">
+        <div class="carousel-caption slide playlist_label">
+            {{ playlist['name'] }}
+        </div>
+        <img onClick="openPlaylist('{{ playlist['id'] }}')" class="playlist" style="object-fit: cover" width="300vw" height="300vh"
+            src="{{ playlist['images'][0]['url'] }}">
+    </div>
+    {% endfor %}
+</div>
+
+<div id="playlist_slide">
+    <a style="color: white" src="" onclick="closePlaylist();">&times;</a>
+    <div id="playlist_slide_content">
+        <iframe id="playlist_link" src="" width="380" height="380" frameborder="0" allowtransparency="true"
+            allow="encrypted-media"></iframe>
+    </div>
+</div>
+{% endblock %}

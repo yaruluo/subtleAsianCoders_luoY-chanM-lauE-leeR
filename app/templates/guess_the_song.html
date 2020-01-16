@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+<!--
+subtleAsianCoders - Yaru Luo, Matthew Chan, Eric "Morty" Lau, ray. lee.
+SoftDev1 pd1
+P02 -- The End
+RYthEM
+-->
+
+<!-- Guess The Song Game Homepage -->
+
+{% block title %}
+    Guess The Song
+{% endblock %}
+
+
+{% block style %}
+<style>
+    #background img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        min-width: 50%;
+        min-height: 50%;
+        opacity: 0.9;
+    }
+    #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2rem;
+        text-align: center;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<div class="text-center row" style="color:white;">
+    <div class="col p-5" style="background-color: rgba(0,0,125, 0.5);">
+        <h1>Guess The Song</h1>
+        <p>
+            You’ll be shown the lyrics to a song. Multiple choice question and all stuy students are good at MCQs. Guess what song the lyrics are from! Link your Spotify to use your own Liked songs, or use popular songs out now.
+        </p>
+        <a id="random" href="/guess_the_song/random" class="btn btn-lg mb-3 btn-primary">Play With Random Songs</a>
+        <br>
+        {% if session['access_token'] %}
+            <a id="my_songs" href="/guess_the_song/my_songs" class="btn btn-lg btn-primary">Play With Your Songs</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $("body").css("background-image", `url("../static/img/guess_the_song.jpg")`)
+    $("body").css("background-size", "cover")
+    $("body").css("background-position", "center")
+    $("body").css("background-attachment", "fixed")
+    $('body').css('margin-top', '12%')
+  </script>
+{% endblock %}
