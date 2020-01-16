@@ -187,7 +187,7 @@ def cache_songs(songs):
             if (cachedAlbum != None):
                 aid = cachedAlbum.aid
             else:
-                albumObject = Album(title=album, coverartlink=coverArtLink)
+                albumObject = Album(title=album, coverartlink=coverartlink)
                 db.session.add(albumObject)
                 db.session.commit()
 
