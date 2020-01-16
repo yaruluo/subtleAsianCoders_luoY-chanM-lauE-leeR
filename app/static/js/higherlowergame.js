@@ -1,4 +1,5 @@
 function init(songs, counter) { // params are meant to preserve the state of the game throughout playing; songs is the list of songs (with song title, artist, popularity rating, cover art link, etc.) and counter is the current index in the songs list that the game is on. Initially, the game is on the 0th song, so on first load, counter should equal 0.
+  var curScore = 0;
   shuffle = (array) => array.sort(() => Math.random() - 0.5);
   songs = shuffle(songs);
   $(window).on('load', () => {
@@ -10,6 +11,7 @@ function init(songs, counter) { // params are meant to preserve the state of the
       if (counter >= 8) {
         $("#higher-lower").empty(); // this means the user finished all 10 questions; hide the page so they cannot play anymore.
         $("#game-message").html("You Won!");
+        $("#game-score").html(`Your score: ${curScore}`);
         $("#endgame").css("display", "initial");
       }
       // scorekeeping
@@ -27,6 +29,7 @@ function init(songs, counter) { // params are meant to preserve the state of the
         // wrong choice
         $("#higher-lower").empty();
         $("#game-message").html("You Lost!");
+        $("#game-score").html(`Your score: ${curScore}`);
         $("#endgame").css("display", "initial");
         $("body").css("background-image", `url("../static/img/high_low_2.jpg")`);
         $("body").css("background-size", "cover")
