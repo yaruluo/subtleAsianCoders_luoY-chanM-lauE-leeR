@@ -6,8 +6,13 @@ function init(songs, counter) { // params are meant to preserve the state of the
     // when the document is ready to be loaded, run code below
     loadGame(songs, counter, 0);
     $("#higher-btn, #lower-btn").on("click", btn => {
+      $("#higher-btn, #lower-btn").hide(500);
       var leftSongPopularity = parseInt($("#left-song-popularity").text()); // get the left song popularity rating
+      $("#right-song-popularity").show(250);
+      setTimeout(() => {}, 2000);
       var rightSongPopularity = parseInt($("#right-song-popularity").text()); //get the right song popularity rating
+      $("#right-song-popularity").hide(500);
+      setTimeout(() => {}, 2000);
       if (counter >= 8) {
         $("#higher-lower").empty(); // this means the user finished all 10 questions; hide the page so they cannot play anymore.
         $("#game-message").html("You Won!");
@@ -21,18 +26,21 @@ function init(songs, counter) { // params are meant to preserve the state of the
         (leftSongPopularity >= rightSongPopularity &&
           $(btn.target).html() == "Lower")
       ) {
+        $("#higher-btn, #lower-btn").show(500);
         curScore = parseInt($("#score").text()); // gets the current score of the user
-        // $(".left-half, .right-half").animate({right: '50%'});
         $(btn.target).attr("next-page", ++counter); // set the counter equal to counter + 1 and then return its updated value here.
         loadGame(songs, counter, ++curScore); // song and counter is explained above; curScore (current score) is incremented and then its value is returned and loaded back into loadGame for the next question (if applicable—user did not finish all 10 questions yet)
       } else {
         // wrong choice
-        $("#higher-lower").empty();
-        $("#game-message").html("You Lost!");
-        $("#game-score").html(`Your score: ${curScore}`);
-        $("#endgame").css("display", "initial");
-        $("body").css("background-image", `url("../static/img/high_low_2.jpg")`);
-        $("body").css("background-size", "cover")
+        $("#right-song-popularity").show(500);
+        setTimeout(() => {
+          $("#higher-lower").empty();
+          $("#game-message").html("You Lost!");
+          $("#game-score").html(`Your score: ${curScore}`);
+          $("#endgame").css("display", "initial");
+          $("body").css("background-image", `url("../static/img/high_low_2.jpg")`);
+          $("body").css("background-size", "cover")
+        }, 2000);
       }
     });
   });
