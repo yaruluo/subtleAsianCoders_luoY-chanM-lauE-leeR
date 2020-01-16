@@ -17,6 +17,7 @@ import os
 import random
 import json
 import datetime
+import random
 
 api_file = os.path.dirname(os.path.abspath(__file__)) + '/api.json'
 
@@ -33,12 +34,15 @@ MUSIXMATCH_API_KEY = keys[ 'MUSIXMATCH_API_KEY']
 db = models.db
 Song = models.Song
 Album = models.Album
+UserSongs = models.UserSongs
 
 app = Flask(__name__)
 app.config.from_object( Config)
 
 # creates secret key for sessions
 app.secret_key = os.urandom( 32)
+
+# MUSIXMATCH_API_KEY = open('secret', 'r').read()
 
 # renders spotify api url data vis a vis ur own spotify account
 SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/authorize'
@@ -59,6 +63,202 @@ spotify_auth_query_parameters = {
     'scope': SPOTIFY_SCOPE,
 }
 
+#========================================================================================
+# HELPER FUNCTIONS
+
+#----------------------------------------------------------------------------------
+# API FUNCTIONS
+def spotify_api_query(url, method):
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+    req = urllib.request.Request(
+        url,
+        headers=authorization_header,
+        method=method,
+    )
+    req = urllib.request.urlopen(req)
+
+    if method == 'GET':
+        res = req.read()
+        data = json.loads(res)
+        return data
+    return None
+
+
+'''
+Accesses the Musixmatch API and returns the lyrics and genre of a given song title and/or artist and/or album
+'''
+def musixmatch_api_query(title='', artist='', album=''):
+    # Search for the song
+    search_request = 'https://api.musixmatch.com/ws/1.1/matcher.track.get?'
+    arguments = list()
+    if (len(title) != 0):
+        title = 'q_track=' + urllib.parse.quote(title)
+        arguments.append(title)
+    if (len(artist) != 0):
+        artist = 'q_artist=' + urllib.parse.quote(artist)
+        arguments.append(artist)
+    if (len(album) != 0):
+        album = 'q_album=' + urllib.parse.quote(album)
+        arguments.append(album)
+    search_request += '&'.join(arguments)
+    search_request += '&apikey=' + MUSIXMATCH_API_KEY
+    url = urllib.request.urlopen(search_request)
+    search_json = json.loads(url.read())
+    # print(search_request)
+
+    body = search_json['message']['body']
+    if (body != ''):
+        track_id = search_json['message']['body']['track']['track_id']
+        
+        music_genre_list = search_json['message']['body']['track']['primary_genres']['music_genre_list']
+        if (len(music_genre_list) == 0):
+            genre = "GENRE NOT AVAILABLE"
+        else:
+            genre = music_genre_list[0]['music_genre']['music_genre_name']
+
+        has_lyrics = search_json['message']['body']['track']['has_lyrics']
+        if (has_lyrics == 1):
+            # Get the lyrics for the found song
+            lyrics_request = 'https://api.musixmatch.com/ws/1.1/track.lyrics.get?'
+            lyrics_request += 'track_id=' + str(track_id)
+            lyrics_request += '&apikey=' + MUSIXMATCH_API_KEY
+            # print(lyrics_request)
+            url = urllib.request.urlopen(lyrics_request)
+            lyrics_json = json.loads(url.read())
+
+            lyrics = lyrics_json['message']['body']['lyrics']['lyrics_body']
+        else:
+            lyrics = 'LYRICS NOT AVAILABLE'
+    else:
+        genre = "GENRE NOT AVAILABLE"
+        lyrics = 'LYRICS NOT AVAILABLE'
+
+    # Package the API data
+    data = dict()
+    data['lyrics'] = lyrics
+    data['genre'] = genre
+    return data
+
+#----------------------------------------------------------------------------------
+
+def get_user_name():
+    data = spotify_api_query("https://api.spotify.com/v1/me/", 'GET')
+    session['display_name'] = data['display_name']
+    session['spotify_user_id'] = data['id']
+
+
+def get_user_hearted():
+    data = spotify_api_query("https://api.spotify.com/v1/me/tracks?limit=50", 'GET')['items']
+    sids = cache_songs(data)
+    for sid in sids:
+        user_song_link(session['spotify_user_id'], sid)
+
+
+def cache_songs(songs):
+    sids = list()
+    for song in songs:
+        artist = song['track']['album']['artists'][0]['name']
+        title = song['track']['name']
+        genre = ''
+        lyrics = ''
+        popularity = -1
+        spotifyid = ''
+        iframe = ''
+        album = ''
+        coverartlink = ''
+
+        cachedSong = Song.query.filter_by(title = title, artist=artist).first()
+        if (cachedSong != None):
+            sids.append(cachedSong.sid)
+        else:
+            coverartlink = song['track']['album']['images'][0]['url']
+            popularity = song['track']['popularity']
+
+            spotifyid = song['track']['id']
+            track_link = song['track']['external_urls']['spotify']
+            iframe = f"{track_link[:25]}embed/{track_link[25:]}"
+
+            albumType = song['track']['album']['album_type']
+            # TODO: problems with non-standard characters in album names like "÷ (Deluxe)"
+            if (albumType == "single"):
+                album = f"SINGLE|{title}:{artist}"
+                musixmatch_data = musixmatch_api_query(title=title, artist=artist)
+            else:
+                album = song['track']['album']['name']
+                musixmatch_data = musixmatch_api_query(title=title, artist=artist, album=album)
+            
+            if ((musixmatch_data['lyrics'] != "LYRICS NOT AVAILABLE") and (musixmatch_data['genre'] != "GENRE NOT AVAILABLE")):
+                lyrics = musixmatch_data['lyrics']
+                if (lyrics != "LYRICS NOT AVAILABLE"):
+                    lyrics = lyrics[:((lyrics.find('*'))-1)]
+                genre = musixmatch_data['genre']
+                
+                # add songs to database
+                aid = -1
+                cachedAlbum = Album.query.filter_by(title = album).first()
+                if (cachedAlbum != None):
+                    aid = cachedAlbum.aid
+                else:
+                    albumObject = Album(title=album, coverartlink=coverartlink)
+                    db.session.add(albumObject)
+                    db.session.commit()
+
+                    lastAddedAlbum = db.session.query(Album).order_by(Album.aid.desc()).first()
+                    aid=lastAddedAlbum.aid
+                
+                songObject = Song(
+                    aid=aid,
+                    artist=artist,
+                    title=title,
+                    genre=genre,
+                    lyrics=lyrics,
+                    popularity=popularity,
+                    spotifyid=spotifyid,
+                    iframe=iframe
+                )
+                db.session.add(songObject)
+                db.session.commit()
+
+                lastAddedSong = db.session.query(Song).order_by(Song.sid.desc()).first()
+                sids.append(lastAddedSong.sid)
+
+    return sids
+
+
+def user_song_link(spotifyid, sid):
+    link = UserSongs(spotifyid = spotifyid, sid=sid)
+    db.session.add(link)
+    db.session.commit()
+
+
+def get_user_songs(numSongs):
+    links = UserSongs.query.filter_by(spotifyid=session['spotify_user_id']).all()
+    random.shuffle(links)
+    links[0:numSongs]
+
+    songObjects = list()
+    for link in links:
+        songObject = Song.query.filter_by(sid=link.sid).first()
+        songObjects.append(songObject)
+    return songObjects
+
+
+def get_guest_songs(numSongs):
+    links = UserSongs.query.filter_by(spotifyid='guest').all()
+    random.shuffle(links)
+    links[0:numSongs]
+
+    songObjects = list()
+    for link in links:
+        songObject = Song.query.filter_by(sid=link.sid).first()
+        songObjects.append(songObject)
+    return songObjects
+
+#========================================================================================
+
+
 # checks if logged in to ur Spotify acc
 def protected( f):
     @functools.wraps( f)
@@ -71,26 +271,6 @@ def protected( f):
             return redirect( url_for( 'home'))
     return wrapper
 
-def spotify_api_query( url, method):
-    authorization_header = {
-        'Authorization': f"Bearer {session['access_token']}"
-    }
-
-    req = urllib.request.Request(
-        url,
-        headers=authorization_header,
-        method=method,
-    )
-
-    req = urllib.request.urlopen( req)
-
-    if method == 'GET':
-        res = req.read()
-        data = json.loads( res)
-
-        return data
-
-    return None
 
 @app.route( '/')
 def home():
@@ -133,15 +313,32 @@ def callback():
     session['access_token'] = access_token
 
     get_user_name()
-    get_user_top()
+    get_user_hearted()
 
     return redirect(url_for('home'))
 
-def get_user_name():
-    data = spotify_api_query("https://api.spotify.com/v1/me/", 'GET')
 
-    session['display_name'] = data['display_name']
+@app.route('/guess_the_song')
+def guess_the_song():
+    return render_template('guess_the_song.html')
 
+
+@app.route('/guess_the_song/play')
+def play():
+    # choose 10 random popular songs
+    songObjects = get_guest_songs(10)
+    
+    songsDict = dict()
+    for i in range(len(songObjects)):
+        availableChoices = list(songObjects)
+        availableChoices.pop(i)
+        choices = random.sample(availableChoices, k=3)
+        choices.append(songObjects[i])
+        random.shuffle(choices)
+        songsDict[songObjects[i]] = choices
+
+    return render_template('guess_the_song_game.html', songs=songsDict)
+  
 '''
 Accesses the Musixmatch API and returns the lyrics of a given song title and/or artist and/or album
 '''
@@ -253,9 +450,7 @@ def higher_lower(choice):
 @protected # openable if connected
 @app.route("/save_song/<song_id>")
 def save_song( song_id):
-
     spotify_api_query( f"https://api.spotify.com/v1/me/tracks?ids={song_id}", 'PUT')
-
     return redirect( url_for( 'hearted_songs'))
 
 @protected
@@ -270,24 +465,16 @@ def hearted_songs():
     )
 
 @protected
-@app.route("/playlists")
-def playlists():
-    data = spotify_api_query("http://api.spotify.com/v1/me/playlists?limit=50", 'GET')
+@app.route("/cache")
+def cache():
+    data = spotify_api_query("http://api.spotify.com/v1/playlists/37i9dQZF1DXbYM3nMM0oPk", 'GET')['tracks']['items']
+    sids = cache_songs(data)
+    for sid in sids:
+        user_song_link('guest', sid)
 
     return render_template(
-        "playlists.html",
-        data = data['items'],
-    )
-
-@protected
-@app.route('/artists')
-def artists():
-    rand = random.randrange(0, 100)
-    data = spotify_api_query(f"http://api.spotify.com/v1/search?q=year:0000-9999&type=artist&offset={rand}", 'GET')
-
-    return render_template(
-        'test.html',
-        data = data['artists']['items']
+        "test.html",
+        data = data
     )
 
 @app.route('/logout')

@@ -37,8 +37,20 @@ RYthEM
             crossorigin="anonymous"></script>
 
         <title>
-            {% block title %}{% endblock %} :: RYthEM
+            {% block title %}BASE{% endblock %} :: RYthEM
         </title>
+
+        {% block style %}
+        <style>
+            #footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2rem;
+                text-align: center;
+            }
+        </style>
+        {% endblock %}
     </head>
 
     <body>
@@ -80,45 +92,54 @@ RYthEM
             </div>
         </nav>
 
+
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
 
         {% if category == "error" %}
         <div class="alert alert-danger text-align-center alert-dismissible fade show" role="alert">
-        {% endif %}
+            {% endif %}
 
-        {% if category == "success" %}
-        <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
-        {% endif %}
-            {{message}}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
 
-        {% block background %}
-        {% endblock %}
-        <div class="container-fluid">
-            {% block body %}
+            {% if category == "success" %}
+            <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
+                {% endif %}
+
+                {{message}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            {% block background %}
             {% endblock %}
-        </div>
+            <div class="container-fluid">
+                {% block body %}
+                {% endblock %}
+            </div>
 
-        <!-- uncompressed jQuery -->
-        <script src="https://code.jquery.com/jquery-3.4.1.js"
-            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+            <!-- uncompressed jQuery -->
+            <script src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <!-- custom js jinja linking -->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-        {% block script %}
-        {% endblock %}
-    </body>
+            {% block script %}
+            {% endblock %}
+
+
+            <!-- Footer -->
+            <footer class="page-footer font-small">
+
 
     <!-- Footer -->
     <footer class="page-footer font-small">
