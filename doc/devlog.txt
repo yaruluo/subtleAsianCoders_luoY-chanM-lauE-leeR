@@ -213,3 +213,8 @@ Error found with apostrophes in javascript checking answers (won't register as a
 Added abstraction for API connection and data collection
 Grouped helper functions and fixed them with Musixmatch interaction
 Errors with database for Guess the Song due to merging and database changes
+
+matthewC -- 2020-01-16 01:21
+Changed database logic and abstracted caching into helper functions
+Added spotify_user_id to session
+Finished /cache route to store guest pop songs
