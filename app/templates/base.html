@@ -37,20 +37,8 @@ RYthEM
             crossorigin="anonymous"></script>
 
         <title>
-            {% block title %}BASE{% endblock %} :: RYthEM
+            {% block title %}{% endblock %} :: RYthEM
         </title>
-
-        {% block style %}
-        <style>
-            #footer {
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-                height: 2rem;
-                text-align: center;
-            }
-        </style>
-        {% endblock %}
     </head>
 
     <body>
@@ -71,20 +59,15 @@ RYthEM
                     <li class="nav-item">
                         <a class="nav-link" href="/hearted_songs">My Hearted Songs</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/playlists">My Playlists</a>
-                    </li>
                     {% endif %}
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item navbar-right">
                         {% if session['display_name'] %}
                         <span style="color: white;">{{ session['display_name'] }}</span>
-                        <a id="logout-btn" class="btn btn-outline-success nav-link text-success" href="/logout">Log
-                            out</a>
+                        <a id="logout-btn" class="btn btn-outline-success nav-link text-success" href="/logout">Log out</a>
                         {% else %}
-                        <a id="spotify-connect-btn" class="btn btn-outline-success nav-link text-success"
-                            href="/spotify_connect">Connect to
+                        <a id="spotify-connect-btn" class="btn btn-outline-success nav-link text-success" href="/spotify_connect">Connect to
                             Spotify</a>
                         {% endif %}
                     </li>
@@ -92,66 +75,56 @@ RYthEM
             </div>
         </nav>
 
-
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
 
         {% if category == "error" %}
         <div class="alert alert-danger text-align-center alert-dismissible fade show" role="alert">
-            {% endif %}
+        {% endif %}
 
+        {% if category == "success" %}
+        <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
+        {% endif %}
 
-            {% if category == "success" %}
-            <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
-                {% endif %}
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
 
-                {{message}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
 
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-
-            {% block background %}
+        {% block background %}
+        {% endblock %}
+        <div class="container-fluid">
+            {% block body %}
             {% endblock %}
-            <div class="container-fluid">
-                {% block body %}
-                {% endblock %}
-            </div>
+        </div>
 
-            <!-- uncompressed jQuery -->
-            <script src="https://code.jquery.com/jquery-3.4.1.js"
-                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- uncompressed jQuery -->
+        <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
         <!-- custom js jinja linking -->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
-            {% block script %}
-            {% endblock %}
-
-
-            <!-- Footer -->
-            <footer class="page-footer font-small">
-
+        {% block script %}
+        {% endblock %}
+    </body>
 
     <!-- Footer -->
-    <footer class="page-footer font-small">
+<footer class="page-footer font-small">
 
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">© 2020 subtleAsianCoders
-        </div>
-        <!-- Copyright -->
-        {% block footer%}
-        {% endblock%}
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 subtleAsianCoders
+    </div>
+    <!-- Copyright -->
+    {% block footer%}
+    {% endblock%}
 
-    </footer>
-    <!-- Footer -->
-
+  </footer>
+  <!-- Footer -->
 </html>

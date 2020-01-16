@@ -73,16 +73,8 @@ Updated design doc: tasks, connecting with Spotify, database layout (clarified r
 matthewC -- 2020-01-08 05:18
 Added background jinja block for base.html
 
-matthewC -- 2020-01-09 10:16
-Edited headings that got ovewritten in merging
-Added test /guess_the_song route
-Created Guess The Song HTML page and added background image generation
-Fixed error in models.py database with Song table containing two primary keys
-
-matthewC -- 2020-01-09 10:03
-Added /guess_the_song/play route to test
-Added standardized footer in base.html
-Finished text and button on Guess The Song page
+rayL -- 2020-01-09 23:04
+created beginning interface for higher lower game
 
 ericL -- 2020-01-09 21:04
 change doc/requirements to nix extraneous modules
@@ -91,28 +83,12 @@ update readme with api information
 ericL -- 2020-01-09 22:06
 add carousel with images and labels to home page
 
-rayL -- 2020-01-09 23:04
-created beginning interface for higher lower game
-
 yaruL -- 2020-01-09 23:34
 Updated README: roles, descriptions, APIs and links, git clone instructions
-
-matthewC -- 2020-01-10 02:08
-Added logging of Musixmatch API Key
-Finished Musixmatch API data logic and created musixmatch_get(...) to handle
-Sucessfully retrieved all data for test songs for use in Guess The Song Game
-Things left to do marked as "# TODO:" as well as potential improvements
-
-matthewC -- 2020-01-10 02:16
-Added testing route for Guess The Song Playing Page
-Created rough outline for the playing page without Jinja variables
 
 ericL -- 2020-01-10 08:29
 Create HTML template for hearted songs and add session logic for non connected users
 Display JSON mess on hearted songs
-
-matthewC -- 2020-01-10 09:20
-Finished logic for caching song and album in database and checking if already in the database
 
 ericL -- 2020-01-10 14:47
 Get relevant information for favorited songs
@@ -151,11 +127,6 @@ ericL -- 2020-01-12 02:38
 embed player in higher lower game
 add heart outline and align with player
 
-matthewC -- 2020-01-12 03:29
-Tested database additions (lots of problems)
-Errors in database, won't automatically fill in primary key columns
-Added some interaction between HTML playing page and javascript (wasn't able to test yet because of database problems)
-
 ericL -- 2020-01-12 03:33
 heart fill on hover
 
@@ -163,24 +134,12 @@ ericL -- 2020-01-12 04:35
 put request to add song to hearted songs
 add basic endgame screen
 
-matthewC -- 2020-01-12 15:49
-Fixed logic for guess_the_song database work
-Errors in data collection and duplicated database entries
-Testing needed for Javascript usage
-
 rayL --2020-01-12 15:54
 added logout button
 turned app into dark mode lol
 
 ericL -- 2020-01-12 15:54
 use user's top tracks in higher lower game
-
-matthewC -- 2020-01-13 22:49
-Logic in app.py for Guess The Song Game fleshed out
-Fixed errors in data collection and duplicate database entries
-Need to filter out songs without lyrics available
-Fixed passing python song objects through jinja to javascript
-Functional Javascript logic and correct answer detection as well as question generation
 
 ericL -- 2020-01-14 08:10
 add function wrapper for spotify connnection
@@ -191,7 +150,7 @@ abstract spotify api queries into a function
 ericL -- 2020-01-14 16:23
 added choosing screen and background for higher lower
 
-yaruL -- 2020-01-14 16:42
+yaruL -- 2020-01014 16:42
 Hello if I didn't do the beautiful Holmes spacing it means I need to go back to dojo to figure out what means
 also elau ur code is so perspicuous ah THANK YOU
 
@@ -200,36 +159,3 @@ clean up logic on higher lower game
 
 ericL -- 2020-01-14 21:09
 add background to higher lower landing screen
-
-matthewC -- 2020-01-14 23:29
-Fixed answer checking typo in javascript
-Cleaned Musixmatch lyric output string
-Changed frontend to look better
-Error still on last song in quiz
-
-matthewC -- 2020-01-15 08:39
-Added UserSongs table to establish relationship between users and their songs
-Error found with apostrophes in javascript checking answers (won't register as a correct answer)
-Added abstraction for API connection and data collection
-Grouped helper functions and fixed them with Musixmatch interaction
-Errors with database for Guess the Song due to merging and database changes
-
-matthewC -- 2020-01-16 01:21
-Changed database logic and abstracted caching into helper functions
-Added spotify_user_id to session
-Finished /cache route to store guest pop songs
-
-matthewC -- 2020-01-16 01:33
-Abstracted getting specified amount of either guest or user songs in helper functions
-
-ericL -- 2020-01-15 18:33
-add users playlist route
-add artist high low route
-
-ericL -- 2020-01-16 01:04
-show score of user at higher lower endgame
-
-ericL -- 2020-01-16 01:41
-animate higher lower game
-tweak timing and add background to win screen
-
