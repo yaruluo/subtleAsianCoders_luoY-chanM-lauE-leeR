@@ -212,10 +212,35 @@ def cache_songs(songs):
 
     return sids
 
+
 def user_song_link(spotifyid, sid):
     link = UserSongs(spotifyid = spotifyid, sid=sid)
     db.session.add(albumObject)
     db.session.commit()
+
+
+def get_user_songs(numSongs):
+    links = UserSongs.query.filter_by(spotifyid=session['spotify_user_id']).all()
+    random.shuffle(links)
+    links[0:numSongs]
+
+    songObjects = list()
+    for link in links:
+        songObject = Songs.query.filter_by(sid=link.sid).first()
+        songObjects.append(songObject)
+    return songObjects
+
+
+def get_guest_songs(numSongs):
+    links = UserSongs.query.filter_by(spotifyid='guest').all()
+    random.shuffle(links)
+    links[0:numSongs]
+
+    songObjects = list()
+    for link in links:
+        songObject = Songs.query.filter_by(sid=link.sid).first()
+        songObjects.append(songObject)
+    return songObjects
 
 #========================================================================================
 

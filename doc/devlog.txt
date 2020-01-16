@@ -218,3 +218,6 @@ matthewC -- 2020-01-16 01:21
 Changed database logic and abstracted caching into helper functions
 Added spotify_user_id to session
 Finished /cache route to store guest pop songs
+
+matthewC -- 2020-01-16 01:33
+Abstracted getting specified amount of either guest or user songs in helper functions
