@@ -226,7 +226,7 @@ def get_user_songs(numSongs):
 
     songObjects = list()
     for link in links:
-        songObject = Songs.query.filter_by(sid=link.sid).first()
+        songObject = Song.query.filter_by(sid=link.sid).first()
         songObjects.append(songObject)
     return songObjects
 
@@ -238,7 +238,7 @@ def get_guest_songs(numSongs):
 
     songObjects = list()
     for link in links:
-        songObject = Songs.query.filter_by(sid=link.sid).first()
+        songObject = Song.query.filter_by(sid=link.sid).first()
         songObjects.append(songObject)
     return songObjects
 
