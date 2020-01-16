@@ -169,7 +169,7 @@ def musixmatch_get(title='', artist='', album=''):
         genre = "No genre found!"
     else:
         genre = music_genre_list[0]['music_genre']['music_genre_name']
-    print(search_json['message']['body']['track'])
+    # print(search_json['message']['body']['track'])
   
     has_lyrics = search_json['message']['body']['track']['has_lyrics']
     if (has_lyrics == 1):
@@ -209,23 +209,34 @@ def get_user_top():
             'iframe': f"{track_link[:25]}embed/{track_link[25:]}",
         }
         songs.append(track_data)
-        print(track_data)
-        musixmatch_track_data = musixmatch_get(title=track_data['title'], artist=track_data['artist'], album=track_data['album'])
-        print(musixmatch_track_data)
-        track_data['genre'] = musixmatch_track_data['genre']
-        track_data['lyrics'] = musixmatch_track_data['lyrics']
         # print(track_data)
+        musixmatch_track_data = musixmatch_get(title=track_data['title'], artist=track_data['artist'], album=track_data['album'])
+        # print(musixmatch_track_data)
+        track_data['genre'] = musixmatch_track_data['genre']
+        # track_data['lyrics'] = musixmatch_track_data['lyrics']
+        # print(track_data)
+
+        # trying to query a record in the album table
         potentialAlbum = Album.query.filter_by(title=track_data['album']).first()
+        # print(potentialAlbum)
+
+        # if that record we are trying to query in the album does not exist, it is None and we run the following logic
         if potentialAlbum == None:
             albumObject = Album(title=track_data['album'], coverartlink=track_data['coverArtLink'])
             db.session.add(albumObject)
-            db.session.commit()
-        album = Album.query.filter_by(title=track_data['album']).first()
+            album = Album.query.filter_by(title=track_data['album']).first()
+            newTrack = Song(aid=album.aid, artist=track_data['artist'], title=track_data['title'], genre=track_data['genre'], lyrics=track_data['lyrics'], popularity=track_data['popularity'], spotifyid=track_data['spotify_id'], iframe=track_data['iframe'])
+            db.session.add(newTrack)
+        # if that record we are typing to query in the album does exist
+        else:
+            # since potential album already exists, use its aid attribute to create song object and add it to song table
+            newTrack = Song(aid=potentialAlbum.aid, artist=track_data['artist'], title=track_data['title'], genre=track_data['genre'], lyrics=track_data['lyrics'], popularity=track_data['popularity'], spotifyid=track_data['spotify_id'], iframe=track_data['iframe'])
+            db.session.add(newTrack)
+            
+        # commit changes to db
+        db.session.commit()
 
-        
-    
-    # newTrack = Song()
-    # session['songs'] = songs
+    session['songs'] = songs
 
 @app.route('/higher_lower/<choice>')
 def higher_lower(choice):
