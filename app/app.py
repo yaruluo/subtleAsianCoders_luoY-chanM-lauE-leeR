@@ -214,13 +214,15 @@ def get_user_top():
         print(musixmatch_track_data)
         # track_data['genre'] = musixmatch_track_data['genre']
         # track_data['lyrics'] = musixmatch_track_data['lyrics']
-        # print(track_data)
-        potentialAlbum = Album.query.filter_by(title=track_data['album']).first()
-        if potentialAlbum == None:
-            albumObject = Album(title=track_data['album'], coverartlink=track_data['coverArtLink'])
-            db.session.add(albumObject)
-            db.session.commit()
-        album = Album.query.filter_by(title=track_data['album']).first()
+        # track_data['genre'] = musixmatch_track_data['genre']
+        # track_data['lyrics'] = musixmatch_track_data['lyrics']
+        # # print(track_data)
+        # potentialAlbum = Album.query.filter_by(title=track_data['album']).first()
+        # if potentialAlbum == None:
+        #     albumObject = Album(title=track_data['album'], coverartlink=track_data['coverArtLink'])
+        #     db.session.add(albumObject)
+        #     db.session.commit()
+        # album = Album.query.filter_by(title=track_data['album']).first()
 
     # newTrack = Song()
     session['songs'] = songs
