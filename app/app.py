@@ -267,6 +267,8 @@ def package_song(songObject):
     songDict['popularity'] = songObject.popularity
     songDict['spotify_id'] = songObject.spotifyid
     songDict['iframe'] = songObject.iframe
+    album = Album.query.filter_by(aid=songObject.aid).first()
+    songDict['coverArtLink'] = album.coverartlink
     return songDict
 
 #========================================================================================
@@ -365,16 +367,26 @@ def higher_lower(choice):
             'higherlowerscreen.html',
             )
     elif choice == 'random':
+        songObjects = get_guest_songs(10)
+        songs = list()
+        for songObject in songObjects:
+            songs.append(package_song(songObject))
+
         return render_template(
             'higherlowergame.html',
-            songs=session['songs'],
+            songs=songs,
             choice = choice
             )
     if choice == 'favorite':
+        songObjects = get_user_songs(10)
+        songs = list()
+        for songObject in songObjects:
+            songs.append(package_song(songObject))
+        
         if 'access_token' in session:
             return render_template(
                 'higherlowergame.html',
-                songs=session['songs'],
+                songs=songs,
                 choice = choice
             )
         else:
