@@ -228,10 +228,9 @@ def cache_songs(songs):
 
 
 def user_song_link(spotifyid, sid):
-    cachedLinks = UserSongs.query.filter_by(spotifyid=spotifyid).all()
-    for cachedLink in cachedLinks:
-        if (cachedLink.sid == sid):
-            return None
+    cachedLink = UserSongs.query.filter_by(spotifyid=spotifyid, sid=sid).first()
+    if (cachedLink != None):
+        return None
     link = UserSongs(spotifyid = spotifyid, sid=sid)
     db.session.add(link)
     db.session.commit()
