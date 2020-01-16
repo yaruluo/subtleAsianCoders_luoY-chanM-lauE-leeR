@@ -33,6 +33,7 @@ MUSIXMATCH_API_KEY = keys[ 'MUSIXMATCH_API_KEY']
 db = models.db
 Song = models.Song
 Album = models.Album
+UserSongs = models.UserSongs
 
 app = Flask(__name__)
 app.config.from_object( Config)
@@ -133,11 +134,73 @@ def musixmatch_api_query(title='', artist='', album=''):
 def get_user_name():
     data = spotify_api_query("https://api.spotify.com/v1/me/", 'GET')
     session['display_name'] = data['display_name']
+    session['user_id'] = data['id']
 
 
-def get_user_top():
-    data = spotify_api_query("https://api.spotify.com/v1/me/top/tracks", 'GET')['items']
+def get_user_hearted():
+    data = spotify_api_query("https://api.spotify.com/v1/me/tracks", 'GET')['items']
+    
+    for song in data:
+        artist = song['track']['album']['artists'][0]['name']
+        title = song['track']['name']
+        genre = ''
+        lyrics = ''
+        popularity = -1
+        spotifyid = ''
+        iframe = ''
+        album = ''
+        coverartlink = ''
 
+        cachedSong = Song.query.filter_by(title = title, artist=artist).first()
+        if (cachedSong == None):
+            coverartlink = song['track']['album']['images'][0]['url']
+            popularity = song['track']['popularity']
+
+            spotify_id = track['id'],
+            track_link = track['external_urls']['spotify']
+            iframe = f"{track_link[:25]}embed/{track_link[25:]}"
+
+            albumType = song['track']['album']['album_type']
+            # TODO: problems with non-standard characters in album names like "÷ (Deluxe)"
+            if (albumType == "single"):
+                album = f"SINGLE|{title}:{artist}"
+                musixmatch_data = musixmatch_api_query(title=title, artist=artist)
+            else:
+                album = song['track']['album']['name']
+                musixmatch_data = musixmatch_api_query(title=title, artist=artist, album=album)
+            lyrics = musixmatch_data['lyrics']
+            if (lyrics != "LYRICS NOT AVAILABLE"):
+                lyrics = lyrics[:((lyrics.find('*'))-1)]
+            genre = musixmatch_data['genre']
+            
+            # add songs to database
+            aid = -1
+            cachedAlbum = Album.query.filter_by(title = album).first()
+            if (cachedAlbum != None):
+                aid = cachedAlbum.aid
+            else:
+                albumObject = Album(title=album, coverartlink=coverArtLink)
+                db.session.add(albumObject)
+                db.session.commit()
+
+                lastAddedAlbum = db.session.query(Album).order_by(Album.aid.desc()).first()
+                aid=lastAddedAlbum.aid
+            
+            songObject = Song(
+                aid=aid,
+                artist=artist,
+                title=title,
+                genre=genre,
+                lyrics=lyrics,
+                popularity=popularity,
+                spotifyid=spotifyid,
+                iframe=iframe
+            )
+            db.session.add(songObject)
+            db.session.commit()
+
+            songObjects.append(songObject)
+    '''
     songs = list()
     for track in data:
         track_link = track['external_urls']['spotify']
@@ -156,8 +219,9 @@ def get_user_top():
         track_data['lyrics'] = musixmatch_data['lyrics']
 
         songs.append(track_data)
-
+    
     session['songs'] = songs
+    '''
 
 #========================================================================================
 
@@ -216,7 +280,7 @@ def callback():
     session['access_token'] = access_token
 
     get_user_name()
-    get_user_top()
+    get_user_hearted()
 
     return redirect(url_for('home'))
 
