@@ -141,7 +141,7 @@ def get_user_hearted():
     data = spotify_api_query("https://api.spotify.com/v1/me/tracks", 'GET')['items']
     sids = cache_songs(data)
     for sid in sids:
-        user_song_link(session['spotify_user_id'])
+        user_song_link(session['spotify_user_id'], sid)
 
 
 def cache_songs(songs):
@@ -401,22 +401,10 @@ def hearted_songs():
 @protected
 @app.route("/cache")
 def cache():
-    data = spotify_api_query("http://api.spotify.com/v1/playlists/37i9dQZF1DXbYM3nMM0oPk", 'GET')
-
-    songs = list()
-    for track in data['tracks']['item']:
-        track_link = track['external_urls']['spotify']
-        song_data = {
-            'title': track['name'],
-            'artist': track['artists'][0]['name'],
-            'genre': "MUSIXMATCH",
-            'lyrics': "MUSIXMATCH",
-            'popularity': track['popularity'],
-            'spotifyid': track['id'],
-            'iframe': f"{track_link[:25]}embed/{track_link[25:]}"
-        }
-        album_title = track['album']['name']
-        coverartlink = track['images'][0]['url']
+    data = spotify_api_query("http://api.spotify.com/v1/playlists/37i9dQZF1DXbYM3nMM0oPk", 'GET')['tracks']['item']
+    sids = cache_songs(data)
+    for sid in sids:
+        user_song_link('guest', sid)
 
     return render_template(
         "test.html",
