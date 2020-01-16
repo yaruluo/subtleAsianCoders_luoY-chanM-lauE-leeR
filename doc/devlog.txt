@@ -233,3 +233,5 @@ ericL -- 2020-01-16 01:41
 animate higher lower game
 tweak timing and add background to win screen
 
+ericL -- 2020-01-16 09:57
+add styling to guess the song
