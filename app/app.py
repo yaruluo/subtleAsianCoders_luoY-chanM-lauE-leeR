@@ -227,6 +227,10 @@ def cache_songs(songs):
 
 
 def user_song_link(spotifyid, sid):
+    cachedLinks = UserSongs.query.filter_by(spotifyid=spotifyid).all()
+    for cachedLink in cachedLinks:
+        if (cachedLink.sid == sid):
+            return None
     link = UserSongs(spotifyid = spotifyid, sid=sid)
     db.session.add(link)
     db.session.commit()
@@ -235,7 +239,7 @@ def user_song_link(spotifyid, sid):
 def get_user_songs(numSongs):
     links = UserSongs.query.filter_by(spotifyid=session['spotify_user_id']).all()
     random.shuffle(links)
-    links[0:numSongs]
+    links = links[0:numSongs]
 
     songObjects = list()
     for link in links:
@@ -247,7 +251,7 @@ def get_user_songs(numSongs):
 def get_guest_songs(numSongs):
     links = UserSongs.query.filter_by(spotifyid='guest').all()
     random.shuffle(links)
-    links[0:numSongs]
+    links = links[0:numSongs]
 
     songObjects = list()
     for link in links:
@@ -322,20 +326,22 @@ def guess_the_song():
     return render_template('guess_the_song.html')
 
 
-@app.route('/guess_the_song/play')
-def play():
-    # choose 10 random popular songs
-    songObjects = get_guest_songs(10)
-    
+@app.route('/guess_the_song/<choice>')
+def play(choice):
+    if (choice == 'random'):
+        songObjects = get_guest_songs(10)
+    if (choice == 'my_songs'):
+        songObjects = get_user_songs(10)
+
     songsDict = dict()
-    for i in range(len(songObjects)):
+    for i in range(10):
         availableChoices = list(songObjects)
         availableChoices.pop(i)
         choices = random.sample(availableChoices, k=3)
         choices.append(songObjects[i])
         random.shuffle(choices)
         songsDict[songObjects[i]] = choices
-
+    print(f"========================{str(len(songsDict))}===========================")
     return render_template('guess_the_song_game.html', songs=songsDict)
 
 @app.route('/higher_lower/<choice>')
