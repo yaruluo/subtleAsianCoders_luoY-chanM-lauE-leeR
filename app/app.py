@@ -9,6 +9,8 @@ RYthEM
 from flask import Flask, request, redirect, session, render_template, url_for, flash
 from utl import models
 from config import Config
+from sqlalchemy.sql.expression import func, select
+from alchemy_encoder import AlchemyEncoder
 import sqlite3
 import urllib.request
 import urllib.parse
@@ -233,27 +235,66 @@ def user_song_link(spotifyid, sid):
     db.session.commit()
 
 
-def get_user_songs(numSongs):
+def get_user_songs(numSongs, containExtraneous):
     links = UserSongs.query.filter_by(spotifyid=session['spotify_user_id']).all()
     random.shuffle(links)
-    links[0:numSongs]
-
+    links = links[0:numSongs]
+    songDict = dict()
     songObjects = list()
     for link in links:
-        songObject = Song.query.filter_by(sid=link.sid).first()
-        songObjects.append(songObject)
+        songObject = None
+        if(containExtraneous == True):
+            songObject = Song.query.filter_by(sid=link.sid).first()
+            songObject = json.dumps(songObject, cls=AlchemyEncoder)
+        else:
+            songObject = Song.query.with_entities(Song.artist, Song.title, Song.popularity, Song.iframe, Song.spotifyid, Song.aid).filter_by(sid=link.sid).first()
+            songObject = json.dumps(songObject, cls=AlchemyEncoder)
+           
+            print(songObject)
+            print(len(songObject))
+            songObject = json.loads(songObject)
+            albumObject = Album.query.filter_by(aid=songObject[5]).first()
+            coverArtLink = albumObject.coverartlink 
+            songDict['artist'] = songObject[0]
+            songDict['title'] = songObject[1]
+            songDict['popularity'] = songObject[2]
+            songDict['iframe'] = songObject[3]
+            songDict['spotify_id'] = songObject[4]
+            songDict['coverArtLink'] = coverArtLink
+            print(songDict)
+            songObjects.append(songDict)
+    print(songObjects)
     return songObjects
 
 
-def get_guest_songs(numSongs):
+def get_guest_songs(numSongs, containExtraneous):
     links = UserSongs.query.filter_by(spotifyid='guest').all()
     random.shuffle(links)
-    links[0:numSongs]
-
+    links = links[0:numSongs]
+    songDict = dict()
     songObjects = list()
     for link in links:
-        songObject = Song.query.filter_by(sid=link.sid).first()
-        songObjects.append(songObject)
+        if(containExtraneous == True):
+            songObject = Song.query.filter_by(sid=link.sid).first()
+            songObject = json.dumps(songObject, cls=AlchemyEncoder)
+        else:
+            songObject = Song.query.with_entities(Song.artist, Song.title, Song.popularity, Song.iframe, Song.spotifyid, Song.aid).filter_by(sid=link.sid).first()
+            songObject = json.dumps(songObject, cls=AlchemyEncoder)
+        
+            print(songObject)
+            print(len(songObject))
+            songObject = json.loads(songObject)
+            albumObject = Album.query.filter_by(aid=songObject[5]).first()
+            coverArtLink = albumObject.coverartlink 
+            songDict['artist'] = songObject[0]
+            songDict['title'] = songObject[1]
+            songDict['popularity'] = songObject[2]
+            songDict['iframe'] = songObject[3]
+            songDict['spotify_id'] = songObject[4]
+            songDict['coverArtLink'] = coverArtLink
+        print(songDict)
+        songObjects.append(songDict)
+
     return songObjects
 
 #========================================================================================
@@ -326,7 +367,7 @@ def guess_the_song():
 @app.route('/guess_the_song/play')
 def play():
     # choose 10 random popular songs
-    songObjects = get_guest_songs(10)
+    songObjects = get_guest_songs(10, False)
     
     songsDict = dict()
     for i in range(len(songObjects)):
@@ -366,7 +407,7 @@ def musixmatch_get(title='', artist='', album=''):
         genre = "No genre found!"
     else:
         genre = music_genre_list[0]['music_genre']['music_genre_name']
-    print(search_json['message']['body']['track'])
+    # print(search_json['message']['body']['track'])
 
     has_lyrics = search_json['message']['body']['track']['has_lyrics']
     if (has_lyrics == 1):
@@ -408,12 +449,12 @@ def get_user_top():
         songs.append(track_data)
         # print(track_data)
         musixmatch_track_data = musixmatch_get(title=track_data['title'], artist=track_data['artist'], album=track_data['album'])
-        print(musixmatch_track_data)
+        # print(musixmatch_track_data)
         # track_data['genre'] = musixmatch_track_data['genre']
         # track_data['lyrics'] = musixmatch_track_data['lyrics']
         # track_data['genre'] = musixmatch_track_data['genre']
         # track_data['lyrics'] = musixmatch_track_data['lyrics']
-        # # print(track_data)
+        #   print(track_data)
         # potentialAlbum = Album.query.filter_by(title=track_data['album']).first()
         # if potentialAlbum == None:
         #     albumObject = Album(title=track_data['album'], coverartlink=track_data['coverArtLink'])
@@ -431,17 +472,20 @@ def higher_lower(choice):
             'higherlowerscreen.html',
             )
     elif choice == 'random':
-        print(Song.query.all())
+        songs = get_guest_songs(10, False)
+        print(songs)
         return render_template(
             'higherlowergame.html',
-            songs=Song.query.all(),
+            songs=songs,
             choice = choice
             )
     if choice == 'favorite':
+        songs = get_user_songs(10, False)
+        print(songs)
         if 'access_token' in session:
             return render_template(
                 'higherlowergame.html',
-                songs=Song.query.all(),
+                songs=songs,
                 choice = choice
             )
         else:
