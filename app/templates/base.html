@@ -71,6 +71,9 @@ RYthEM
                     <li class="nav-item">
                         <a class="nav-link" href="/hearted_songs">My Hearted Songs</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/playlists">My Playlists</a>
+                    </li>
                     {% endif %}
                 </ul>
                 <ul class="navbar-nav ml-auto">
@@ -98,6 +101,7 @@ RYthEM
         <div class="alert alert-danger text-align-center alert-dismissible fade show" role="alert">
             {% endif %}
 
+
             {% if category == "success" %}
             <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
                 {% endif %}
@@ -123,8 +127,11 @@ RYthEM
             <script src="https://code.jquery.com/jquery-3.4.1.js"
                 integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
-            <!-- custom js jinja linking -->
-            <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- custom js jinja linking -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
             {% block script %}
             {% endblock %}
@@ -133,14 +140,18 @@ RYthEM
             <!-- Footer -->
             <footer class="page-footer font-small">
 
-                <!-- Copyright -->
-                <div class="footer-copyright text-center py-3">© 2020 subtleAsianCoders
-                </div>
-                <!-- Copyright -->
-                {% block footer%}
-                {% endblock%}
 
-            </footer>
-            <!-- Footer -->
+    <!-- Footer -->
+    <footer class="page-footer font-small">
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 subtleAsianCoders
+        </div>
+        <!-- Copyright -->
+        {% block footer%}
+        {% endblock%}
+
+    </footer>
+    <!-- Footer -->
 
 </html>
