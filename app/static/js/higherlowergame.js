@@ -1,4 +1,7 @@
-function init(songs, counter) { // params are meant to preserve the state of the game throughout playing; songs is the list of songs (with song title, artist, popularity rating, cover art link, etc.) and counter is the current index in the songs list that the game is on. Initially, the game is on the 0th song, so on first load, counter should equal 0.
+function init(songs, counter) { // params are meant to preserve the state of the game throughout playing;
+    // songs is the list of songs (with song title, artist, popularity rating, cover art link, etc.)
+    // and counter is the current index in the songs list that the game is on. Initially, the game
+    // is on the 0th song, so on first load, counter should equal 0.
   var curScore = 0;
   shuffle = (array) => array.sort(() => Math.random() - 0.5);
   songs = shuffle(songs);
@@ -23,7 +26,10 @@ function init(songs, counter) { // params are meant to preserve the state of the
       }
       // scorekeeping
       if (
-        (leftSongPopularity <= rightSongPopularity && // if the user chooses the 'Higher' choice and the right song is indeed higher in popularity than the left song, or if the user chooses the 'Lower' choice and the right song is indeed lower in popularity than the left song, then consider that the user picked the right choice and move on to the next question (if applicable)
+          (leftSongPopularity <= rightSongPopularity && // if the user chooses the 'Higher' choice and the right song
+	   // is indeed higher in popularity than the left song, or if the user chooses the 'Lower' choice and the right
+	   // song is indeed lower in popularity than the left song, then consider that the user picked the right
+	   // choice and move on to the next question (if applicable)
           $(btn.target).html() == "Higher") ||
         (leftSongPopularity >= rightSongPopularity &&
           $(btn.target).html() == "Lower")
@@ -31,7 +37,8 @@ function init(songs, counter) { // params are meant to preserve the state of the
         $("#higher-btn, #lower-btn").show(500);
         curScore = parseInt($("#score").text()); // gets the current score of the user
         $(btn.target).attr("next-page", ++counter); // set the counter equal to counter + 1 and then return its updated value here.
-        loadGame(songs, counter, ++curScore); // song and counter is explained above; curScore (current score) is incremented and then its value is returned and loaded back into loadGame for the next question (if applicable—user did not finish all 10 questions yet)
+          loadGame(songs, counter, ++curScore); // song and counter is explained above; curScore (current score) is incremented and
+	  // then its value is returned and loaded back into loadGame for the next question (if applicable—user did not finish all 10 questions yet)
       } else {
         // wrong choice
         $("#right-song-popularity").show(500);
@@ -48,7 +55,9 @@ function init(songs, counter) { // params are meant to preserve the state of the
   });
 }
 
-function loadGame(songs, counter, score) { // this fxn basically updates the moving parts of the game: the left and right images, song titles, song artists, popularity ratings, etc.; this modularization allows us to call this function again and again after a button is clicked—to update the DOM each time upon an event.
+function loadGame(songs, counter, score) { // this fxn basically updates the moving parts of the game: the left and right images,
+    // song titles, song artists, popularity ratings, etc.; this modularization allows us to call this function again and again after
+    // a button is clicked—to update the DOM each time upon an event.
   renderInfo(songs, counter, "left", 0);
   renderInfo(songs, counter, "right", 1);
 

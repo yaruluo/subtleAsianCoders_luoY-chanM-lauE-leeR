@@ -58,16 +58,17 @@
       <div id="higher-lower-without-token" class="col-sm-12 col-md-6">
         {% endif %}
         <div class="text-center">
-          <img class="bottom-image pt-2" src="../static/img/background_1.jpg" />
+          <img class="bottom-image pt-2" src="../static/img/circle1.jpg" />
           <br /><br>
           <p class="h5 pt-2">Higher Lower</p>
           You’ll be shown two cards with the names of two songs. You simply have
-          to decide whether the second card’s popularity is
+          to decide whether the second card’s popularity (on a scale of 0-100) is
           higher or lower than the first card. As you progress, you will be
           shown a new card. Choose higher or lower to decide whether it is
           listened to more or less than the previous card. The objective is to
           get the most right in a row. If you get one wrong, you lose the game.
-          <br />
+          <br /><br>
+          <a id="see-songs-btn" class="btn btn-success" href="/higher_lower/screen">Play Now</a>
         </div>
       </div>
       {% if session['access_token'] %}
@@ -76,15 +77,15 @@
         <div id="guess-the-song-section-without-token" class="col-sm-12 col-md-6">
           {% endif %}
           <div class="text-center">
-            <img class="bottom-image pt-2" src="../static/img/background_2.jpg"/>
+            <img class="bottom-image pt-2" src="../static/img/circle2.jpeg"/>
             <br /><br>
             <p class="h5 pt-2">Guess the Song</p>
             You’ll be shown the lyrics to a song. Multiple choice question and
             all stuy students are good at MCQs. Guess what song the lyrics are
             from! Link your Spotify to use your own Liked songs, or use popular
             songs out now.
-            <br />
-            <!-- <a class="btn btn-success" href="/guess_the_song">Play Now</a> -->
+            <br /><br>
+            <a class="btn btn-success" href="/guess_the_song">Play Now</a>
           </div>
         </div>
         {% if session['access_token'] %}
@@ -96,7 +97,7 @@
             Connect with your Spotify account to view and listen to your recently
             liked songs. If you see a new song you like in the “Random Pop”
             version of Higher Lower, heart it to add to your page of Hearted Songs.
-            <br />
+            <br /><br>
             <a id="see-songs-btn" class="btn btn-success" href="/hearted_songs">See Songs</a>
           </div>
         </div>
