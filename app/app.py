@@ -251,7 +251,7 @@ def higher_lower(choice):
             return redirect(url_for('home'))
 
 @protected # openable if connected
-@app.route( "/save_song/<song_id>")
+@app.route("/save_song/<song_id>")
 def save_song( song_id):
 
     spotify_api_query( f"https://api.spotify.com/v1/me/tracks?ids={song_id}", 'PUT')

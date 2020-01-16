@@ -163,3 +163,9 @@ add background to higher lower landing screen
 ericL -- 2020-01-15 18:33
 add users playlist route
 add artist high low route
+
+ericL -- 2020-01-16 01:04
+show score of user at higher lower endgame
+
+ericL -- 2020-01-16 01:41
+animate higher lower game
