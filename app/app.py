@@ -14,6 +14,7 @@ import urllib.request
 import urllib.parse
 import functools
 import os
+import random
 import json
 import datetime
 
@@ -201,6 +202,27 @@ def hearted_songs():
     return render_template(
         "hearted_songs.html",
         data = data['items'],
+    )
+
+@protected
+@app.route("/playlists")
+def playlists():
+    data = spotify_api_query("http://api.spotify.com/v1/me/playlists?limit=50", 'GET')
+
+    return render_template(
+        "playlists.html",
+        data = data['items'],
+    )
+
+@protected
+@app.route('/artists')
+def artists():
+    rand = random.randrange(0, 100)
+    data = spotify_api_query(f"http://api.spotify.com/v1/search?q=year:0000-9999&type=artist&offset={rand}", 'GET')
+
+    return render_template(
+        'test.html',
+        data = data['artists']['items']
     )
 
 @app.route('/logout')

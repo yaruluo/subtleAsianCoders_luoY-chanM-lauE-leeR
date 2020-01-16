@@ -65,9 +65,11 @@ RYthEM
                     <li class="nav-item navbar-right">
                         {% if session['display_name'] %}
                         <span style="color: white;">{{ session['display_name'] }}</span>
-                        <a id="logout-btn" class="btn btn-outline-success nav-link text-success" href="/logout">Log out</a>
+                        <a id="logout-btn" class="btn btn-outline-success nav-link text-success" href="/logout">Log
+                            out</a>
                         {% else %}
-                        <a id="spotify-connect-btn" class="btn btn-outline-success nav-link text-success" href="/spotify_connect">Connect to
+                        <a id="spotify-connect-btn" class="btn btn-outline-success nav-link text-success"
+                            href="/spotify_connect">Connect to
                             Spotify</a>
                         {% endif %}
                     </li>
@@ -86,12 +88,10 @@ RYthEM
         {% if category == "success" %}
         <div class="alert alert-success text-align-center alert-dismissible fade show" role="alert">
         {% endif %}
-
             {{message}}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-
         </div>
         {% endfor %}
         {% endif %}
@@ -108,6 +108,8 @@ RYthEM
         <script src="https://code.jquery.com/jquery-3.4.1.js"
             integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
         <!-- custom js jinja linking -->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
@@ -116,15 +118,16 @@ RYthEM
     </body>
 
     <!-- Footer -->
-<footer class="page-footer font-small">
+    <footer class="page-footer font-small">
 
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 subtleAsianCoders
-    </div>
-    <!-- Copyright -->
-    {% block footer%}
-    {% endblock%}
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2020 subtleAsianCoders
+        </div>
+        <!-- Copyright -->
+        {% block footer%}
+        {% endblock%}
 
-  </footer>
-  <!-- Footer -->
+    </footer>
+    <!-- Footer -->
+
 </html>
