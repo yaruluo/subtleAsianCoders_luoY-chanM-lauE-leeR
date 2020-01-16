@@ -76,6 +76,8 @@ RYthEM
         You’ll be shown the lyrics to a song. Multiple choice question and all stuy students are good at MCQs. Guess what song the lyrics are from! Link your Spotify to use your own Liked songs, or use popular songs out now.
     </p>
     <a id="random" href="/guess_the_song/random" class="btn btn-lg btn-primary">Play With Random Songs</a i><br>
-    <a id="my_songs" href="/guess_the_song/my_songs" class="btn btn-lg btn-primary">Play With Your Songs</a>
+    {% if session['access_token'] %}
+        <a id="my_songs" href="/guess_the_song/my_songs" class="btn btn-lg btn-primary">Play With Your Songs</a>
+    {% endif %}
 </div>
 {% endblock %}
