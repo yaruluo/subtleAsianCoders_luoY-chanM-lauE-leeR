@@ -127,7 +127,7 @@ def musixmatch_api_query(title='', artist='', album=''):
             # print(lyrics_request)
             url = urllib.request.urlopen(lyrics_request)
             lyrics_json = json.loads(url.read())
-
+            print(lyrics_request)
             lyrics = lyrics_json['message']['body']['lyrics']['lyrics_body']
         else:
             lyrics = 'LYRICS NOT AVAILABLE'
@@ -258,6 +258,16 @@ def get_guest_songs(numSongs):
         songObject = Song.query.filter_by(sid=link.sid).first()
         songObjects.append(songObject)
     return songObjects
+
+
+def package_song(songObject):
+    songDict = dict()
+    songDict['artist'] = songObject.artist
+    songDict['title'] = songObject.title
+    songDict['popularity'] = songObject.popularity
+    songDict['spotify_id'] = songObject.spotifyid
+    songDict['iframe'] = songObject.iframe
+    return songDict
 
 #========================================================================================
 
