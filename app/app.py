@@ -236,35 +236,64 @@ def user_song_link(spotifyid, sid):
 
 
 def get_user_songs(numSongs, containExtraneous):
-    links = UserSongs.query.filter_by(spotifyid=session['spotify_user_id']).all()
-    random.shuffle(links)
-    links = links[0:numSongs]
-    songDict = dict()
-    songObjects = list()
-    for link in links:
-        songObject = None
-        if(containExtraneous == True):
-            songObject = Song.query.filter_by(sid=link.sid).first()
-            songObject = json.dumps(songObject, cls=AlchemyEncoder)
-        else:
-            songObject = Song.query.with_entities(Song.artist, Song.title, Song.popularity, Song.iframe, Song.spotifyid, Song.aid).filter_by(sid=link.sid).first()
-            songObject = json.dumps(songObject, cls=AlchemyEncoder)
+    # links = UserSongs.query.filter_by(spotifyid=session['spotify_user_id']).all()
+    # links = Song.query.order_by(func.random()).limit(10)
+    # print(UserSongs.query.count())
+    # random.shuffle(links)
+    # links = links[0:numSongs]
+    # songDict = dict()
+    # songObjects = list()
+    # for link in links:
+    #     songObject = None
+    #     if(containExtraneous == True):
+    #         songObject = Song.query.filter_by(sid=link.sid).first()
+    #         songObject = json.dumps(songObject, cls=AlchemyEncoder)
+    #     else:
+    #         songObject = Song.query.with_entities(Song.artist, Song.title, Song.popularity, Song.iframe, Song.spotifyid, Song.aid).filter_by(sid=link.sid).first()
+    #         songObject = json.dumps(songObject, cls=AlchemyEncoder)
            
-            print(songObject)
-            print(len(songObject))
-            songObject = json.loads(songObject)
-            albumObject = Album.query.filter_by(aid=songObject[5]).first()
-            coverArtLink = albumObject.coverartlink 
-            songDict['artist'] = songObject[0]
-            songDict['title'] = songObject[1]
-            songDict['popularity'] = songObject[2]
-            songDict['iframe'] = songObject[3]
-            songDict['spotify_id'] = songObject[4]
-            songDict['coverArtLink'] = coverArtLink
-            print(songDict)
-            songObjects.append(songDict)
-    print(songObjects)
-    return songObjects
+    #         # print(f'song object: {songObject}')
+    #         # print(len(songObject))
+    #         songObject = json.loads(songObject)
+    #         albumObject = Album.query.filter_by(aid=songObject[5]).first()
+    #         coverArtLink = albumObject.coverartlink 
+    #         songDict['artist'] = songObject[0]
+    #         songDict['title'] = songObject[1]
+    #         songDict['popularity'] = songObject[2]
+    #         songDict['iframe'] = songObject[3]
+    #         songDict['spotify_id'] = songObject[4]
+    #         songDict['coverArtLink'] = coverArtLink
+    #         # print(songDict)
+    #         songObjects.append(songDict)
+            # print(f'song objects: {songObjects}')
+    # print(songObjects)
+    # return songObjects
+    authorization_header = {
+        'Authorization': f"Bearer {session['access_token']}"
+    }
+    req = urllib.request.Request(
+        "https://api.spotify.com/v1/me/top/tracks",
+        headers=authorization_header,
+    )
+
+    req = urllib.request.urlopen(req)
+    res = req.read()
+    data = json.loads(res)['items']
+
+    songs = list()
+    for track in data:
+        track_data = {
+            'title': track['name'],
+            'artist': track['album']['artists'][0]['name'],
+            'coverArtLink': track['album']['images'][0]['url'],
+            'genre': "I DONT KNOW",
+            'lyrics': "MUSIXMATCH",
+            'popularity': track['popularity'],
+            'spotify_id': track['id'],
+            'iframe': f"{track['external_urls']['spotify'][:25]}embed/{track['external_urls']['spotify'][25:]}",
+        }
+        songs.append(track_data)
+    session['songs'] = songs
 
 
 def get_guest_songs(numSongs, containExtraneous):
@@ -476,7 +505,7 @@ def higher_lower(choice):
         print(songs)
         return render_template(
             'higherlowergame.html',
-            songs=songs,
+            songs=session['songs'],
             choice = choice
             )
     if choice == 'favorite':
@@ -485,7 +514,7 @@ def higher_lower(choice):
         if 'access_token' in session:
             return render_template(
                 'higherlowergame.html',
-                songs=songs,
+                songs=session['songs'],
                 choice = choice
             )
         else:
