@@ -16,7 +16,7 @@ function init(songs, counter) { // params are meant to preserve the state of the
       if (counter >= 8) {
         $("#higher-lower").empty(); // this means the user finished all 10 questions; hide the page so they cannot play anymore.
         $("#game-message").html("You Won!");
-        $("#game-score").html(`Your score: ${curScore}`);
+        $("#game-score").html(`Your score: ${curScore}/10`);
         $("#endgame").css("display", "initial");
         $("body").css("background-image", `url("../static/img/high_low_2.jpg")`);
         $("body").css("background-size", "cover")
@@ -38,7 +38,7 @@ function init(songs, counter) { // params are meant to preserve the state of the
         setTimeout(() => {
           $("#higher-lower").empty();
           $("#game-message").html("You Lost!");
-          $("#game-score").html(`Your score: ${curScore}`);
+          $("#game-score").html(`Your score: ${curScore}/10`);
           $("#endgame").css("display", "initial");
           $("body").css("background-image", `url("../static/img/high_low_2.jpg")`);
           $("body").css("background-size", "cover")

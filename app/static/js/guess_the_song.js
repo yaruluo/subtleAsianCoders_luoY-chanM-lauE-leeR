@@ -8,7 +8,7 @@ function init(songs, counter) {
         $("#choice-1, #choice-2, #choice-3, #choice-4").on("click", btn => {
             // If finished with final question
             if (counter >= 10) {
-                $("#endscore").html($("#score").text())
+                $("#endscore").html(`${$("#score").text()}/10`)
                 $("#game").empty();
                 $("#endgame").css("display", "initial");
             }
