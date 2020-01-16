@@ -187,39 +187,41 @@ def cache_songs(songs):
             else:
                 album = song['track']['album']['name']
                 musixmatch_data = musixmatch_api_query(title=title, artist=artist, album=album)
-            lyrics = musixmatch_data['lyrics']
-            if (lyrics != "LYRICS NOT AVAILABLE"):
-                lyrics = lyrics[:((lyrics.find('*'))-1)]
-            genre = musixmatch_data['genre']
             
-            # add songs to database
-            aid = -1
-            cachedAlbum = Album.query.filter_by(title = album).first()
-            if (cachedAlbum != None):
-                aid = cachedAlbum.aid
-            else:
-                albumObject = Album(title=album, coverartlink=coverartlink)
-                db.session.add(albumObject)
+            if ((musixmatch_data['lyrics'] != "LYRICS NOT AVAILABLE") and (musixmatch_data['genre'] != "GENRE NOT AVAILABLE")):
+                lyrics = musixmatch_data['lyrics']
+                if (lyrics != "LYRICS NOT AVAILABLE"):
+                    lyrics = lyrics[:((lyrics.find('*'))-1)]
+                genre = musixmatch_data['genre']
+                
+                # add songs to database
+                aid = -1
+                cachedAlbum = Album.query.filter_by(title = album).first()
+                if (cachedAlbum != None):
+                    aid = cachedAlbum.aid
+                else:
+                    albumObject = Album(title=album, coverartlink=coverartlink)
+                    db.session.add(albumObject)
+                    db.session.commit()
+
+                    lastAddedAlbum = db.session.query(Album).order_by(Album.aid.desc()).first()
+                    aid=lastAddedAlbum.aid
+                
+                songObject = Song(
+                    aid=aid,
+                    artist=artist,
+                    title=title,
+                    genre=genre,
+                    lyrics=lyrics,
+                    popularity=popularity,
+                    spotifyid=spotifyid,
+                    iframe=iframe
+                )
+                db.session.add(songObject)
                 db.session.commit()
 
-                lastAddedAlbum = db.session.query(Album).order_by(Album.aid.desc()).first()
-                aid=lastAddedAlbum.aid
-            
-            songObject = Song(
-                aid=aid,
-                artist=artist,
-                title=title,
-                genre=genre,
-                lyrics=lyrics,
-                popularity=popularity,
-                spotifyid=spotifyid,
-                iframe=iframe
-            )
-            db.session.add(songObject)
-            db.session.commit()
-
-            lastAddedSong = db.session.query(Song).order_by(Song.sid.desc()).first()
-            sids.append(lastAddedSong.sid)
+                lastAddedSong = db.session.query(Song).order_by(Song.sid.desc()).first()
+                sids.append(lastAddedSong.sid)
 
     return sids
 
@@ -437,7 +439,7 @@ def hearted_songs():
 @protected
 @app.route("/cache")
 def cache():
-    data = spotify_api_query("http://api.spotify.com/v1/playlists/37i9dQZF1DXbYM3nMM0oPk?limit=50", 'GET')['tracks']['item']
+    data = spotify_api_query("http://api.spotify.com/v1/playlists/37i9dQZF1DXbYM3nMM0oPk", 'GET')['tracks']['items']
     sids = cache_songs(data)
     for sid in sids:
         user_song_link('guest', sid)
