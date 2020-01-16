@@ -10,37 +10,12 @@ RYthEM
 <!-- Guess The Song Game Homepage -->
 
 {% block title %}
-    Guess The Song Game
+    Guess The Song
 {% endblock %}
 
 
 {% block style %}
 <style>
-    body {
-        /* background-image: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg'); */
-        background: url('https://images.unsplash.com/photo-1528728935509-22fb14722a30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=660&q=80&fbclid=IwAR3BSFjZm2T5ZbvusG64YoSJVZUVv6RztV-Xf7CRpDi9lSmEZmXe48LEObg')
-                    no-repeat
-                    center
-                    center
-                    fixed;
-        background-size: cover;
-        height: 100%;
-        overflow: hidden;
-    }
-    /* #background {
-        position: fixed;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-
-        background-color: black;
-        background-image: linear-gradient(
-            45deg,
-            #ff00fc,
-            #393939,
-            #00d4ff);
-    }
     #background img {
         position: absolute;
         top: 0;
@@ -50,9 +25,8 @@ RYthEM
         margin: auto;
         min-width: 50%;
         min-height: 50%;
-
         opacity: 0.9;
-    } */
+    }
     #footer {
         position: absolute;
         bottom: 0;
@@ -61,23 +35,32 @@ RYthEM
         text-align: center;
         color: white;
     }
-    #content {
-        width: 50%;
-        height: 100%;
-    }
 </style>
 {% endblock %}
 
 
 {% block body %}
-<div id="content" class="container text-center mt-5 pt-5" style="color:white;">
-    <h1>Guess The Song</h1>
-    <p>
-        You’ll be shown the lyrics to a song. Multiple choice question and all stuy students are good at MCQs. Guess what song the lyrics are from! Link your Spotify to use your own Liked songs, or use popular songs out now.
-    </p>
-    <a id="random" href="/guess_the_song/random" class="btn mb-3 btn-lg btn-primary">Play With Random Songs</a><br>
-    {% if session['access_token'] %}
-        <a id="my_songs" href="/guess_the_song/my_songs" class="btn btn-lg btn-primary">Play With Your Songs</a>
-    {% endif %}
+<div class="text-center row" style="color:white;">
+    <div class="col p-5" style="background-color: rgba(0,0,125, 0.5);">
+        <h1>Guess The Song</h1>
+        <p>
+            You’ll be shown the lyrics to a song. Multiple choice question and all stuy students are good at MCQs. Guess what song the lyrics are from! Link your Spotify to use your own Liked songs, or use popular songs out now.
+        </p>
+        <a id="random" href="/guess_the_song/random" class="btn btn-lg mb-3 btn-primary">Play With Random Songs</a>
+        <br>
+        {% if session['access_token'] %}
+            <a id="my_songs" href="/guess_the_song/my_songs" class="btn btn-lg btn-primary">Play With Your Songs</a>
+        {% endif %}
+    </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $("body").css("background-image", `url("../static/img/guess_the_song.jpg")`)
+    $("body").css("background-size", "cover")
+    $("body").css("background-position", "center")
+    $("body").css("background-attachment", "fixed")
+    $('body').css('margin-top', '12%')
+  </script>
 {% endblock %}

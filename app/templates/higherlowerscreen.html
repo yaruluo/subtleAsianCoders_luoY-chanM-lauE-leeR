@@ -6,11 +6,11 @@ Higher Lower
 
 {% block body %}
 <div class="text-center row" style="color: white;">
-  <div class="col p-5 m-5" style="background-color: rgba(0, 125, 0, 0.2);">
+  <div class="col p-5" style="background-color: rgba(0, 125, 0, 0.2);">
     <h1>The Higher Lower Game</h1>
     <p>
       You’ll be shown two cards with the names of two songs. You simply have
-      to decide whether the second card’s number of “monthly listens” is
+      to decide whether the second card’s popularity is
       higher or lower than the first card. As you progress, you will be
       shown a new card. Choose higher or lower to decide whether it is
       listened to more or less than the previous card. The objective is to
@@ -18,12 +18,12 @@ Higher Lower
     </p>
     <br>
     <form action="/higher_lower/random" method="GET">
-      <button type="submit" class="btn btn-success">Play with random songs</button>
+      <button type="submit" class="btn btn-lg btn-success">Play With Random Songs</button>
     </form>
     <br>
     {% if session['access_token'] %}
     <form action="/higher_lower/favorite" method="GET">
-      <button type="submit" class="btn btn-success">Play with my Liked songs</button>
+      <button type="submit" class="btn btn-lg btn-success">Play With Your Songs</button>
     </form>
     {% endif %}
   </div>
@@ -34,6 +34,8 @@ Higher Lower
 <script>
   $("body").css("background-image", `url("../static/img/high_low_2.jpg")`)
   $("body").css("background-size", "cover")
+  $("body").css("background-attachment", "fixed")
+  $("body").css("background-position", "center")
   $('body').css('margin-top', '12%')
 </script>
 {% endblock %}
