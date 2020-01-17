@@ -25,7 +25,7 @@
 
 Our website is all about music! We want to create two games: HigherLower, wherein you guess which song of two shown have more listens, and GuessTheSong, wherein you are shown the lyrics to a song and guess what song it is (multiple choice). We also allow user's to connect connect with their own Spotify account and use their own liked songs in the games.
 
-[video demo here](youtube.com)
+[video demo here](https://www.youtube.com/watch?v=uAfj_XrBE7g&feature=youtu.be)
 
 ## APIs Used
 
